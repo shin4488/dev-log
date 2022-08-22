@@ -25,6 +25,7 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                 itemScope
                 itemType="http://schema.org/Article"
               >
+                {/* タイトル・更新日時 */}
                 <header>
                   <h2>
                     <Link to={slug || ''} itemProp="url">
@@ -33,6 +34,7 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                   </h2>
                   <small>{post.frontmatter?.date}</small>
                 </header>
+                {/* 説明 */}
                 <section>
                   <p
                     dangerouslySetInnerHTML={{
@@ -42,6 +44,7 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                     itemProp="description"
                   />
                 </section>
+                {/* タグ */}
                 {post.frontmatter?.tags?.map((tag) => {
                   const linkToPath = `/tags/${tag}`;
                   return (
