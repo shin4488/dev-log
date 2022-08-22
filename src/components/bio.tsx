@@ -7,7 +7,6 @@
 
 import * as React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import { StaticImage } from 'gatsby-plugin-image';
 
 const Bio: React.FC = () => {
   const data = useStaticQuery(graphql`
@@ -27,31 +26,23 @@ const Bio: React.FC = () => {
   `);
 
   // Set these values by editing "siteMetadata" in gatsby-config.js
-  const author = data.site.siteMetadata?.author;
   const social = data.site.siteMetadata?.social;
+  const twitterAccountUserName = social?.twitter;
 
   return (
-    <div className="bio">
-      <StaticImage
-        className="bio-avatar"
-        layout="fixed"
-        formats={['auto', 'webp', 'avif']}
-        src="../images/my-profile-image.png"
-        width={50}
-        height={50}
-        quality={95}
-        alt="Profile picture"
-      />
-      {author?.name && (
-        <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
+    <span className="bio">
+      {twitterAccountUserName && (
+        <>
+          エンジニアです。
+          <a
+            href={`https://twitter.com/${twitterAccountUserName || ``}`}
+            target="_blank"
+          >
+            {`@${twitterAccountUserName}`}
           </a>
-        </p>
+        </>
       )}
-    </div>
+    </span>
   );
 };
 
