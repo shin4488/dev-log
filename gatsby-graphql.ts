@@ -3440,15 +3440,15 @@ export type BioQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type BioQueryQuery = { site?: { siteMetadata?: { author?: { name?: string | null, summary?: string | null } | null, social?: { twitter?: string | null } | null } | null } | null };
 
-export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+export type SeoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Unnamed_1_Query = { site?: { siteMetadata?: { title?: string | null, description?: string | null, social?: { twitter?: string | null } | null } | null } | null };
+export type SeoQuery = { site?: { siteMetadata?: { title?: string | null, description?: string | null, social?: { twitter?: string | null } | null } | null } | null };
 
-export type Unnamed_2_QueryVariables = Exact<{ [key: string]: never; }>;
+export type NotFoundQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Unnamed_2_Query = { site?: { siteMetadata?: { title?: string | null } | null } | null };
+export type NotFoundQuery = { site?: { siteMetadata?: { title?: string | null } | null } | null };
 
 export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
