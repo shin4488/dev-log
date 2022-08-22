@@ -1,9 +1,8 @@
 {
-  "name": "shin4488-blog",
+  "name": "gatsby-blog",
   "private": true,
   "description": "shin4488's blog written by Gatsby and Markdown",
   "version": "1.0.0",
-  "author": "shin4488 <efshinya48@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
