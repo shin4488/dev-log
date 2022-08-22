@@ -9,6 +9,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import { ReactNode } from 'react';
+import { SeoQuery } from '~/gatsby-graphql';
 
 interface SeoParameter {
   description?: string;
@@ -24,9 +25,9 @@ const Seo: React.FC<SeoParameter> = ({
   image,
   children,
 }) => {
-  const { site } = useStaticQuery(
+  const { site }: SeoQuery = useStaticQuery(
     graphql`
-      query {
+      query Seo {
         site {
           siteMetadata {
             title
@@ -40,8 +41,8 @@ const Seo: React.FC<SeoParameter> = ({
     `,
   );
 
-  const metaDescription = description || site.siteMetadata.description;
-  const defaultTitle = site.siteMetadata?.title;
+  const metaDescription = description || site?.siteMetadata?.description || '';
+  const defaultTitle = site?.siteMetadata?.title;
 
   return (
     <>
@@ -54,7 +55,7 @@ const Seo: React.FC<SeoParameter> = ({
       <meta name="twitter:card" content="summary" />
       <meta
         name="twitter:creator"
-        content={site.siteMetadata?.social?.twitter || ``}
+        content={site?.siteMetadata?.social?.twitter || ``}
       />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={metaDescription} />
