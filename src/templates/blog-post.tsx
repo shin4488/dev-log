@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { Link, graphql, PageProps, HeadFC } from 'gatsby';
-
-import Bio from '../components/bio';
-import Layout from '../components/layout';
-import Seo from '../components/seo';
+import Layout from '@/components/layout';
+import Seo from '@/components/seo';
 import { BlogPostBySlugQuery } from '~/gatsby-graphql';
 
 const BlogPostTemplate: React.FC<PageProps<BlogPostBySlugQuery>> = ({
@@ -30,10 +28,9 @@ const BlogPostTemplate: React.FC<PageProps<BlogPostBySlugQuery>> = ({
           itemProp="articleBody"
         />
         <hr />
-        <footer>
-          <Bio />
-        </footer>
       </article>
+
+      {/* 前後の記事へのリンク */}
       <nav className="blog-post-nav">
         <ul
           style={{
@@ -45,17 +42,23 @@ const BlogPostTemplate: React.FC<PageProps<BlogPostBySlugQuery>> = ({
           }}
         >
           <li>
-            {next && (
-              <Link to={next.fields?.slug || ''} rel="next">
-                {next.frontmatter?.title} ←
-              </Link>
+            {previous && (
+              <>
+                {'Previous: '}
+                <Link to={previous.fields?.slug || ''} rel="prev">
+                  {previous.frontmatter?.title}
+                </Link>
+              </>
             )}
           </li>
           <li>
-            {previous && (
-              <Link to={previous.fields?.slug || ''} rel="prev">
-                → {previous.frontmatter?.title}
-              </Link>
+            {next && (
+              <>
+                {'Next: '}
+                <Link to={next.fields?.slug || ''} rel="next">
+                  {next.frontmatter?.title}
+                </Link>
+              </>
             )}
           </li>
         </ul>
@@ -71,6 +74,8 @@ export const Head: HeadFC<BlogPostBySlugQuery> = ({
     <Seo
       title={post?.frontmatter?.title || ''}
       description={post?.frontmatter?.description || post?.excerpt || ''}
+      // TODO:og:imageに設定する画像データの用意
+      image={''}
     />
   );
 };

@@ -1,25 +1,14 @@
 import * as React from 'react';
 import { Link, graphql, PageProps, HeadFC } from 'gatsby';
-
-import Bio from '../components/bio';
-import Layout from '../components/layout';
-import Seo from '../components/seo';
+import Layout from '@/components/layout';
+import Seo from '@/components/seo';
 import { IndexPageQuery } from '~/gatsby-graphql';
 
 const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
   const posts = data.allMarkdownRemark.nodes;
 
   if (posts.length === 0) {
-    return (
-      <Layout location={location}>
-        <Bio />
-        <p>
-          No blog posts found. Add markdown posts to "content/blog" (or the
-          directory you specified for the "gatsby-source-filesystem" plugin in
-          gatsby-config.js).
-        </p>
-      </Layout>
-    );
+    return <Layout location={location}></Layout>;
   }
 
   return (
@@ -56,9 +45,11 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                 {post.frontmatter?.tags?.map((tag) => {
                   const linkToPath = `/tags/${tag}`;
                   return (
-                    <Link to={linkToPath} key={linkToPath}>
-                      #{tag}{' '}
-                    </Link>
+                    <>
+                      <Link to={linkToPath} key={linkToPath}>
+                        #{tag}
+                      </Link>{' '}
+                    </>
                   );
                 })}
               </article>
