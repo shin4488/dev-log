@@ -2,8 +2,30 @@ import * as React from 'react';
 import AboutImage from '@/images/my-profile-image.png';
 import { Navbar, Nav, Image, Container, Offcanvas } from 'react-bootstrap';
 
+/**
+ * ナビゲーションのリンク選択肢
+ */
+interface NavigationItem {
+  path: string;
+  label: string;
+}
+
 const Navigation: React.FC = () => {
   const expandWidth = 'md';
+  const navigationItems: NavigationItem[] = [
+    {
+      path: '/',
+      label: 'Blog',
+    },
+    {
+      path: '/my-second-post',
+      label: 'Tags',
+    },
+    {
+      path: '/about',
+      label: 'About',
+    },
+  ];
 
   return (
     <Navbar key={expandWidth} bg="light" expand={expandWidth} className="mb-3">
@@ -26,16 +48,14 @@ const Navigation: React.FC = () => {
         >
           <Offcanvas.Header className="justify-content-end" closeButton />
           <Offcanvas.Body className="justify-content-end">
-            <Nav activeKey="/">
-              <Nav.Item>
-                <Nav.Link href="/">Blog</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/my-second-post">Tags</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/about">About</Nav.Link>
-              </Nav.Item>
+            <Nav>
+              {navigationItems.map((item) => {
+                return (
+                  <Nav.Item key={item.path}>
+                    <Nav.Link href={item.path}>{item.label}</Nav.Link>
+                  </Nav.Item>
+                );
+              })}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
