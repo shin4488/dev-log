@@ -3,7 +3,7 @@ module.exports = {
     title: `shin4488`,
     author: {
       name: `shin4488`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      summary: `software engineer who lives in small town`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
     siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
