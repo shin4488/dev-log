@@ -18,6 +18,8 @@
   },
   // markdownはprettierを適用しない
   "[markdown]": {
+    // markdownは 行末の半角スペース2つで改行なので、消さないようにする
+    "files.trimTrailingWhitespace": false,
     "editor.formatOnSave": false
   },
   // 保存時のeslintを有効化
