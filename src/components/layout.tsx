@@ -22,6 +22,7 @@ const Layout: React.FC<LayoutParameter> = ({ location, children }) => {
 
       <Container>
         <main>{children}</main>
+        <hr />
         <footer>
           <Bio /> © {new Date().getFullYear()} shin4488
         </footer>
