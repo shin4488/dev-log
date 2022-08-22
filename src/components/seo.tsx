@@ -14,10 +14,16 @@ interface SeoParameter {
   description?: string;
   lang?: string;
   title: string;
+  image?: string;
   children?: ReactNode;
 }
 
-const Seo: React.FC<SeoParameter> = ({ description, title, children }) => {
+const Seo: React.FC<SeoParameter> = ({
+  description,
+  title,
+  image,
+  children,
+}) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -43,6 +49,7 @@ const Seo: React.FC<SeoParameter> = ({ description, title, children }) => {
       <meta name="description" content={metaDescription} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={metaDescription} />
+      <meta property="og:image" content={image || ''} />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary" />
       <meta
