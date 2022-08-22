@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { WindowLocation } from '@reach/router';
 import AboutImage from '@/images/my-profile-image.png';
 import { Navbar, Nav, Image, Container, Offcanvas } from 'react-bootstrap';
+import Bio from '@/components/bio';
 
 interface LayoutParameter {
   location: WindowLocation;
@@ -59,8 +60,12 @@ const Layout: React.FC<LayoutParameter> = ({ location, children }) => {
         </Container>
       </Navbar>
 
-      <main>{children}</main>
-      <footer>© {new Date().getFullYear()} shin4488</footer>
+      <Container>
+        <main>{children}</main>
+        <footer>
+          <Bio /> © {new Date().getFullYear()} shin4488
+        </footer>
+      </Container>
     </div>
   );
 };
