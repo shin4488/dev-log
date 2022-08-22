@@ -45,11 +45,11 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                 {post.frontmatter?.tags?.map((tag) => {
                   const linkToPath = `/tags/${tag}`;
                   return (
-                    <>
+                    <React.Fragment key={tag}>
                       <Link to={linkToPath} key={linkToPath}>
                         #{tag}
                       </Link>{' '}
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </article>
