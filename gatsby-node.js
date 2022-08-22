@@ -13,12 +13,6 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 };
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions;
-
-  // Define a template for blog post
-  const blogPost = path.resolve(`./src/templates/blog-post.tsx`);
-  const indexPage = path.resolve(`./src/pages/index.tsx`);
-
   // Get all markdown blog posts sorted by date
   const result = await graphql(
     `
@@ -63,12 +57,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   const posts = result.data.posts.nodes;
+  const { createPage } = actions;
 
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
 
   if (posts.length > 0) {
+    const blogPost = path.resolve('src', 'templates', 'blog-post.tsx');
     posts.forEach((post, index) => {
       const previousPostId = index === 0 ? null : posts[index - 1].id;
       const nextPostId =
@@ -89,6 +85,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const tags = result.data.tags.group;
 
   if (tags.length > 0) {
+    const indexPage = path.resolve('src', 'pages', 'index.tsx');
     tags.forEach((tag) => {
       createPage({
         path: `/tags/${tag.tag}`,
@@ -99,6 +96,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       });
     });
   }
+
+  const aboutPage = path.resolve('src', 'pages', 'about.tsx');
+  createPage({
+    path: '/about',
+    component: aboutPage,
+  });
 };
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

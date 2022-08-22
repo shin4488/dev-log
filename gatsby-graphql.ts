@@ -3450,6 +3450,11 @@ export type NotFoundQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type NotFoundQuery = { site?: { siteMetadata?: { title?: string | null } | null } | null };
 
+export type AboutPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AboutPageQuery = { markdownRemark?: { html?: string | null, frontmatter?: { date?: any | null } | null } | null };
+
 export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 

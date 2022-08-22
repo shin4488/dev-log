@@ -34,7 +34,7 @@ const Navigation: React.FC = () => {
                 <Nav.Link href="/my-second-post">Tags</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="/hello-world">About</Nav.Link>
+                <Nav.Link href="/about">About</Nav.Link>
               </Nav.Item>
             </Nav>
           </Offcanvas.Body>
