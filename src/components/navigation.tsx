@@ -28,7 +28,14 @@ const Navigation: React.FC = () => {
   ];
 
   return (
-    <Navbar key={expandWidth} bg="light" expand={expandWidth} className="mb-3">
+    <Navbar
+      key={expandWidth}
+      bg="nav-bar"
+      variant="dark"
+      expand={expandWidth}
+      className="mb-3"
+      sticky="top"
+    >
       <Container>
         <Navbar.Brand href="/">
           <Image
@@ -45,6 +52,7 @@ const Navigation: React.FC = () => {
           style={{
             border: 'var(--bs-border-width) solid rgba(0, 0, 0, 0)',
           }}
+          className="text-light"
         />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expandWidth}`}
