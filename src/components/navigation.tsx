@@ -12,6 +12,7 @@ interface NavigationItem {
 
 const Navigation: React.FC = () => {
   const expandWidth = 'md';
+  const imageSize = 40;
   const navigationItems: NavigationItem[] = [
     {
       path: '/',
@@ -41,8 +42,8 @@ const Navigation: React.FC = () => {
           <Image
             alt="Shin"
             src={AboutImage}
-            width={50}
-            height={50}
+            width={imageSize}
+            height={imageSize}
             roundedCircle
           />
           <span className="ms-3">Shin</span>
@@ -52,7 +53,6 @@ const Navigation: React.FC = () => {
           style={{
             border: 'var(--bs-border-width) solid rgba(0, 0, 0, 0)',
           }}
-          className="text-light"
         />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expandWidth}`}
