@@ -38,6 +38,7 @@ const Navigation: React.FC = () => {
             height={50}
             roundedCircle
           />
+          <span className="ms-3">Shin</span>
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar-expand-${expandWidth}`}
