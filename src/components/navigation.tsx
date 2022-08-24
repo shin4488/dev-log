@@ -41,6 +41,9 @@ const Navigation: React.FC = () => {
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar-expand-${expandWidth}`}
+          style={{
+            border: 'var(--bs-border-width) solid rgba(0, 0, 0, 0)',
+          }}
         />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expandWidth}`}
