@@ -1,6 +1,7 @@
 import * as React from 'react';
 import AboutImage from '@/images/my-profile-image.png';
 import { Navbar, Nav, Image, Container, Offcanvas } from 'react-bootstrap';
+import { withPrefix } from 'gatsby';
 
 /**
  * ナビゲーションのリンク選択肢
@@ -39,7 +40,7 @@ const Navigation: React.FC = () => {
       sticky="top"
     >
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href={withPrefix('/')}>
           <Image
             alt="Shin"
             src={AboutImage}
@@ -65,7 +66,9 @@ const Navigation: React.FC = () => {
               {navigationItems.map((item) => {
                 return (
                   <Nav.Item key={item.path}>
-                    <Nav.Link href={item.path}>{item.label}</Nav.Link>
+                    <Nav.Link href={withPrefix(item.path)}>
+                      {item.label}
+                    </Nav.Link>
                   </Nav.Item>
                 );
               })}
