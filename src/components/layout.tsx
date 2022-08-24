@@ -4,6 +4,7 @@ import { WindowLocation } from '@reach/router';
 import { Container } from 'react-bootstrap';
 import Bio from '@/components/bio';
 import Navigation from '@/components/navigation';
+import '@/style.scss';
 
 interface LayoutParameter {
   location: WindowLocation;
