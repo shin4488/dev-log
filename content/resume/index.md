@@ -1,13 +1,17 @@
 ---
-title: resume dir
-date: "2015-05-01T22:12:03.284Z"
-description: "Hello World"
-tags: [abc, bbb]
+title: 開発経験
+date: "2022-08-25T12:12:12.284Z"
+description: "これまで開発してきたもの"
 ---
 
-https://blog.tamaosa.com/2021/filter-allMarkdownRemark/  
-https://github.com/gatsbyjs/gatsby/issues/1634#issuecomment-318336985  
-aaa
+業務で扱ってきた主な技術スタック  
+★★★★☆  
+TypeScript, Salesforce (Apex, Lightning Web Component, Aura Component, Visualforce, プロセスビルダー, フロー, 第2世代管理パッケージ)  
+★★★☆☆  
+Node.js, C#, Vue.js, Jenkins  
+★★☆☆☆  
+SQL Server  
+
 
 ```js
 const aaa = 'this is aaa';
