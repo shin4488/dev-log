@@ -160,18 +160,6 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
                           </tr>
                         </tbody>
                       </Table>
-
-                      {/* <div>
-                    サイト：
-                    <a href={item.siteUri} target="_blank" title={item.title}>
-                      {item.siteUri}
-                    </a>
-                  </div>
-                  <div>
-                    開発時期：{item.developmentStartAt}〜{item.developmentEndAt}
-                  </div>
-                  <div>使用技術：{item.usedTechniques.join(', ')}</div>
-                  <div>{item.description}</div> */}
                     </Card.Text>
                   </Card.Body>
                 </Col>
