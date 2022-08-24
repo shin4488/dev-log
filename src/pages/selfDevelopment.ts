@@ -109,6 +109,6 @@ export const selfDevelopmentItems: SelfDevelopmentItem[] = [
     usedTechniques: ['JavaScript', 'Surge'],
     sellingPoint: `Surgeを使用してサーバコスト・開発スピードをかけずにデリバリーできるようにした。`,
     description: `大学3年生の時に初めてHTML・CSS・JavaScriptを触った時に作ったもの。
-今考えるとよくこんなクオリティでリリースしたなと思うが、当時は結構真剣に作っていた。`,
+クオリティ的な問題はたくさんあると思うが、当時は結構真剣に作っていた。`,
   },
 ];
