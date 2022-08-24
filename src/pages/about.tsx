@@ -10,7 +10,7 @@ import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { selfDevelopmentItems } from './selfDevelopment';
+import { selfDevelopmentItems } from '@/data/selfDevelopment';
 
 interface SnsLink {
   className?: string;
