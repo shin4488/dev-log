@@ -82,24 +82,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     });
   }
 
-  const tags = result.data.tags.group;
+  // TODO:タグの実装
+  // const tags = result.data.tags.group;
 
-  if (tags.length > 0) {
-    const indexPage = path.resolve('src', 'pages', 'index.tsx');
-    tags.forEach((tag) => {
-      createPage({
-        path: `/tags/${tag.tag}`,
-        component: indexPage,
-        context: {
-          tag: tag.tag,
-        },
-      });
-    });
-  }
+  // if (tags.length > 0) {
+  //   const indexPage = path.resolve('src', 'pages', 'index.tsx');
+  //   tags.forEach((tag) => {
+  //     createPage({
+  //       path: `/tags/${tag.tag}`,
+  //       component: indexPage,
+  //       context: {
+  //         tag: tag.tag,
+  //       },
+  //     });
+  //   });
+  // }
 
   const aboutPage = path.resolve('src', 'pages', 'about.tsx');
   createPage({
-    path: '/about',
+    path: '/about/',
     component: aboutPage,
   });
 };

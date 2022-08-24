@@ -18,10 +18,11 @@ const Navigation: React.FC = () => {
       path: '/',
       label: 'Blog',
     },
-    {
-      path: '/my-second-post',
-      label: 'Tags',
-    },
+    // TODO:タグの実装
+    // {
+    //   path: '/my-second-post',
+    //   label: 'Tags',
+    // },
     {
       path: '/about',
       label: 'About',

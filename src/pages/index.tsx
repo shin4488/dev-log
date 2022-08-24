@@ -45,7 +45,8 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                   />
                 </section>
                 {/* タグ */}
-                {post.frontmatter?.tags?.map((tag) => {
+                {/* TODO:タグページの実装後にコメント解除 */}
+                {/* {post.frontmatter?.tags?.map((tag) => {
                   const linkToPath = `/tags/${tag}`;
                   return (
                     <React.Fragment key={tag}>
@@ -54,7 +55,7 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                       </Link>{' '}
                     </React.Fragment>
                   );
-                })}
+                })} */}
               </article>
             </li>
           );
@@ -90,7 +91,7 @@ export const query = graphql`
           slug
         }
         frontmatter {
-          date(formatString: "MMMM DD, YYYY")
+          date(formatString: "YYYY/MM/DD")
           title
           description
           tags
