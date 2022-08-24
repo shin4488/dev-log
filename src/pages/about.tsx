@@ -149,7 +149,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
       {resumePost === undefined || resumePost === null ? (
         <></>
       ) : (
-        <>
+        <div>
           <div>
             <span className="bg-dark">||</span>
             <span> 開発経験</span>
@@ -163,10 +163,11 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             <p>{resumePost.frontmatter?.date} 現在</p>
             <section
               dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
+              className="text-break"
               itemProp="articleBody"
             />
           </article>
-        </>
+        </div>
       )}
     </Layout>
   );
