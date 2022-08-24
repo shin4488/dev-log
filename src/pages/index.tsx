@@ -71,7 +71,7 @@ export default BlogIndex;
  *
  * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
  */
-export const Head: HeadFC<IndexPageQuery> = () => <Seo title="All posts" />;
+export const Head: HeadFC<IndexPageQuery> = () => <Seo title="Blog" />;
 
 export const query = graphql`
   query IndexPage {
