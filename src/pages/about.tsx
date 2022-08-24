@@ -10,23 +10,13 @@ import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { selfDevelopmentItems } from './selfDevelopment';
 
 interface SnsLink {
   className?: string;
   uri: string;
   title: string;
   iconComponent: IconType;
-}
-
-interface SelfDevelopmentItem {
-  title: string;
-  imageUri: string;
-  siteUri: string;
-  developmentStartAt: string;
-  developmentEndAt: string;
-  usedTechniques: string[];
-  sellingPoint: string;
-  description: string;
 }
 
 const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
@@ -61,21 +51,6 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
     },
   ];
 
-  const selfDevelopmentItems: SelfDevelopmentItem[] = [
-    {
-      title: 'Shooting Game',
-      imageUri: 'https://shooting-basic.surge.sh/img/man.png',
-      siteUri: 'https://shooting-basic.surge.sh',
-      developmentStartAt: '2017年1月',
-      developmentEndAt: '3月',
-      usedTechniques: ['JavaScript', 'Surge'],
-      sellingPoint:
-        'Surgeを使用してサーバコスト・開発スピードをかけずにデリバリーできるようにした。',
-      description:
-        '大学3年生の時に初めてHTML・CSS・JavaScriptを触った時に作ったもの。今考えるとよくこんなクオリティでリリースしたなと思うが、当時は結構真剣に作っていた。',
-    },
-  ];
-
   const resumePost = data.markdownRemark;
 
   return (
@@ -106,7 +81,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
       <div className="my-3">
         {selfDevelopmentItems.map((item) => {
           return (
-            <Card className="ps-1">
+            <Card key={item.siteUri} className="ps-1 mb-3">
               <Row xs={1} md={2}>
                 <Col md={2} className="m-auto text-center">
                   <a href={item.siteUri} target="_blank" title={item.title}>
@@ -124,43 +99,42 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
                 <Col md={10}>
                   <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
-                    <Card.Text>
-                      <Table striped bordered hover>
-                        <tbody>
-                          <tr>
-                            <td>サイト</td>
-                            <td>
-                              <a
-                                href={item.siteUri}
-                                target="_blank"
-                                title={item.title}
-                              >
-                                {item.siteUri}
-                              </a>
-                            </td>
-                          </tr>
-                          {/* 列幅が４文字の方が見やすいため、４文字全てが1行に入るように調整している */}
-                          <tr>
-                            <td style={{ whiteSpace: 'nowrap' }}>開発時期</td>
-                            <td>
-                              {item.developmentStartAt}〜{item.developmentEndAt}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>使用技術</td>
-                            <td>{item.usedTechniques.join(', ')}</td>
-                          </tr>
-                          <tr>
-                            <td>アピール</td>
-                            <td>{item.sellingPoint}</td>
-                          </tr>
-                          <tr>
-                            <td>コメント</td>
-                            <td>{item.description}</td>
-                          </tr>
-                        </tbody>
-                      </Table>
-                    </Card.Text>
+                    <Table striped bordered hover>
+                      <tbody>
+                        <tr>
+                          <td>サイト</td>
+                          <td>
+                            <a
+                              href={item.siteUri}
+                              target="_blank"
+                              title={item.title}
+                              className="text-break"
+                            >
+                              {item.siteUri}
+                            </a>
+                          </td>
+                        </tr>
+                        {/* 列幅が４文字の方が見やすいため、４文字全てが1行に入るように調整している */}
+                        <tr>
+                          <td style={{ whiteSpace: 'nowrap' }}>開発時期</td>
+                          <td>
+                            {item.developmentStartAt}〜{item.developmentEndAt}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>使用技術</td>
+                          <td>{item.usedTechniques.join(', ')}</td>
+                        </tr>
+                        <tr>
+                          <td>アピール</td>
+                          <td>{item.sellingPoint}</td>
+                        </tr>
+                        <tr>
+                          <td>コメント</td>
+                          <td>{item.description}</td>
+                        </tr>
+                      </tbody>
+                    </Table>
                   </Card.Body>
                 </Col>
               </Row>
