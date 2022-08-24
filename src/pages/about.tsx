@@ -118,7 +118,10 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
                         <tr>
                           <td style={{ whiteSpace: 'nowrap' }}>開発時期</td>
                           <td>
-                            {item.developmentStartAt}〜{item.developmentEndAt}
+                            {item.developmentStartAt}
+                            {item.developmentEndAt === ''
+                              ? ''
+                              : `〜${item.developmentEndAt}`}
                           </td>
                         </tr>
                         <tr>
@@ -127,11 +130,11 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
                         </tr>
                         <tr>
                           <td>アピール</td>
-                          <td>{item.sellingPoint}</td>
+                          <td className="text-break">{item.sellingPoint}</td>
                         </tr>
                         <tr>
                           <td>コメント</td>
-                          <td>{item.description}</td>
+                          <td className="text-break">{item.description}</td>
                         </tr>
                       </tbody>
                     </Table>
