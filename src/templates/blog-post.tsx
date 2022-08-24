@@ -27,7 +27,7 @@ const BlogPostTemplate: React.FC<PageProps<BlogPostBySlugQuery>> = ({
           dangerouslySetInnerHTML={{ __html: post?.html || '' }}
           itemProp="articleBody"
         />
-        <hr />
+        {previous && next && <hr />}
       </article>
 
       {/* 前後の記事へのリンク */}
@@ -99,7 +99,7 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        date(formatString: "YYYY/MM/DD")
         description
       }
     }
