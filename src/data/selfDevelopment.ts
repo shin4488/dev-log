@@ -13,7 +13,7 @@ export const selfDevelopmentItems: SelfDevelopmentItem[] = [
   {
     title:
       '福井に拠点のあるNo.1企業を共有し、また他ユーザの共有内容を閲覧できるサービス（F1C）',
-    imageUri: 'http://illustrain.com/img/work/2016/illustrain04-kaisya01.png',
+    imageUri: 'https://illustrain.com/img/work/2016/illustrain04-kaisya01.png',
     siteUri: 'https://f1c.jp.net',
     developmentStartAt: '2022年5月',
     developmentEndAt: '6月',
