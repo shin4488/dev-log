@@ -6,9 +6,9 @@ description: "これまで開発してきたもの"
 
 ## 業務で扱ってきた主な技術スタック  
 ★★★★☆  
-TypeScript, Salesforce (Apex, Lightning Web Component, Aura Component, Visualforce, プロセスビルダー, フロー, 第2世代管理パッケージ)  
+Salesforce (Apex, Lightning Web Component, Aura Component, Visualforce, プロセスビルダー, フロー, 第2世代管理パッケージ)  
 ★★★☆☆  
-Node.js, C#, Vue.js, Jenkins  
+Node.js, TypeScript, C#, Vue.js, Jenkins  
 ★★☆☆☆  
 SQL Server  
 

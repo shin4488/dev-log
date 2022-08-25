@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/dev-log',
   siteMetadata: {
     title: `shin4488`,
     author: {

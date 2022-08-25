@@ -250,8 +250,8 @@ export type Site = Node & {
   siteMetadata?: Maybe<SiteSiteMetadata>;
   port?: Maybe<Scalars['Int']>;
   host?: Maybe<Scalars['String']>;
-  polyfill?: Maybe<Scalars['Boolean']>;
   pathPrefix?: Maybe<Scalars['String']>;
+  polyfill?: Maybe<Scalars['Boolean']>;
   jsxRuntime?: Maybe<Scalars['String']>;
   trailingSlash?: Maybe<Scalars['String']>;
   graphqlTypegen?: Maybe<Scalars['Boolean']>;
@@ -831,8 +831,8 @@ export type QuerySiteArgs = {
   siteMetadata?: InputMaybe<SiteSiteMetadataFilterInput>;
   port?: InputMaybe<IntQueryOperatorInput>;
   host?: InputMaybe<StringQueryOperatorInput>;
-  polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   pathPrefix?: InputMaybe<StringQueryOperatorInput>;
+  polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   jsxRuntime?: InputMaybe<StringQueryOperatorInput>;
   trailingSlash?: InputMaybe<StringQueryOperatorInput>;
   graphqlTypegen?: InputMaybe<BooleanQueryOperatorInput>;
@@ -2033,8 +2033,8 @@ export type SiteFieldsEnum =
   | 'siteMetadata___social___twitter'
   | 'port'
   | 'host'
-  | 'polyfill'
   | 'pathPrefix'
+  | 'polyfill'
   | 'jsxRuntime'
   | 'trailingSlash'
   | 'graphqlTypegen'
@@ -2171,8 +2171,8 @@ export type SiteFilterInput = {
   siteMetadata?: InputMaybe<SiteSiteMetadataFilterInput>;
   port?: InputMaybe<IntQueryOperatorInput>;
   host?: InputMaybe<StringQueryOperatorInput>;
-  polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   pathPrefix?: InputMaybe<StringQueryOperatorInput>;
+  polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   jsxRuntime?: InputMaybe<StringQueryOperatorInput>;
   trailingSlash?: InputMaybe<StringQueryOperatorInput>;
   graphqlTypegen?: InputMaybe<BooleanQueryOperatorInput>;

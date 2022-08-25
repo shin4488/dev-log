@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import { ReactNode } from 'react';
 import { SeoQuery } from '~/gatsby-graphql';
+import ProfileImage from '@/images/my-profile-image.png';
 
 interface SeoParameter {
   description?: string;
@@ -50,7 +51,7 @@ const Seo: React.FC<SeoParameter> = ({
       <meta name="description" content={metaDescription} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={metaDescription} />
-      <meta property="og:image" content={image || ''} />
+      <meta property="og:image" content={image || ProfileImage} />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary" />
       <meta
