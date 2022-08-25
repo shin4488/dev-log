@@ -30,19 +30,20 @@ const Bio: React.FC = () => {
   const twitterAccountUserName = social?.twitter;
 
   return (
-    <span className="bio">
+    <div>
       {twitterAccountUserName && (
         <>
-          エンジニアです。
+          エンジニアです。お問合せなどありましたら、Twitter（
           <a
             href={`https://twitter.com/${twitterAccountUserName || ``}`}
             target="_blank"
           >
             {`@${twitterAccountUserName}`}
           </a>
+          ）のDMにてご連絡お願いいたします。
         </>
       )}
-    </span>
+    </div>
   );
 };
 
