@@ -52,14 +52,17 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
   ];
 
   const resumePost = data.markdownRemark;
+  const scrollPaddingTopStyle = { paddingTop: '65px', marginTop: '-45px' };
 
   return (
     <Layout location={location}>
-      <div>
-        <span className="bg-dark">||</span>
-        <span> リンク</span>
-      </div>
-      <div className="ms-3 my-3">
+      <a href="#link">
+        <h4 id="link" className="d-inline-block" style={scrollPaddingTopStyle}>
+          <span className="bg-dark">|</span>
+          <span> リンク</span>
+        </h4>
+      </a>
+      <div className="ms-3 mt-4 mb-5 ">
         {snsLinkItems.map((item) => (
           <a
             key={item.uri}
@@ -74,11 +77,17 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
         ))}
       </div>
 
-      <div>
-        <span className="bg-dark">||</span>
-        <span> 個人開発</span>
-      </div>
-      <div className="my-3">
+      <a href="#self-development">
+        <h4
+          id="self-development"
+          className="d-inline-block"
+          style={scrollPaddingTopStyle}
+        >
+          <span className="bg-dark">|</span>
+          <span> 個人開発</span>
+        </h4>
+      </a>
+      <div className="mt-4 mb-5">
         {selfDevelopmentItems.map((item) => {
           return (
             <Card key={item.siteUri} className="ps-1 mb-3">
@@ -150,17 +159,23 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
         <></>
       ) : (
         <div>
-          <div>
-            <span className="bg-dark">||</span>
-            <span> 開発経験</span>
-          </div>
+          <a href="#development-experience">
+            <h4
+              id="development-experience"
+              className="d-inline-block"
+              style={scrollPaddingTopStyle}
+            >
+              <span className="bg-dark">|</span>
+              <span> 開発経験</span>
+            </h4>
+          </a>
 
           <article
             className="blog-post"
             itemScope
             itemType="http://schema.org/Article"
           >
-            <p>{resumePost.frontmatter?.date} 現在</p>
+            <p className="mb-4">{resumePost.frontmatter?.date} 現在</p>
             <section
               dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
               className="text-break"
