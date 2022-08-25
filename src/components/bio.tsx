@@ -33,14 +33,26 @@ const Bio: React.FC = () => {
     <div>
       {twitterAccountUserName && (
         <>
-          エンジニアです。お問合せなどありましたら、Twitter（
-          <a
-            href={`https://twitter.com/${twitterAccountUserName || ``}`}
-            target="_blank"
-          >
-            {`@${twitterAccountUserName}`}
-          </a>
-          ）のDMにてご連絡お願いいたします。
+          <div>
+            エンジニアです。お問合せなどありましたら、Twitter（
+            <a
+              href={`https://twitter.com/${twitterAccountUserName || ``}`}
+              target="_blank"
+            >
+              {`@${twitterAccountUserName}`}
+            </a>
+            ）のDMにてご連絡お願いいたします。
+          </div>
+          <div>
+            このサイト内への要望などございましたら、GitHubの
+            <a
+              href="https://github.com/shin4488/dev-log/issues"
+              target="_blank"
+            >
+              Issues
+            </a>
+            を登録していただけますと幸いです。
+          </div>
         </>
       )}
     </div>
