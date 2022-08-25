@@ -42,7 +42,7 @@ export const selfDevelopmentItems: SelfDevelopmentItem[] = [
   {
     title: '常に満塁から始まる野球盤ゲーム',
     imageUri: 'https://baseballgames.jp.net/image/top.png',
-    siteUri: 'https://baseballgames.jp.net/',
+    siteUri: 'https://baseballgames.jp.net',
     developmentStartAt: '2021年5月',
     developmentEndAt: '',
     usedTechniques: [
