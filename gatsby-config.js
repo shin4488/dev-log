@@ -6,8 +6,8 @@ module.exports = {
       name: `shin4488`,
       summary: `software engineer who lives in small town`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `shin4488's development log`,
+    siteUrl: `https://shin4488.github.io/dev-log/`,
     social: {
       twitter: `shin44880`,
     },
