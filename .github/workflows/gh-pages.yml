@@ -13,17 +13,14 @@ jobs:
       # GitHub Pagesへデプロイするためのコミットはbotが行うものとする
       - name: set git config
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: yarn
       - name: deploy to GitHub Pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          USERNAME: ${{ github.repository_owner }}
         run: |
           npm install -g yarn
           yarn install
