@@ -175,7 +175,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             itemScope
             itemType="http://schema.org/Article"
           >
-            <p className="mb-4">{resumePost.frontmatter?.date} 現在</p>
+            <p className="mb-4">{resumePost.frontmatter?.updatedDate} 現在</p>
             <section
               dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
               className="text-break"
@@ -202,7 +202,7 @@ export const pageQuery = graphql`
     markdownRemark(fileAbsolutePath: { regex: "/content/resume/" }) {
       html
       frontmatter {
-        date(formatString: "YYYY/MM/DD")
+        updatedDate(formatString: "YYYY/MM/DD")
       }
     }
   }

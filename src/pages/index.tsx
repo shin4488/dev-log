@@ -32,7 +32,7 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
-                  <small>{post.frontmatter?.date}</small>
+                  <small>{post.frontmatter?.createdDate}</small>
                 </header>
                 {/* 説明 */}
                 <section>
@@ -82,7 +82,7 @@ export const query = graphql`
       }
     }
     allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { fields: [frontmatter___createdDate], order: DESC }
       filter: { fileAbsolutePath: { regex: "/content/blog/" } }
     ) {
       nodes {
@@ -91,7 +91,7 @@ export const query = graphql`
           slug
         }
         frontmatter {
-          date(formatString: "YYYY/MM/DD")
+          createdDate(formatString: "YYYY/MM/DD")
           title
           description
           tags
