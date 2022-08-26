@@ -16,13 +16,10 @@ jobs:
         with:
           node-version: 16
           cache: yarn
-      - name: set git config
+      - name: deploy to GitHub Pages
         run: |
           git config --global user.name ${{ github.repository_owner }}
           git config --global user.email ${{ secrets.USER_EMAIL }}
-          git config --global credential.helper wincred
-      - name: deploy to GitHub Pages
-        run: |
           npm install --location=global yarn
           yarn install
           yarn deploy
