@@ -6,8 +6,14 @@ on:
     branches:
       - main
 
+# GitHub PagesへデプロイするためのGITHUB_TOKENの権限設定
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       # GitHub Pagesへデプロイするためのコミットはbotが行うものとする
@@ -16,13 +22,29 @@ jobs:
         with:
           node-version: 16
           cache: yarn
-      - name: set git config
-        run: |
-          git config --global user.name ${{ github.repository_owner }}
-          git config --global user.email ${{ secrets.USER_EMAIL }}
-          git config --global credential.helper wincred
-      - name: deploy to GitHub Pages
-        run: |
-          npm install --location=global yarn
-          yarn install
-          yarn deploy
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+        with:
+          # pathPrefixの自動適用
+          static_site_generator: gatsby
+      - name: Install dependencies
+        run: yarn install
+      - name: Build with Gatsby
+        env:
+          PREFIX_PATHS: 'true'
+        run: yarn build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
