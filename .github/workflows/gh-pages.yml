@@ -1,0 +1,22 @@
+name: GitHub Pages for my blog
+
+on:
+  # マージされたプルリクエストは常にプッシュになる
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
+      - name: deploy to GitHub Pages
+        run: |
+          npm install -g yarn
+          yarn install
+          yarn deploy
