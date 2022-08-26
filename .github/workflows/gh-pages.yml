@@ -13,8 +13,8 @@ jobs:
       # GitHub Pagesへデプロイするためのコミットはbotが行うものとする
       - name: set git config
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
+          git config --global user.name github-actions[bot]
+          git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
