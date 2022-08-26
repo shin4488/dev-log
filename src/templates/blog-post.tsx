@@ -21,7 +21,11 @@ const BlogPostTemplate: React.FC<PageProps<BlogPostBySlugQuery>> = ({
       >
         <header>
           <h1 itemProp="headline">{post.frontmatter?.title}</h1>
-          <p>{post.frontmatter?.date}</p>
+          <p>
+            作成日：{post.frontmatter?.createdDate}
+            {post.frontmatter?.updatedDate &&
+              `, 更新日：${post.frontmatter.updatedDate}`}
+          </p>
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post?.html || '' }}
@@ -99,7 +103,8 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        date(formatString: "YYYY/MM/DD")
+        createdDate(formatString: "YYYY/MM/DD")
+        updatedDate(formatString: "YYYY/MM/DD")
         description
       }
     }

@@ -18,7 +18,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
       query markdownPosts {
         posts: allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: ASC }
+          sort: { fields: [frontmatter___createdDate], order: ASC }
           limit: 1000
           filter: { fileAbsolutePath: { regex: "/content/blog/" } }
         ) {
@@ -30,7 +30,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
         tags: allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: ASC }
+          sort: { fields: [frontmatter___createdDate], order: ASC }
           limit: 1000
           filter: { fileAbsolutePath: { regex: "/content/blog/" } }
         ) {
@@ -152,7 +152,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Frontmatter {
       title: String
       description: String
-      date: Date @dateformat
+      createdDate: Date @dateformat
+      updatedDate: Date @dateformat
       tags: [String]
     }
 
