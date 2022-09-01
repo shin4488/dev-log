@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { graphql, PageProps, HeadFC } from 'gatsby';
+import { graphql, PageProps, HeadFC, Link } from 'gatsby';
 import Seo from '@/components/seo';
 import Layout from '@/components/layout';
 import { AboutPageQuery } from '~/gatsby-graphql';
@@ -13,15 +13,15 @@ import { snsLinkItems } from '@/data/sns';
 const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
   const resumePost = data.markdownRemark;
   const scrollPaddingTopStyle = { paddingTop: '65px', marginTop: '-45px' };
+  const titleLeftSideBar = 'ps-2 border-start border-title-left-bar border-5';
 
   return (
     <Layout location={location}>
-      <a href="#link">
+      <Link to="#link">
         <h4 id="link" className="d-inline-block" style={scrollPaddingTopStyle}>
-          <span className="bg-dark">|</span>
-          <span> リンク</span>
+          <span className={titleLeftSideBar}>リンク</span>
         </h4>
-      </a>
+      </Link>
       <div className="ms-3 mt-4 mb-5 ">
         {snsLinkItems.map((item) => (
           <a
@@ -37,16 +37,15 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
         ))}
       </div>
 
-      <a href="#self-development">
+      <Link to="#self-development">
         <h4
           id="self-development"
           className="d-inline-block"
           style={scrollPaddingTopStyle}
         >
-          <span className="bg-dark">|</span>
-          <span> 個人開発</span>
+          <span className={titleLeftSideBar}>個人開発</span>
         </h4>
-      </a>
+      </Link>
       <div className="mt-4 mb-5">
         {selfDevelopmentItems.map((item) => {
           return (
@@ -119,16 +118,15 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
         <></>
       ) : (
         <div>
-          <a href="#development-experience">
+          <Link to="#development-experience">
             <h4
               id="development-experience"
               className="d-inline-block"
               style={scrollPaddingTopStyle}
             >
-              <span className="bg-dark">|</span>
-              <span> 開発経験</span>
+              <span className={titleLeftSideBar}>開発経験</span>
             </h4>
-          </a>
+          </Link>
 
           <article
             className="blog-post"
