@@ -3,54 +3,14 @@ import { graphql, PageProps, HeadFC } from 'gatsby';
 import Seo from '@/components/seo';
 import Layout from '@/components/layout';
 import { AboutPageQuery } from '~/gatsby-graphql';
-import { FaGithub, FaDev, FaTwitter, FaLinkedin } from 'react-icons/fa';
-import { SiQiita } from 'react-icons/si';
-import { IconType } from 'react-icons';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { selfDevelopmentItems } from '@/data/selfDevelopment';
-
-interface SnsLink {
-  className?: string;
-  uri: string;
-  title: string;
-  iconComponent: IconType;
-}
+import { snsLinkItems } from '@/data/sns';
 
 const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
-  const snsLinkItems: SnsLink[] = [
-    {
-      uri: 'https://github.com/shin4488',
-      title: 'GitHub',
-      iconComponent: FaGithub,
-    },
-    {
-      className: 'text-qiita',
-      uri: 'https://qiita.com/shin4488',
-      title: 'Qiita',
-      iconComponent: SiQiita,
-    },
-    {
-      uri: 'https://dev.to/shin4488',
-      title: 'dev.to',
-      iconComponent: FaDev,
-    },
-    {
-      className: 'text-twitter',
-      uri: 'https://twitter.com/shin44880',
-      title: 'Twitter',
-      iconComponent: FaTwitter,
-    },
-    {
-      className: 'text-linkedin',
-      uri: 'https://www.linkedin.com/in/shinya-umeshita-668676240',
-      title: 'LinkedIn',
-      iconComponent: FaLinkedin,
-    },
-  ];
-
   const resumePost = data.markdownRemark;
   const scrollPaddingTopStyle = { paddingTop: '65px', marginTop: '-45px' };
 
