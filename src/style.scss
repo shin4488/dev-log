@@ -1,8 +1,11 @@
+$dark-color: #333c5e;
+
 $theme-colors: (
   'twitter': #00acee,
   'qiita': #00ca00,
   'linkedin': #0e76a8,
-  'nav-bar': #333c5e,
+  'nav-bar': $dark-color,
+  'title-left-bar': $dark-color,
 );
 
 @import '../node_modules/bootstrap/scss/bootstrap';

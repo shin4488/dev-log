@@ -13,13 +13,13 @@ import { snsLinkItems } from '@/data/sns';
 const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
   const resumePost = data.markdownRemark;
   const scrollPaddingTopStyle = { paddingTop: '65px', marginTop: '-45px' };
+  const titleLeftSideBar = 'ps-2 border-start border-title-left-bar border-5';
 
   return (
     <Layout location={location}>
       <a href="#link">
         <h4 id="link" className="d-inline-block" style={scrollPaddingTopStyle}>
-          <span className="bg-dark">|</span>
-          <span> リンク</span>
+          <span className={titleLeftSideBar}>リンク</span>
         </h4>
       </a>
       <div className="ms-3 mt-4 mb-5 ">
@@ -43,8 +43,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
           className="d-inline-block"
           style={scrollPaddingTopStyle}
         >
-          <span className="bg-dark">|</span>
-          <span> 個人開発</span>
+          <span className={titleLeftSideBar}>個人開発</span>
         </h4>
       </a>
       <div className="mt-4 mb-5">
@@ -125,8 +124,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
               className="d-inline-block"
               style={scrollPaddingTopStyle}
             >
-              <span className="bg-dark">|</span>
-              <span> 開発経験</span>
+              <span className={titleLeftSideBar}>開発経験</span>
             </h4>
           </a>
 
