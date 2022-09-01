@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { graphql, PageProps, HeadFC } from 'gatsby';
+import { graphql, PageProps, HeadFC, Link } from 'gatsby';
 import Seo from '@/components/seo';
 import Layout from '@/components/layout';
 import { AboutPageQuery } from '~/gatsby-graphql';
@@ -17,11 +17,11 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
 
   return (
     <Layout location={location}>
-      <a href="#link">
+      <Link to="#link">
         <h4 id="link" className="d-inline-block" style={scrollPaddingTopStyle}>
           <span className={titleLeftSideBar}>リンク</span>
         </h4>
-      </a>
+      </Link>
       <div className="ms-3 mt-4 mb-5 ">
         {snsLinkItems.map((item) => (
           <a
@@ -37,7 +37,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
         ))}
       </div>
 
-      <a href="#self-development">
+      <Link to="#self-development">
         <h4
           id="self-development"
           className="d-inline-block"
@@ -45,7 +45,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
         >
           <span className={titleLeftSideBar}>個人開発</span>
         </h4>
-      </a>
+      </Link>
       <div className="mt-4 mb-5">
         {selfDevelopmentItems.map((item) => {
           return (
@@ -118,7 +118,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
         <></>
       ) : (
         <div>
-          <a href="#development-experience">
+          <Link to="#development-experience">
             <h4
               id="development-experience"
               className="d-inline-block"
@@ -126,7 +126,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             >
               <span className={titleLeftSideBar}>開発経験</span>
             </h4>
-          </a>
+          </Link>
 
           <article
             className="blog-post"
