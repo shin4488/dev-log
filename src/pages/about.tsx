@@ -9,139 +9,214 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { selfDevelopmentItems } from '@/data/selfDevelopment';
 import { snsLinkItems } from '@/data/sns';
+import ListGroup from 'react-bootstrap/ListGroup';
+
+interface TitleLink {
+  innerLink: string;
+  titleLabel: string;
+}
+
+interface LinkedId {
+  link: TitleLink;
+  selfDevelopment: TitleLink;
+  developmentExperience: TitleLink;
+}
 
 const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
   const resumePost = data.markdownRemark;
   const scrollPaddingTopStyle = { paddingTop: '65px', marginTop: '-45px' };
   const titleLeftSideBar = 'ps-2 border-start border-title-left-bar border-5';
+  const sideBarWidth = 2;
+  const linkedIds: LinkedId = {
+    link: {
+      innerLink: 'link',
+      titleLabel: 'リンク',
+    },
+    selfDevelopment: {
+      innerLink: 'self-development',
+      titleLabel: '個人開発',
+    },
+    developmentExperience: {
+      innerLink: 'development-experience',
+      titleLabel: '開発経験',
+    },
+  };
 
   return (
     <Layout location={location}>
-      <Link to="#link">
-        <h4 id="link" className="d-inline-block" style={scrollPaddingTopStyle}>
-          <span className={titleLeftSideBar}>リンク</span>
-        </h4>
-      </Link>
-      <div className="ms-3 mt-4 mb-5 ">
-        {snsLinkItems.map((item) => (
-          <a
-            key={item.uri}
-            href={item.uri}
-            style={{ color: 'inherit' }}
-            target="_blank"
-            className="me-4 me-md-5"
-            title={item.title}
-          >
-            <item.iconComponent className={item.className} size={30} />
-          </a>
-        ))}
-      </div>
-
-      <Link to="#self-development">
-        <h4
-          id="self-development"
-          className="d-inline-block"
-          style={scrollPaddingTopStyle}
-        >
-          <span className={titleLeftSideBar}>個人開発</span>
-        </h4>
-      </Link>
-      <div className="mt-4 mb-5">
-        {selfDevelopmentItems.map((item) => {
-          return (
-            <Card key={item.siteUri} className="ps-1 mb-3">
-              <Row xs={1} md={2}>
-                <Col md={2} className="m-auto text-center">
-                  <a href={item.siteUri} target="_blank" title={item.title}>
-                    <Card.Img
-                      variant="top"
-                      src={item.imageUri}
-                      style={{
-                        maxWidth: 200,
-                        maxHeight: 200,
-                        objectFit: 'contain',
-                      }}
-                    />
-                  </a>
-                </Col>
-                <Col md={10}>
-                  <Card.Body>
-                    <Card.Title>{item.title}</Card.Title>
-                    <Table striped bordered hover>
-                      <tbody>
-                        <tr>
-                          <td>サイト</td>
-                          <td>
-                            <a
-                              href={item.siteUri}
-                              target="_blank"
-                              title={item.title}
-                              className="text-break"
-                            >
-                              {item.siteUri}
-                            </a>
-                          </td>
-                        </tr>
-                        {/* 列幅が４文字の方が見やすいため、４文字全てが1行に入るように調整している */}
-                        <tr>
-                          <td style={{ whiteSpace: 'nowrap' }}>開発時期</td>
-                          <td>
-                            {item.developmentStartAt}
-                            {item.developmentEndAt === ''
-                              ? ''
-                              : `〜${item.developmentEndAt}`}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>使用技術</td>
-                          <td>{item.usedTechniques.join(', ')}</td>
-                        </tr>
-                        <tr>
-                          <td>コメント</td>
-                          <td className="text-break">{item.description}</td>
-                        </tr>
-                        <tr>
-                          <td>アピール</td>
-                          <td className="text-break">{item.sellingPoint}</td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </Card.Body>
-                </Col>
-              </Row>
-            </Card>
-          );
-        })}
-      </div>
-
-      {resumePost === undefined || resumePost === null ? (
-        <></>
-      ) : (
-        <div>
-          <Link to="#development-experience">
+      <Row sm={1} md={2}>
+        <Col md={12 - sideBarWidth}>
+          <Link to={`#${linkedIds.link}`}>
             <h4
-              id="development-experience"
+              id={linkedIds.link.innerLink}
               className="d-inline-block"
               style={scrollPaddingTopStyle}
             >
-              <span className={titleLeftSideBar}>開発経験</span>
+              <span className={titleLeftSideBar}>
+                {linkedIds.link.titleLabel}
+              </span>
             </h4>
           </Link>
+          <div className="ms-3 mt-4 mb-5 ">
+            {snsLinkItems.map((item) => (
+              <a
+                key={item.uri}
+                href={item.uri}
+                style={{ color: 'inherit' }}
+                target="_blank"
+                className="me-4 me-md-5"
+                title={item.title}
+              >
+                <item.iconComponent className={item.className} size={30} />
+              </a>
+            ))}
+          </div>
 
-          <article
-            className="blog-post"
-            itemScope
-            itemType="http://schema.org/Article"
-          >
-            <p className="mb-4">{resumePost.frontmatter?.updatedDate} 現在</p>
-            <section
-              dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
-              className="text-break"
-              itemProp="articleBody"
-            />
-          </article>
-        </div>
-      )}
+          <Link to={`#${linkedIds.selfDevelopment}`}>
+            <h4
+              id={linkedIds.selfDevelopment.innerLink}
+              className="d-inline-block"
+              style={scrollPaddingTopStyle}
+            >
+              <span className={titleLeftSideBar}>
+                {linkedIds.selfDevelopment.titleLabel}
+              </span>
+            </h4>
+          </Link>
+          <div className="mt-4 mb-5">
+            {selfDevelopmentItems.map((item) => {
+              return (
+                <Card key={item.siteUri} className="ps-1 mb-3">
+                  <Row xs={1} md={2}>
+                    <Col md={2} className="m-auto text-center">
+                      <a href={item.siteUri} target="_blank" title={item.title}>
+                        <Card.Img
+                          variant="top"
+                          src={item.imageUri}
+                          style={{
+                            maxWidth: 200,
+                            maxHeight: 200,
+                            objectFit: 'contain',
+                          }}
+                        />
+                      </a>
+                    </Col>
+                    <Col md={10}>
+                      <Card.Body>
+                        <Card.Title>{item.title}</Card.Title>
+                        <Table striped bordered hover>
+                          <tbody>
+                            <tr>
+                              <td>サイト</td>
+                              <td>
+                                <a
+                                  href={item.siteUri}
+                                  target="_blank"
+                                  title={item.title}
+                                  className="text-break"
+                                >
+                                  {item.siteUri}
+                                </a>
+                              </td>
+                            </tr>
+                            {/* 列幅が４文字の方が見やすいため、４文字全てが1行に入るように調整している */}
+                            <tr>
+                              <td style={{ whiteSpace: 'nowrap' }}>開発時期</td>
+                              <td>
+                                {item.developmentStartAt}
+                                {item.developmentEndAt === ''
+                                  ? ''
+                                  : `〜${item.developmentEndAt}`}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>使用技術</td>
+                              <td>{item.usedTechniques.join(', ')}</td>
+                            </tr>
+                            <tr>
+                              <td>コメント</td>
+                              <td className="text-break">{item.description}</td>
+                            </tr>
+                            <tr>
+                              <td>アピール</td>
+                              <td className="text-break">
+                                {item.sellingPoint}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                      </Card.Body>
+                    </Col>
+                  </Row>
+                </Card>
+              );
+            })}
+          </div>
+
+          {resumePost === undefined || resumePost === null ? (
+            <></>
+          ) : (
+            <div>
+              <Link to={`#${linkedIds.developmentExperience}`}>
+                <h4
+                  id={linkedIds.developmentExperience.innerLink}
+                  className="d-inline-block"
+                  style={scrollPaddingTopStyle}
+                >
+                  <span className={titleLeftSideBar}>
+                    {linkedIds.developmentExperience.titleLabel}
+                  </span>
+                </h4>
+              </Link>
+
+              <article
+                className="blog-post"
+                itemScope
+                itemType="http://schema.org/Article"
+              >
+                <p className="mb-4">
+                  {resumePost.frontmatter?.updatedDate} 現在
+                </p>
+                <section
+                  dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
+                  className="text-break"
+                  itemProp="articleBody"
+                />
+              </article>
+            </div>
+          )}
+        </Col>
+
+        <Col
+          md={sideBarWidth}
+          className="d-none d-sm-none d-md-block position-fixed end-0 border border-dark"
+        >
+          <span className="mb-2">Contents</span>
+          <ListGroup variant="flush">
+            <ListGroup.Item
+              href={`#${linkedIds.link.innerLink}`}
+              action
+              active={false}
+            >
+              {linkedIds.link.titleLabel}
+            </ListGroup.Item>
+            <ListGroup.Item
+              href={`#${linkedIds.selfDevelopment.innerLink}`}
+              action
+              active={false}
+            >
+              {linkedIds.selfDevelopment.titleLabel}
+            </ListGroup.Item>
+            <ListGroup.Item
+              href={`#${linkedIds.developmentExperience.innerLink}`}
+              action
+              active={false}
+            >
+              {linkedIds.developmentExperience.titleLabel}
+            </ListGroup.Item>
+          </ListGroup>
+        </Col>
+      </Row>
     </Layout>
   );
 };
