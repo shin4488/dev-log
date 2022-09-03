@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, graphql, PageProps, HeadFC, withPrefix } from 'gatsby';
+import { Link, graphql, PageProps, HeadFC } from 'gatsby';
 import { TagListPageQuery } from '~/gatsby-graphql';
 import Layout from '@/components/layout';
 import Seo from '@/components/seo';
@@ -18,7 +18,7 @@ const TagList: React.FC<PageProps<TagListPageQuery>> = ({ data, location }) => {
           const tagName = tag.tag;
           return (
             <span className="me-3" key={tagName}>
-              <Link className="me-1" to={withPrefix(`tags/${tagName}`)}>
+              <Link className="me-1" to={tagName || ''}>
                 {tagName}
               </Link>
               {`(${tag.totalCount})`}
