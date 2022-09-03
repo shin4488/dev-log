@@ -14,39 +14,31 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   // Get all markdown blog posts sorted by date
-  const result = await graphql(
-    `
-      query markdownPosts {
-        posts: allMarkdownRemark(
-          sort: { fields: [frontmatter___createdDate], order: ASC }
-          limit: 1000
-          filter: { fileAbsolutePath: { regex: "/content/blog/" } }
-        ) {
-          nodes {
-            id
-            fields {
-              slug
-            }
-          }
-        }
-        tags: allMarkdownRemark(
-          sort: { fields: [frontmatter___createdDate], order: ASC }
-          limit: 1000
-          filter: { fileAbsolutePath: { regex: "/content/blog/" } }
-        ) {
-          group(field: frontmatter___tags) {
-            tag: fieldValue
-            nodes {
-              id
-              fields {
-                slug
-              }
-            }
+  const result = await graphql(`
+    query markdownPosts {
+      posts: allMarkdownRemark(
+        sort: { fields: [frontmatter___createdDate], order: ASC }
+        limit: 1000
+        filter: { fileAbsolutePath: { regex: "/content/blog/" } }
+      ) {
+        nodes {
+          id
+          fields {
+            slug
           }
         }
       }
-    `,
-  );
+      tags: allMarkdownRemark(
+        sort: { fields: [frontmatter___createdDate], order: ASC }
+        limit: 1000
+        filter: { fileAbsolutePath: { regex: "/content/blog/" } }
+      ) {
+        group(field: frontmatter___tags) {
+          tag: fieldValue
+        }
+      }
+    }
+  `);
 
   if (result.errors) {
     reporter.panicOnBuild(
@@ -82,21 +74,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     });
   }
 
-  // TODO:タグの実装
-  // const tags = result.data.tags.group;
+  const tags = result.data.tags.group;
+  if (!(tags === undefined || tags === null || tags.length <= 0)) {
+    const indexPage = path.resolve('src', 'pages', 'index.tsx');
+    tags.forEach((tag) => {
+      createPage({
+        path: `/tags/${tag.tag}`,
+        component: indexPage,
+        context: {
+          tagName: [tag.tag],
+        },
+      });
+    });
+  }
 
-  // if (tags.length > 0) {
-  //   const indexPage = path.resolve('src', 'pages', 'index.tsx');
-  //   tags.forEach((tag) => {
-  //     createPage({
-  //       path: `/tags/${tag.tag}`,
-  //       component: indexPage,
-  //       context: {
-  //         tag: tag.tag,
-  //       },
-  //     });
-  //   });
-  // }
+  const tagListPage = path.resolve('src', 'pages', 'tagList.tsx');
+  createPage({
+    path: '/tags/',
+    component: tagListPage,
+  });
 
   const aboutPage = path.resolve('src', 'pages', 'about.tsx');
   createPage({

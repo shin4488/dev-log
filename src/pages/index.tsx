@@ -45,8 +45,7 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                   />
                 </section>
                 {/* タグ */}
-                {/* TODO:タグページの実装後にコメント解除 */}
-                {/* {post.frontmatter?.tags?.map((tag) => {
+                {post.frontmatter?.tags?.map((tag) => {
                   const linkToPath = `/tags/${tag}`;
                   return (
                     <React.Fragment key={tag}>
@@ -55,7 +54,7 @@ const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
                       </Link>{' '}
                     </React.Fragment>
                   );
-                })} */}
+                })}
               </article>
             </li>
           );
@@ -75,7 +74,7 @@ export default BlogIndex;
 export const Head: HeadFC<IndexPageQuery> = () => <Seo title="Blog" />;
 
 export const query = graphql`
-  query IndexPage {
+  query IndexPage($tagName: [String]) {
     site {
       siteMetadata {
         title
@@ -83,7 +82,10 @@ export const query = graphql`
     }
     allMarkdownRemark(
       sort: { fields: [frontmatter___createdDate], order: DESC }
-      filter: { fileAbsolutePath: { regex: "/content/blog/" } }
+      filter: {
+        fileAbsolutePath: { regex: "/content/blog/" }
+        frontmatter: { tags: { in: $tagName } }
+      }
     ) {
       nodes {
         excerpt
