@@ -3468,10 +3468,17 @@ export type AboutPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AboutPageQuery = { markdownRemark?: { html?: string | null, frontmatter?: { updatedDate?: any | null } | null } | null };
 
-export type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
+export type IndexPageQueryVariables = Exact<{
+  tagName?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
 
 
 export type IndexPageQuery = { site?: { siteMetadata?: { title?: string | null } | null } | null, allMarkdownRemark: { nodes: Array<{ excerpt?: string | null, fields?: { slug?: string | null } | null, frontmatter?: { createdDate?: any | null, title?: string | null, description?: string | null, tags?: Array<string | null> | null } | null }> } };
+
+export type TagListPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TagListPageQuery = { tags: { group: Array<{ totalCount: number, tag?: string | null }> } };
 
 export type BlogPostBySlugQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3511,4 +3518,4 @@ export type GatsbyImageSharpFluid_WithWebp_NoBase64Fragment = { aspectRatio: num
 export type MarkdownPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MarkdownPostsQuery = { posts: { nodes: Array<{ id: string, fields?: { slug?: string | null } | null }> }, tags: { group: Array<{ tag?: string | null, nodes: Array<{ id: string, fields?: { slug?: string | null } | null }> }> } };
+export type MarkdownPostsQuery = { posts: { nodes: Array<{ id: string, fields?: { slug?: string | null } | null }> }, tags: { group: Array<{ tag?: string | null }> } };
