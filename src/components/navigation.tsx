@@ -41,13 +41,13 @@ const Navigation: React.FC = () => {
       <Container>
         <Navbar.Brand href={withPrefix('/')}>
           <Image
-            alt="Shin"
+            alt="Dev Log"
             src={AboutImage}
             width={imageSize}
             height={imageSize}
             roundedCircle
           />
-          <span className="ms-3">Shin</span>
+          <span className="ms-3">Dev Log</span>
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar-expand-${expandWidth}`}
