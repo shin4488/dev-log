@@ -5,10 +5,10 @@ require('dotenv').config({
 module.exports = {
   pathPrefix: '/dev-log',
   siteMetadata: {
-    title: `shin4488`,
+    title: `Dev Log`,
     author: {
       name: `shin4488`,
-      summary: `software engineer who lives in small town`,
+      summary: `software engineer who lives in a small town`,
     },
     description: `shin4488's development log`,
     siteUrl: `https://shin4488.github.io/dev-log/`,

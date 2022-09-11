@@ -34,7 +34,7 @@ const Bio: React.FC = () => {
       {twitterAccountUserName && (
         <>
           <div>
-            エンジニアです。お問合せなどありましたら、Twitter（
+            お問合せは、Twitter（
             <a
               href={`https://twitter.com/${twitterAccountUserName || ``}`}
               target="_blank"
