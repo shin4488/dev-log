@@ -46,7 +46,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
     <Layout location={location}>
       <Row sm={1} md={2}>
         <Col md={12 - sideBarWidth}>
-          <Link to={`#${linkedIds.link}`}>
+          <Link to={`#${linkedIds.link.innerLink}`}>
             <h4
               id={linkedIds.link.innerLink}
               className="d-inline-block"
@@ -72,7 +72,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             ))}
           </div>
 
-          <Link to={`#${linkedIds.selfDevelopment}`}>
+          <Link to={`#${linkedIds.selfDevelopment.innerLink}`}>
             <h4
               id={linkedIds.selfDevelopment.innerLink}
               className="d-inline-block"
@@ -157,7 +157,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             <></>
           ) : (
             <div>
-              <Link to={`#${linkedIds.developmentExperience}`}>
+              <Link to={`#${linkedIds.developmentExperience.innerLink}`}>
                 <h4
                   id={linkedIds.developmentExperience.innerLink}
                   className="d-inline-block"
