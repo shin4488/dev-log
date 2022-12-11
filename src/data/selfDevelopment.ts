@@ -88,7 +88,8 @@ Lambdaを使用してサーバレスな環境を日次で動かしている。
     usedTechniques: [
       'LINE Messaging API',
       'Python',
-      'Heroku',
+      'Heroku（リリース当時）',
+      'Render（Heroku無料枠廃止に伴い使用）',
       'Google Vision API',
       'Google Places API',
       'Firebase (Firestore)',
