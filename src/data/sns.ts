@@ -1,5 +1,6 @@
 import { IconType } from 'react-icons';
-import { FaGithub, FaDev, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaDev, FaLinkedin } from 'react-icons/fa';
+import { RiFileLine } from 'react-icons/ri';
 import { SiQiita } from 'react-icons/si';
 
 interface SnsLink {
@@ -27,10 +28,10 @@ const snsLinkItems: SnsLink[] = [
     iconComponent: FaDev,
   },
   {
-    className: 'text-twitter',
-    uri: 'https://twitter.com/shin44880',
-    title: 'Twitter',
-    iconComponent: FaTwitter,
+    uri: 'https://note.com/shin4488',
+    className: 'text-qiita',
+    title: 'note',
+    iconComponent: RiFileLine,
   },
   {
     className: 'text-linkedin',
