@@ -3448,11 +3448,6 @@ export type ImageSharpSortInput = {
   order?: InputMaybe<Array<InputMaybe<SortOrderEnum>>>;
 };
 
-export type BioQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type BioQueryQuery = { site?: { siteMetadata?: { author?: { name?: string | null, summary?: string | null } | null, social?: { twitter?: string | null } | null } | null } | null };
-
 export type SeoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
