@@ -11,6 +11,35 @@ interface SelfDevelopmentItem {
 
 export const selfDevelopmentItems: SelfDevelopmentItem[] = [
   {
+    title: '上場企業の公開済み財務データを可視化するサービス（FLAZA）',
+    imageUri: 'https://flaza.online/logo192.png',
+    siteUri: 'https://flaza.online',
+    developmentStartAt: '2023年9月',
+    developmentEndAt: '10月',
+    usedTechniques: [
+      'Docker',
+      'nginx',
+      'React.js',
+      'Material UI',
+      'Recharts',
+      'TypeScript',
+      'Ruby',
+      'Ruby on Rails',
+      'sidekiq',
+      'PostgreSQL',
+      'Redis',
+      'Ubuntu',
+      'さくらVPS',
+    ],
+    description: `前日以前に公開された財務データ（貸借対照表・損益計算書・キャッシュフロー計算書）をグラフ化して一覧表示するサービス。
+上場企業の財務データを閲覧・検索できるサービスは世に存在するが、それを可視化して一覧表示するサービスは見当たらなかったため開発した。
+ユーザー層としては株など個別企業への投資家をターゲットとしているため、各企業の株探へのリンクをつけており、企業の株価などもすぐチェックできる。
+貸借対照表・損益計算書において国際会計基準や金融機関のデータが表示対応していないことが伸びしろ。
+今後予定している追加機能として、検索・お気に入り登録・ROAやROEなど経営指標の表示を予定している。`,
+    sellingPoint: `財務データの自動切替によってユーザー側で操作せずとも財務3表を繰り返し見れる。
+訂正財務諸表が提出された場合もそれを取り込んで常に正確な財務データを表示できる。`,
+  },
+  {
     title:
       '福井に拠点のあるNo.1企業を共有し、また他ユーザの共有内容を閲覧できるサービス（F1C）',
     imageUri: 'https://illustrain.com/img/work/2016/illustrain04-kaisya01.png',
