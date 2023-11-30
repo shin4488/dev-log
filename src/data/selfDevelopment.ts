@@ -101,7 +101,7 @@ export const selfDevelopmentItems: SelfDevelopmentItem[] = [
     siteUri: 'https://twitter.com/mlbbot2',
     developmentStartAt: '2020年8月',
     developmentEndAt: '',
-    usedTechniques: ['C#', 'AWS Lambda', 'Twitter API'],
+    usedTechniques: ['C#', 'AWS Lambda', 'Twitter API', 'GitHub Actions'],
     description: `メジャーリーグの試合のあった日に順位表を教えてくれるTwitter bot。
 Lambdaを使用してサーバレスな環境を日次で動かしている。
 デプロイを手動で行なっているため、自動化やAWS環境はIaCな形で管理できるようにするのが技術的伸びしろ。
