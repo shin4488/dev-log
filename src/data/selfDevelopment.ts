@@ -25,7 +25,7 @@ export const selfDevelopmentItems: SelfDevelopmentItem[] = [
       'TypeScript',
       'Ruby',
       'Ruby on Rails',
-      'sidekiq',
+      'Sidekiq',
       'GraphQL',
       'PostgreSQL',
       'Redis',
