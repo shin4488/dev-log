@@ -62,7 +62,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
               <a
                 key={item.uri}
                 href={item.uri}
-                style={{ color: 'inherit' }}
+                style={{ color: 'inherit', ...item.style }}
                 target="_blank"
                 className="me-4 me-md-5"
                 title={item.title}
