@@ -138,7 +138,7 @@ Lambdaを使用してサーバレスな環境を日次で動かしている。
   },
   {
     title: 'Shooting Game',
-    imageUri: 'https://shooting-f0o5.onrender.com/index.html/img/man.png',
+    imageUri: 'https://shooting-f0o5.onrender.com/img/man.png',
     siteUri: 'https://shooting-f0o5.onrender.com/index.html',
     developmentStartAt: '2017年1月',
     developmentEndAt: '3月',
