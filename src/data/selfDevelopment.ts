@@ -138,13 +138,13 @@ Lambdaを使用してサーバレスな環境を日次で動かしている。
   },
   {
     title: 'Shooting Game',
-    imageUri: 'https://shooting-basic.surge.sh/img/man.png',
-    siteUri: 'https://shooting-basic.surge.sh',
+    imageUri: 'https://shooting-f0o5.onrender.com/index.html/img/man.png',
+    siteUri: 'https://shooting-f0o5.onrender.com/index.html',
     developmentStartAt: '2017年1月',
     developmentEndAt: '3月',
-    usedTechniques: ['JavaScript', 'Surge'],
+    usedTechniques: ['JavaScript', 'Render'],
     description: `1分間、球から逃げ続けるシューティングゲーム。大学3年生の時に初めてHTML・CSS・JavaScriptを触った時に作ったもの。
 クオリティ的な問題はたくさんあると思うが、当時は結構真剣に作っていた。`,
-    sellingPoint: `Surgeを使用してサーバコスト・開発スピードをかけずにデリバリーできるようにした。`,
+    sellingPoint: `Renderを使用してサーバコスト・デプロイコストをかけずにデリバリーできるようにした。`,
   },
 ];
