@@ -11,9 +11,9 @@ Salesforce (Apex, Lightning Web Component, Aura Component, Visualforce, プロ�
 ★★★☆☆  
 Node.js, TypeScript  
 ★★☆☆☆  
-C#, Vue.js, Ruby, Ruby on Rails  
+C#, Vue.js  
 ★☆☆☆☆  
-SQL Server, Jenkins  
+SQL Server, Jenkins, Ruby on Rails  
 
 ※Salesforceに関して  
 Apex...JavaライクなSalesforce独自のプログラミング言語  
