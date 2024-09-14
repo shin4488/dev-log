@@ -13,7 +13,7 @@ Node.js, TypeScript
 ★★☆☆☆  
 C#, Vue.js  
 ★☆☆☆☆  
-SQL Server, Jenkins, Ruby on Rails, Datadog  
+SQL Server, Jenkins, Ruby on Rails, Datadog, Redis  
 
 ※Salesforceに関して  
 Apex...JavaライクなSalesforce独自のプログラミング言語  
