@@ -12,7 +12,7 @@ interface SelfDevelopmentItem {
 export const selfDevelopmentItems: SelfDevelopmentItem[] = [
   {
     title: '上場企業の公開済み財務データを可視化するサービス（investee）',
-    imageUri: 'https://flaza.online/logo192.png',
+    imageUri: 'https://investee.info/logo192.png',
     siteUri: 'https://investee.info',
     developmentStartAt: '2023年9月',
     developmentEndAt: '10月',
