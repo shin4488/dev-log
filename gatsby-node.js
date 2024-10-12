@@ -76,7 +76,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const tags = result.data.tags.group;
   if (!(tags === undefined || tags === null || tags.length <= 0)) {
-    const indexPage = path.resolve('src', 'pages', 'index.tsx');
+    const indexPage = path.resolve('src', 'pages', 'blog.tsx');
     tags.forEach((tag) => {
       createPage({
         path: `/tags/${tag.tag}`,
@@ -96,7 +96,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const aboutPage = path.resolve('src', 'pages', 'about.tsx');
   createPage({
-    path: '/about/',
+    path: '/',
     component: aboutPage,
   });
 };

@@ -16,14 +16,6 @@ const Navigation: React.FC = () => {
   const imageSize = 40;
   const navigationItems: NavigationItem[] = [
     {
-      path: '/',
-      label: 'Blog',
-    },
-    {
-      path: '/tags',
-      label: 'Tags',
-    },
-    {
       path: '/about',
       label: 'About',
     },
