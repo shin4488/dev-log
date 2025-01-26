@@ -45,6 +45,7 @@ webサイト版同様に財務データの自動切り替え機能をつけて�
       'Material UI',
       'Recharts',
       'TypeScript',
+      'Google Analytics',
       'Ruby',
       'Ruby on Rails',
       'Sidekiq',
@@ -78,6 +79,7 @@ webサイト版同様に財務データの自動切り替え機能をつけて�
       'Vuetify',
       'Nuxt.js',
       'TypeScript',
+      'Google Analytics',
       'Node.js',
       'Express.js',
       'Firebase (Authentication, Functions)',
@@ -106,6 +108,7 @@ webサイト版同様に財務データの自動切り替え機能をつけて�
       'JavaScript',
       'Gulp',
       'webpack',
+      'Google Analytics',
       'Firebase (Authentication, Firestore)',
       'Ubuntu',
       'さくらVPS',
@@ -148,6 +151,7 @@ Lambdaを使用してサーバレスな環境を日次で動かしている。
       'Google Places API',
       'Firebase (Firestore)',
       'Google Apps Script',
+      'Google Analytics',
     ],
     description: `LINEから位置情報を送ると近くのコンビニ（トイレ付き）を表示して、画像を送ると画像内のテキストを翻訳してくれる。
 もともと、近くのレストラン検索Botとして開発を行なっていたが、ホットペッパーのAPI提供が終了してしまったため別路線に切り替えた。
