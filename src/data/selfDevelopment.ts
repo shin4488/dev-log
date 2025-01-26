@@ -11,6 +11,28 @@ interface SelfDevelopmentItem {
 
 export const selfDevelopmentItems: SelfDevelopmentItem[] = [
   {
+    title: '上場企業の財務データ可視化のChrome拡張機能版',
+    imageUri:
+      'https://lh3.googleusercontent.com/_xZpV9RW1B24gnNpYz4tJTuok5bFRnFFe4Z9_v4Lmx6rb2jnjHY2IssMb5n8bC-2x7ECnGnS04vLPwkeRu2NM6X83nc=s275-w275-h175',
+    siteUri:
+      'https://chromewebstore.google.com/detail/jjjlnbhaimbljpnohoelnodggfdoimee',
+    developmentStartAt: '2024年10月',
+    developmentEndAt: '',
+    usedTechniques: [
+      'Docker',
+      'React.js',
+      'Material UI',
+      'Recharts',
+      'TypeScript',
+      'GraphQL',
+      'Vite',
+      'Google Analytics',
+    ],
+    description: `https://investee.info のChrome拡張機能版。株探やYahoo!ファイナンスなどの株式情報サービスの画面と一緒に使える。`,
+    sellingPoint: `企業の検索性は株探やYahoo!ファイナンスなどの株式情報サービスの方が良いため、これらのサービスで企業を検索して財務データは拡張機能側で表示するような使い方ができる。
+webサイト版同様に財務データの自動切り替え機能をつけて、操作性を上げた。`,
+  },
+  {
     title: '上場企業の公開済み財務データを可視化するサービス（investee）',
     imageUri: 'https://investee.info/logo192.png',
     siteUri: 'https://investee.info',
