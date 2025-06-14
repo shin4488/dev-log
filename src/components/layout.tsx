@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutParameter> = ({ location, children }) => {
   return (
     // <div className="global-wrapper" data-is-root-path={isRootPath}>
     <div data-is-root-path={isRootPath}>
-      <Navigation />
+      <Navigation location={location} />
 
       <Container>
         <main>{children}</main>

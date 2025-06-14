@@ -5,15 +5,12 @@ import Seo from '@/components/seo';
 import { AboutPageQuery } from '~/gatsby-graphql';
 import { snsLinkItems } from '@/data/sns';
 import { selfDevelopmentItems } from '@/data/selfDevelopment';
-import Image from 'react-bootstrap/Image';
-import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
-import AboutImage from '@/images/my-profile-image.png';
 
 const AboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
   const resumePost = data.markdownRemark;
@@ -26,32 +23,6 @@ const AboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
 
   return (
     <Layout location={location}>
-      <header className="bg-primary bg-gradient text-white text-center py-5 mb-5">
-        <Image
-          src={AboutImage}
-          width={140}
-          height={140}
-          roundedCircle
-          className="mb-3"
-        />
-        <Nav className="justify-content-center">
-          <Nav.Item>
-            <Nav.Link href="#sns" className="text-white">
-              リンク
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="#projects" className="text-white">
-              個人開発
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="#experience" className="text-white">
-              開発経験
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </header>
       <Container>
         <section className="mb-5">
           <SectionHeading id="sns">リンク</SectionHeading>
