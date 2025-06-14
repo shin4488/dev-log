@@ -90,6 +90,13 @@
       height: 200px;
       width: 100%;
     }
+    /* enforce two-column layout on wider screens */
+    @media (min-width: 768px) {
+      .project-grid > .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+      }
+    }
     .timeline {
       position: relative;
       margin-left: 2rem;
@@ -138,7 +145,7 @@
     </div>
 
     <h2 id="projects" class="mb-4">個人開発</h2>
-    <div class="row row-cols-1 row-cols-md-2 g-4"><!-- keep two-column layout -->
+    <div class="row row-cols-1 row-cols-md-2 g-4 project-grid"><!-- keep two-column layout -->
       <!-- Chrome extension -->
       <div class="col">
         <div class="card project-card h-100 shadow-sm">
