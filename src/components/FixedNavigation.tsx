@@ -12,6 +12,7 @@ const FixedNavigation: React.FC<FixedNavigationProps> = ({
   activeSection,
   onNavClick,
 }) => {
+  const [hoveredItem, setHoveredItem] = React.useState<string | null>(null);
   const navItems = [
     { id: 'sns', label: 'リンク' },
     { id: 'projects', label: '個人開発' },
@@ -25,7 +26,7 @@ const FixedNavigation: React.FC<FixedNavigationProps> = ({
   return (
     <Navbar
       fixed="top"
-      className="bg-white bg-opacity-90 shadow-sm fixed-nav"
+      className="bg-white bg-opacity-90 shadow-sm"
       style={{ backdropFilter: 'blur(6px)' }}
     >
       <Container>
@@ -34,16 +35,22 @@ const FixedNavigation: React.FC<FixedNavigationProps> = ({
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`px-3 fw-semibold text-decoration-none hero-nav-button ${
-                activeSection === item.id ? 'active' : ''
-              }`}
+              className="px-3 fw-semibold text-decoration-none d-inline-block position-relative"
               onClick={(e) => {
                 e.preventDefault();
                 onNavClick(item.id);
               }}
+              onMouseEnter={() => setHoveredItem(item.id)}
+              onMouseLeave={() => setHoveredItem(null)}
               style={{
                 cursor: 'pointer',
                 color: activeSection === item.id ? '#2e86de' : '#333',
+                borderBottom:
+                  hoveredItem === item.id || activeSection === item.id
+                    ? '2px solid #2e86de'
+                    : '2px solid transparent',
+                paddingBottom: '4px',
+                transition: 'all 0.2s ease-in-out',
               }}
             >
               {item.label}
