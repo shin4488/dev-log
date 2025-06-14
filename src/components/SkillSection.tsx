@@ -19,7 +19,7 @@ const SkillSection: React.FC = () => {
   return (
     <div>
       <p className="mb-3 text-muted">{experienceUpdatedDate} 現在</p>
-      <div className="position-relative ms-4 ps-3 border-start border-primary border-4">
+      <div className="position-relative ms-4 ps-3 border-start border-primary border-2">
         <h3 className="mb-4">業務で扱ってきた主な技術スタック</h3>
 
         {skillLevels.map((skillLevel: SkillLevel) => (
