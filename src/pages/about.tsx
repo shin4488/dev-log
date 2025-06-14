@@ -5,6 +5,7 @@ import Seo from '@/components/seo';
 import { AboutPageQuery } from '~/gatsby-graphql';
 import { snsLinkItems } from '@/data/sns';
 import { selfDevelopmentItems } from '@/data/selfDevelopment';
+import ExperienceTimeline from '@/components/experienceTimeline';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -26,18 +27,18 @@ const AboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
       <Container>
         <section className="mb-5">
           <SectionHeading id="sns">リンク</SectionHeading>
-          <div className="mb-4">
+          <div className="d-flex flex-wrap gap-4 mb-4">
             {snsLinkItems.map((item) => (
               <a
                 key={item.uri}
                 href={item.uri}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="me-3"
+                className="text-reset"
                 title={item.title}
                 style={{ color: 'inherit', ...item.style }}
               >
-                <item.iconComponent className={item.className} size={24} />
+                <item.iconComponent className={item.className} size={32} />
               </a>
             ))}
           </div>
@@ -108,12 +109,7 @@ const AboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
           <section className="mb-5">
             <SectionHeading id="experience">開発経験</SectionHeading>
             <p className="mb-3">{resumePost.frontmatter?.updatedDate} 現在</p>
-            <article
-              className="text-break"
-              itemScope
-              itemType="http://schema.org/Article"
-              dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
-            />
+            <ExperienceTimeline rawMarkdown={resumePost.rawMarkdownBody || ''} />
           </section>
         )}
       </Container>
@@ -129,6 +125,7 @@ export const pageQuery = graphql`
   query AboutPage {
     markdownRemark(fileAbsolutePath: { regex: "/content/resume/" }) {
       html
+      rawMarkdownBody
       frontmatter {
         updatedDate(formatString: "YYYY/MM/DD")
       }

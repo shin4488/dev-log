@@ -77,15 +77,19 @@ const Navigation: React.FC<NavigationProps> = ({ location }) => {
         </Container>
       </Navbar>
       {isAboutPage && (
-        <header className="bg-primary bg-gradient text-white text-center py-5 mb-5">
+        <header
+          className="text-white text-center py-5 position-relative mb-5"
+          style={{ background: 'linear-gradient(120deg, #1d976c, #2e86de)' }}
+        >
           <Image
             src={AboutImage}
             width={140}
             height={140}
             roundedCircle
-            className="mb-3"
+            className="mb-3 border border-white border-4"
+            style={{ objectFit: 'cover' }}
           />
-          <Nav className="justify-content-center">
+          <Nav className="justify-content-center gap-4 position-absolute bottom-0 start-50 translate-middle-x pb-2">
             <Nav.Item>
               <Nav.Link href="#sns" className="text-white">
                 リンク

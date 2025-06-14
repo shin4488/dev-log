@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutParameter> = ({ location, children }) => {
     <div data-is-root-path={isRootPath}>
       <Navigation location={location} />
 
-      <Container>
+      <Container fluid="xl">
         <main>{children}</main>
         <hr />
         <footer>
