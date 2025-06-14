@@ -1,233 +1,157 @@
 import * as React from 'react';
-import { graphql, PageProps, HeadFC, Link } from 'gatsby';
-import Seo from '@/components/seo';
+import { graphql, PageProps, HeadFC } from 'gatsby';
 import Layout from '@/components/layout';
+import Seo from '@/components/seo';
 import { AboutPageQuery } from '~/gatsby-graphql';
+import { snsLinkItems } from '@/data/sns';
+import { selfDevelopmentItems } from '@/data/selfDevelopment';
+import Image from 'react-bootstrap/Image';
+import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import { selfDevelopmentItems } from '@/data/selfDevelopment';
-import { snsLinkItems } from '@/data/sns';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Badge from 'react-bootstrap/Badge';
+import AboutImage from '@/images/my-profile-image.png';
 
-interface TitleLink {
-  innerLink: string;
-  titleLabel: string;
-}
-
-interface LinkedId {
-  link: TitleLink;
-  selfDevelopment: TitleLink;
-  developmentExperience: TitleLink;
-}
-
-const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
+const AboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
   const resumePost = data.markdownRemark;
-  const scrollPaddingTopStyle = { paddingTop: '65px', marginTop: '-45px' };
-  const titleLeftSideBar = 'ps-2 border-start border-title-left-bar border-5';
-  const sideBarWidth = 2;
-  const linkedIds: LinkedId = {
-    link: {
-      innerLink: 'link',
-      titleLabel: 'リンク',
-    },
-    selfDevelopment: {
-      innerLink: 'self-development',
-      titleLabel: '個人開発',
-    },
-    developmentExperience: {
-      innerLink: 'development-experience',
-      titleLabel: '開発経験',
-    },
-  };
+
+  const SectionHeading: React.FC<{ id: string }> = ({ id, children }) => (
+    <h2 id={id} className="mb-4">
+      {children}
+    </h2>
+  );
 
   return (
     <Layout location={location}>
-      <Row sm={1} md={2}>
-        <Col md={12 - sideBarWidth}>
-          <Link to={`#${linkedIds.link.innerLink}`}>
-            <h4
-              id={linkedIds.link.innerLink}
-              className="d-inline-block"
-              style={scrollPaddingTopStyle}
-            >
-              <span className={titleLeftSideBar}>
-                {linkedIds.link.titleLabel}
-              </span>
-            </h4>
-          </Link>
-          <div className="ms-3 mt-4 mb-5 ">
+      <header className="bg-primary bg-gradient text-white text-center py-5 mb-5">
+        <Image
+          src={AboutImage}
+          width={140}
+          height={140}
+          roundedCircle
+          className="mb-3"
+        />
+        <Nav className="justify-content-center">
+          <Nav.Item>
+            <Nav.Link href="#sns" className="text-white">
+              リンク
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="#projects" className="text-white">
+              個人開発
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="#experience" className="text-white">
+              開発経験
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </header>
+      <Container>
+        <section className="mb-5">
+          <SectionHeading id="sns">リンク</SectionHeading>
+          <div className="mb-4">
             {snsLinkItems.map((item) => (
               <a
                 key={item.uri}
                 href={item.uri}
-                style={{ color: 'inherit', ...item.style }}
                 target="_blank"
-                className="me-4 me-md-5"
+                rel="noopener noreferrer"
+                className="me-3"
                 title={item.title}
+                style={{ color: 'inherit', ...item.style }}
               >
-                <item.iconComponent className={item.className} size={30} />
+                <item.iconComponent className={item.className} size={24} />
               </a>
             ))}
           </div>
+        </section>
 
-          <Link to={`#${linkedIds.selfDevelopment.innerLink}`}>
-            <h4
-              id={linkedIds.selfDevelopment.innerLink}
-              className="d-inline-block"
-              style={scrollPaddingTopStyle}
-            >
-              <span className={titleLeftSideBar}>
-                {linkedIds.selfDevelopment.titleLabel}
-              </span>
-            </h4>
-          </Link>
-          <div className="mt-4 mb-5">
-            {selfDevelopmentItems.map((item) => {
-              return (
-                <Card key={item.siteUri} className="ps-1 mb-3">
-                  <Row xs={1} md={2}>
-                    <Col md={2} className="m-auto text-center">
-                      <a href={item.siteUri} target="_blank" title={item.title}>
-                        <Card.Img
-                          variant="top"
-                          src={item.imageUri}
-                          style={{
-                            maxWidth: 200,
-                            maxHeight: 200,
-                            objectFit: 'contain',
-                          }}
-                        />
+        <section className="mb-5">
+          <SectionHeading id="projects">個人開発</SectionHeading>
+          <Row xs={1} md={2} className="g-4">
+            {selfDevelopmentItems.map((item) => (
+              <Col key={item.siteUri}>
+                <Card className="h-100 shadow-sm">
+                  <a
+                    href={item.siteUri}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={item.imageUri}
+                      style={{ objectFit: 'contain', height: '200px' }}
+                    />
+                  </a>
+                  <Card.Body>
+                    <Card.Title>
+                      <a
+                        href={item.siteUri}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-decoration-none"
+                      >
+                        {item.title}
                       </a>
-                    </Col>
-                    <Col md={10}>
-                      <Card.Body>
-                        <Card.Title>{item.title}</Card.Title>
-                        <Table striped bordered hover>
-                          <tbody>
-                            <tr>
-                              <td>サイト</td>
-                              <td>
-                                <a
-                                  href={item.siteUri}
-                                  target="_blank"
-                                  title={item.title}
-                                  className="text-break"
-                                >
-                                  {item.siteUri}
-                                </a>
-                              </td>
-                            </tr>
-                            {/* 列幅が４文字の方が見やすいため、４文字全てが1行に入るように調整している */}
-                            <tr>
-                              <td style={{ whiteSpace: 'nowrap' }}>開発時期</td>
-                              <td>
-                                {item.developmentStartAt}
-                                {item.developmentEndAt === ''
-                                  ? ''
-                                  : `〜${item.developmentEndAt}`}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>使用技術</td>
-                              <td>{item.usedTechniques.join(', ')}</td>
-                            </tr>
-                            <tr>
-                              <td>コメント</td>
-                              <td className="text-break">{item.description}</td>
-                            </tr>
-                            <tr>
-                              <td>アピール</td>
-                              <td className="text-break">
-                                {item.sellingPoint}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </Card.Body>
-                    </Col>
-                  </Row>
+                    </Card.Title>
+                    <Table>
+                      <tbody>
+                        <tr>
+                          <th style={{ whiteSpace: 'nowrap' }}>使用技術</th>
+                          <td>
+                            {item.usedTechniques.map((tech) => (
+                              <Badge
+                                bg="secondary"
+                                className="me-1 mb-1"
+                                key={tech}
+                              >
+                                {tech}
+                              </Badge>
+                            ))}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th style={{ whiteSpace: 'nowrap' }}>概要</th>
+                          <td className="text-break">{item.overview}</td>
+                        </tr>
+                        <tr>
+                          <th style={{ whiteSpace: 'nowrap' }}>技術アピール</th>
+                          <td className="text-break">{item.techAppeal}</td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </Card.Body>
                 </Card>
-              );
-            })}
-          </div>
+              </Col>
+            ))}
+          </Row>
+        </section>
 
-          {resumePost === undefined || resumePost === null ? (
-            <></>
-          ) : (
-            <div>
-              <Link to={`#${linkedIds.developmentExperience.innerLink}`}>
-                <h4
-                  id={linkedIds.developmentExperience.innerLink}
-                  className="d-inline-block"
-                  style={scrollPaddingTopStyle}
-                >
-                  <span className={titleLeftSideBar}>
-                    {linkedIds.developmentExperience.titleLabel}
-                  </span>
-                </h4>
-              </Link>
-
-              <article
-                className="blog-post"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
-                <p className="mb-4">
-                  {resumePost.frontmatter?.updatedDate} 現在
-                </p>
-                <section
-                  dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
-                  className="text-break"
-                  itemProp="articleBody"
-                />
-              </article>
-            </div>
-          )}
-        </Col>
-
-        <Col
-          md={sideBarWidth}
-          className="d-none d-sm-none d-md-block position-fixed end-0 border border-dark"
-        >
-          <span className="mb-2">Contents</span>
-          <ListGroup variant="flush">
-            <ListGroup.Item
-              href={`#${linkedIds.link.innerLink}`}
-              action
-              active={false}
-            >
-              {linkedIds.link.titleLabel}
-            </ListGroup.Item>
-            <ListGroup.Item
-              href={`#${linkedIds.selfDevelopment.innerLink}`}
-              action
-              active={false}
-            >
-              {linkedIds.selfDevelopment.titleLabel}
-            </ListGroup.Item>
-            <ListGroup.Item
-              href={`#${linkedIds.developmentExperience.innerLink}`}
-              action
-              active={false}
-            >
-              {linkedIds.developmentExperience.titleLabel}
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-      </Row>
+        {resumePost && (
+          <section className="mb-5">
+            <SectionHeading id="experience">開発経験</SectionHeading>
+            <p className="mb-3">{resumePost.frontmatter?.updatedDate} 現在</p>
+            <article
+              className="text-break"
+              itemScope
+              itemType="http://schema.org/Article"
+              dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
+            />
+          </section>
+        )}
+      </Container>
     </Layout>
   );
 };
 
-export default aboutPage;
+export default AboutPage;
 
-/**
- * Head export to define metadata for the page
- *
- * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
- */
 export const Head: HeadFC<AboutPageQuery> = () => <Seo title="About" />;
 
 export const pageQuery = graphql`
