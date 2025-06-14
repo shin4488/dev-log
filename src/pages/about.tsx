@@ -64,7 +64,9 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
                 href={item.uri}
                 style={{ color: 'inherit', ...item.style }}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="me-4 me-md-5"
+                aria-label={item.title}
                 title={item.title}
               >
                 <item.iconComponent className={item.className} size={30} />
