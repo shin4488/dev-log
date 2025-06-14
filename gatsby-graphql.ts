@@ -3458,11 +3458,6 @@ export type NotFoundQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type NotFoundQuery = { site?: { siteMetadata?: { title?: string | null } | null } | null };
 
-export type AboutPageQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AboutPageQuery = { markdownRemark?: { html?: string | null, frontmatter?: { updatedDate?: any | null } | null } | null };
-
 export type IndexPageQueryVariables = Exact<{
   tagName?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
 }>;
