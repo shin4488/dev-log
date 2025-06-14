@@ -19,5 +19,6 @@ module.exports = {
     curly: 'error',
     // 「(obj?.foo)();」->「(obj?.foo)?.();」
     'no-unsafe-optional-chaining': 'error',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
 };
