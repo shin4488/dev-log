@@ -9,5 +9,8 @@ module.exports = {
     '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/file-mock.js',
   },
   transformIgnorePatterns: ['node_modules/(?!(gatsby)/)'],
-  setupFilesAfterEnv: ['@testing-library/jest-dom'],
+  setupFilesAfterEnv: [
+    '@testing-library/jest-dom',
+    '<rootDir>/jest.setup.js',
+  ],
 };
