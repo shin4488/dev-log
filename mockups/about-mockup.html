@@ -8,6 +8,10 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -42,7 +46,7 @@
 </head>
 <body>
   <header class="hero">
-    <img src="../src/images/my-profile-image.png" alt="Profile" />
+    <img src="../src/images/my-profile-image.png" alt="Profile picture" />
     <h1 class="display-5 fw-bold">Shin4488</h1>
     <p class="lead">フルスタックエンジニア / 趣味で開発する人</p>
   </header>
@@ -50,19 +54,21 @@
   <section class="container py-5">
     <h2 class="mb-4">SNS</h2>
     <div class="sns-icons mb-5">
-      <a href="#" title="GitHub"><i class="bi bi-github"></i></a>
-      <a href="#" class="text-success" title="Qiita"><i class="bi bi-clipboard-data"></i></a>
-      <a href="#" class="text-primary" title="Zenn"><i class="bi bi-book"></i></a>
-      <a href="#" title="dev.to"><i class="bi bi-terminal"></i></a>
-      <a href="#" title="note"><i class="bi bi-pencil"></i></a>
-      <a href="#" class="text-info" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      <a href="https://github.com/shin4488" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="bi bi-github"></i></a>
+      <a href="https://qiita.com/shin4488" class="text-success" target="_blank" rel="noopener noreferrer" title="Qiita"><i class="bi bi-clipboard-data"></i></a>
+      <a href="https://zenn.dev/shin4488" class="text-primary" target="_blank" rel="noopener noreferrer" title="Zenn"><i class="bi bi-book"></i></a>
+      <a href="https://dev.to/shin4488" target="_blank" rel="noopener noreferrer" title="dev.to"><i class="bi bi-terminal"></i></a>
+      <a href="https://note.com/shin4488" target="_blank" rel="noopener noreferrer" title="note"><i class="bi bi-pencil"></i></a>
+      <a href="https://www.linkedin.com/in/shinya-umeshita-668676240" class="text-info" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
     </div>
 
     <h2 class="mb-4">個人開発</h2>
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">
         <div class="card project-card h-100 shadow-sm">
-          <img src="https://investee.info/logo192.png" class="card-img-top" alt="Project" />
+          <a href="https://investee.info" target="_blank" rel="noopener noreferrer">
+            <img src="https://investee.info/logo192.png" class="card-img-top" alt="investee" />
+          </a>
           <div class="card-body">
             <h5 class="card-title">investee</h5>
             <p class="card-text">上場企業の公開済み財務データをグラフ表示するサービス。</p>
@@ -71,7 +77,9 @@
       </div>
       <div class="col">
         <div class="card project-card h-100 shadow-sm">
-          <img src="https://f1c.biz" class="card-img-top" alt="Project" />
+          <a href="https://f1c.biz" target="_blank" rel="noopener noreferrer">
+            <img src="https://illustrain.com/img/work/2016/illustrain04-kaisya01.png" class="card-img-top" alt="F1C" />
+          </a>
           <div class="card-body">
             <h5 class="card-title">F1C</h5>
             <p class="card-text">福井のNo.1企業を共有できるサービス。</p>
@@ -80,7 +88,9 @@
       </div>
       <div class="col">
         <div class="card project-card h-100 shadow-sm">
-          <img src="https://baseballgames.jp.net/image/top.png" class="card-img-top" alt="Project" />
+          <a href="https://baseballgames.jp.net" target="_blank" rel="noopener noreferrer">
+            <img src="https://baseballgames.jp.net/image/top.png" class="card-img-top" alt="Baseball Game" />
+          </a>
           <div class="card-body">
             <h5 class="card-title">Baseball Game</h5>
             <p class="card-text">満塁から始まるオンライン野球ゲーム。</p>
@@ -99,9 +109,5 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-  />
 </body>
 </html>
