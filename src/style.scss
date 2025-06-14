@@ -9,13 +9,3 @@ $theme-colors: (
 );
 
 @import '../node_modules/bootstrap/scss/bootstrap';
-
-// navigation underline styles
-.navbar-nav .nav-link {
-  border-bottom: 2px solid transparent;
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-  border-bottom-color: currentColor;
-}

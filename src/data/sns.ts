@@ -20,10 +20,10 @@ const snsLinkItems: SnsLink[] = [
     iconComponent: FaGithub,
   },
   {
+    className: 'text-qiita',
     uri: 'https://qiita.com/shin4488',
     title: 'Qiita',
     iconComponent: SiQiita,
-    style: { color: '#00ca00' },
   },
   {
     style: { color: '#3EA8FF' },
@@ -38,14 +38,15 @@ const snsLinkItems: SnsLink[] = [
   },
   {
     uri: 'https://note.com/shin4488',
+    className: 'text-qiita',
     title: 'note',
     iconComponent: RiFileLine,
   },
   {
+    className: 'text-linkedin',
     uri: 'https://www.linkedin.com/in/shinya-umeshita-668676240',
     title: 'LinkedIn',
     iconComponent: FaLinkedin,
-    style: { color: '#0e76a8' },
   },
 ];
 

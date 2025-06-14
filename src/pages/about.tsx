@@ -42,49 +42,21 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
     },
   };
 
-  React.useEffect(() => {
-    const sectionIds = [
-      linkedIds.link.innerLink,
-      linkedIds.selfDevelopment.innerLink,
-      linkedIds.developmentExperience.innerLink,
-    ];
-    function onScroll() {
-      const offset = 80;
-      const scrollPos = window.scrollY + offset;
-      let current = sectionIds[0];
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (el && scrollPos >= el.offsetTop) {
-          current = id;
-        }
-      }
-      sectionIds.forEach((id) => {
-        const nav = document.getElementById(`nav-${id}`);
-        if (nav) {
-          if (id === current) {
-            nav.classList.add('active');
-          } else {
-            nav.classList.remove('active');
-          }
-        }
-      });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   return (
     <Layout location={location}>
       <Row sm={1} md={2}>
         <Col md={12 - sideBarWidth}>
-          <h2
-            id={linkedIds.link.innerLink}
-            className="d-inline-block"
-            style={scrollPaddingTopStyle}
-          >
-            <span className={titleLeftSideBar}>{linkedIds.link.titleLabel}</span>
-          </h2>
+          <Link to={`#${linkedIds.link.innerLink}`}>
+            <h4
+              id={linkedIds.link.innerLink}
+              className="d-inline-block"
+              style={scrollPaddingTopStyle}
+            >
+              <span className={titleLeftSideBar}>
+                {linkedIds.link.titleLabel}
+              </span>
+            </h4>
+          </Link>
           <div className="ms-3 mt-4 mb-5 ">
             {snsLinkItems.map((item) => (
               <a
@@ -92,9 +64,7 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
                 href={item.uri}
                 style={{ color: 'inherit', ...item.style }}
                 target="_blank"
-                rel="noopener noreferrer"
                 className="me-4 me-md-5"
-                aria-label={item.title}
                 title={item.title}
               >
                 <item.iconComponent className={item.className} size={30} />
@@ -102,15 +72,17 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             ))}
           </div>
 
-          <h2
-            id={linkedIds.selfDevelopment.innerLink}
-            className="d-inline-block"
-            style={scrollPaddingTopStyle}
-          >
-            <span className={titleLeftSideBar}>
-              {linkedIds.selfDevelopment.titleLabel}
-            </span>
-          </h2>
+          <Link to={`#${linkedIds.selfDevelopment.innerLink}`}>
+            <h4
+              id={linkedIds.selfDevelopment.innerLink}
+              className="d-inline-block"
+              style={scrollPaddingTopStyle}
+            >
+              <span className={titleLeftSideBar}>
+                {linkedIds.selfDevelopment.titleLabel}
+              </span>
+            </h4>
+          </Link>
           <div className="mt-4 mb-5">
             {selfDevelopmentItems.map((item) => {
               return (
@@ -162,11 +134,11 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
                               <td>{item.usedTechniques.join(', ')}</td>
                             </tr>
                             <tr>
-                              <td>概要</td>
+                              <td>コメント</td>
                               <td className="text-break">{item.description}</td>
                             </tr>
                             <tr>
-                              <td>技術アピール</td>
+                              <td>アピール</td>
                               <td className="text-break">
                                 {item.sellingPoint}
                               </td>
@@ -185,15 +157,17 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             <></>
           ) : (
             <div>
-              <h2
-                id={linkedIds.developmentExperience.innerLink}
-                className="d-inline-block"
-                style={scrollPaddingTopStyle}
-              >
-                <span className={titleLeftSideBar}>
-                  {linkedIds.developmentExperience.titleLabel}
-                </span>
-              </h2>
+              <Link to={`#${linkedIds.developmentExperience.innerLink}`}>
+                <h4
+                  id={linkedIds.developmentExperience.innerLink}
+                  className="d-inline-block"
+                  style={scrollPaddingTopStyle}
+                >
+                  <span className={titleLeftSideBar}>
+                    {linkedIds.developmentExperience.titleLabel}
+                  </span>
+                </h4>
+              </Link>
 
               <article
                 className="blog-post"
