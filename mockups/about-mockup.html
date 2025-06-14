@@ -53,6 +53,9 @@
     nav.page-nav a:hover {
       border-color: white;
     }
+    nav.page-nav a.active {
+      border-color: white;
+    }
     nav.page-nav.fixed {
       position: fixed;
       top: 0;
@@ -69,6 +72,10 @@
       font-weight: 600;
     }
     nav.page-nav.fixed a:hover {
+      color: #0d6efd;
+      border-color: #0d6efd;
+    }
+    nav.page-nav.fixed a.active {
       color: #0d6efd;
       border-color: #0d6efd;
     }
@@ -328,14 +335,48 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const nav = document.querySelector('.page-nav');
+      const navLinks = nav.querySelectorAll('a');
+      const sections = Array.from(navLinks).map((link) =>
+        document.querySelector(link.getAttribute('href'))
+      );
       const navTop = nav.getBoundingClientRect().top + window.pageYOffset;
-      function onScroll() {
+
+      navLinks.forEach((link, idx) => {
+        const section = sections[idx];
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const offset = section.getBoundingClientRect().top +
+            window.pageYOffset - nav.offsetHeight;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        });
+      });
+
+      function updateFixed() {
         if (window.pageYOffset >= navTop) {
           nav.classList.add('fixed');
         } else {
           nav.classList.remove('fixed');
         }
       }
+
+      function highlightNav() {
+        const offset = nav.offsetHeight + 10;
+        sections.forEach((section, idx) => {
+          const rect = section.getBoundingClientRect();
+          const link = navLinks[idx];
+          if (rect.top - offset <= 0 && rect.bottom - offset > 0) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+
+      function onScroll() {
+        updateFixed();
+        highlightNav();
+      }
+
       window.addEventListener('scroll', onScroll);
       onScroll();
     });
