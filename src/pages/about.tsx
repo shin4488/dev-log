@@ -1,222 +1,234 @@
 import * as React from 'react';
-import { graphql, PageProps, HeadFC, Link } from 'gatsby';
+import { PageProps, HeadFC } from 'gatsby';
+import { Container, Row, Col } from 'react-bootstrap';
 import Seo from '@/components/seo';
 import Layout from '@/components/layout';
-import { AboutPageQuery } from '~/gatsby-graphql';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { selfDevelopmentItems } from '@/data/selfDevelopment';
 import { snsLinkItems } from '@/data/sns';
-import ListGroup from 'react-bootstrap/ListGroup';
+import HeroSection from '@/components/HeroSection';
+import ProjectCard from '@/components/ProjectCard';
+import SkillSection from '@/components/SkillSection';
+import FixedNavigation from '@/components/FixedNavigation';
 
-interface TitleLink {
-  innerLink: string;
-  titleLabel: string;
-}
+const aboutPage: React.FC<PageProps> = ({ location }) => {
+  const [activeSection, setActiveSection] = React.useState('sns');
+  const [isNavFixed, setIsNavFixed] = React.useState(false);
 
-interface LinkedId {
-  link: TitleLink;
-  selfDevelopment: TitleLink;
-  developmentExperience: TitleLink;
-}
+  // セクションのrefを作成
+  const heroRef = React.useRef<HTMLDivElement>(null);
+  const snsRef = React.useRef<HTMLElement>(null);
+  const projectsRef = React.useRef<HTMLElement>(null);
+  const experienceRef = React.useRef<HTMLElement>(null);
 
-const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
-  const resumePost = data.markdownRemark;
-  const scrollPaddingTopStyle = { paddingTop: '65px', marginTop: '-45px' };
-  const titleLeftSideBar = 'ps-2 border-start border-title-left-bar border-5';
-  const sideBarWidth = 2;
-  const linkedIds: LinkedId = {
-    link: {
-      innerLink: 'link',
-      titleLabel: 'リンク',
-    },
-    selfDevelopment: {
-      innerLink: 'self-development',
-      titleLabel: '個人開発',
-    },
-    developmentExperience: {
-      innerLink: 'development-experience',
-      titleLabel: '開発経験',
-    },
-  };
+  // 初期表示時にsnsセクションをアクティブに設定
+  React.useEffect(() => {
+    setActiveSection('sns');
+  }, []);
+
+  // セクションへのスクロール関数
+  const scrollToSection = React.useCallback((sectionId: string) => {
+    const sectionRefs = {
+      sns: snsRef,
+      projects: projectsRef,
+      experience: experienceRef,
+    };
+
+    const targetRef = sectionRefs[sectionId as keyof typeof sectionRefs];
+    if (targetRef?.current) {
+      targetRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+      setActiveSection(sectionId);
+    }
+  }, []);
+
+  // セクションの位置を監視してアクティブセクションを判定
+  React.useEffect(() => {
+    const checkActiveSection = () => {
+      const sections = [
+        { id: 'sns', ref: snsRef },
+        { id: 'projects', ref: projectsRef },
+        { id: 'experience', ref: experienceRef },
+      ];
+
+      // 画面上端から50px下の位置
+      const targetPosition = 50;
+      let activeSection = 'sns'; // デフォルト
+
+      // 各セクションの位置をチェック
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.ref.current) {
+          const rect = section.ref.current.getBoundingClientRect();
+          const sectionTop = rect.top;
+
+          // セクションの上端が目標位置（50px）を通過している場合
+          if (sectionTop <= targetPosition) {
+            activeSection = section.id;
+            break;
+          }
+        }
+      }
+
+      setActiveSection(activeSection);
+    };
+
+    // 初回チェック
+    checkActiveSection();
+
+    // Intersection Observer を使用してスクロール検出の最適化
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50px 0px 0px 0px', // セクションの上端が画面上部から50px下に来たときに反応
+      threshold: 0,
+    };
+
+    const observerCallback = () => {
+      checkActiveSection();
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
+    );
+
+    // セクション要素を監視対象に追加（スクロール検出用）
+    if (snsRef.current) {
+      observer.observe(snsRef.current);
+    }
+    if (projectsRef.current) {
+      observer.observe(projectsRef.current);
+    }
+    if (experienceRef.current) {
+      observer.observe(experienceRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // ヒーローセクションの監視（ナビゲーション固定用）
+  React.useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        // ヒーローセクションが見えなくなったらナビゲーションを固定
+        setIsNavFixed(!entry.isIntersecting);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const renderSNSLinks = React.useMemo(
+    () => (
+      <div className="mb-4">
+        {snsLinkItems.map((item) => (
+          <a
+            key={item.uri}
+            href={item.uri}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="me-4 me-md-5"
+            style={{ color: 'inherit', ...item.style }}
+            title={item.title}
+          >
+            <item.iconComponent size={35} className={item.className} />
+          </a>
+        ))}
+      </div>
+    ),
+    [],
+  );
+
+  const renderProjects = React.useMemo(
+    () => (
+      <Row xs={1} md={2} className="g-4">
+        {selfDevelopmentItems.map((item) => (
+          <Col key={item.siteUri}>
+            <ProjectCard item={item} />
+          </Col>
+        ))}
+      </Row>
+    ),
+    [],
+  );
 
   return (
-    <Layout location={location}>
-      <Row sm={1} md={2}>
-        <Col md={12 - sideBarWidth}>
-          <Link to={`#${linkedIds.link.innerLink}`}>
-            <h4
-              id={linkedIds.link.innerLink}
-              className="d-inline-block"
-              style={scrollPaddingTopStyle}
-            >
-              <span className={titleLeftSideBar}>
-                {linkedIds.link.titleLabel}
-              </span>
-            </h4>
-          </Link>
-          <div className="ms-3 mt-4 mb-5 ">
-            {snsLinkItems.map((item) => (
-              <a
-                key={item.uri}
-                href={item.uri}
-                style={{ color: 'inherit', ...item.style }}
-                target="_blank"
-                className="me-4 me-md-5"
-                title={item.title}
-              >
-                <item.iconComponent className={item.className} size={30} />
-              </a>
-            ))}
-          </div>
+    <Layout location={location} useFluidContainer={true}>
+      <FixedNavigation
+        isFixed={isNavFixed}
+        activeSection={activeSection}
+        onNavClick={scrollToSection}
+      />
 
-          <Link to={`#${linkedIds.selfDevelopment.innerLink}`}>
-            <h4
-              id={linkedIds.selfDevelopment.innerLink}
-              className="d-inline-block"
-              style={scrollPaddingTopStyle}
-            >
-              <span className={titleLeftSideBar}>
-                {linkedIds.selfDevelopment.titleLabel}
-              </span>
-            </h4>
-          </Link>
-          <div className="mt-4 mb-5">
-            {selfDevelopmentItems.map((item) => {
-              return (
-                <Card key={item.siteUri} className="ps-1 mb-3">
-                  <Row xs={1} md={2}>
-                    <Col md={2} className="m-auto text-center">
-                      <a href={item.siteUri} target="_blank" title={item.title}>
-                        <Card.Img
-                          variant="top"
-                          src={item.imageUri}
-                          style={{
-                            maxWidth: 200,
-                            maxHeight: 200,
-                            objectFit: 'contain',
-                          }}
-                        />
-                      </a>
-                    </Col>
-                    <Col md={10}>
-                      <Card.Body>
-                        <Card.Title>{item.title}</Card.Title>
-                        <Table striped bordered hover>
-                          <tbody>
-                            <tr>
-                              <td>サイト</td>
-                              <td>
-                                <a
-                                  href={item.siteUri}
-                                  target="_blank"
-                                  title={item.title}
-                                  className="text-break"
-                                >
-                                  {item.siteUri}
-                                </a>
-                              </td>
-                            </tr>
-                            {/* 列幅が４文字の方が見やすいため、４文字全てが1行に入るように調整している */}
-                            <tr>
-                              <td style={{ whiteSpace: 'nowrap' }}>開発時期</td>
-                              <td>
-                                {item.developmentStartAt}
-                                {item.developmentEndAt === ''
-                                  ? ''
-                                  : `〜${item.developmentEndAt}`}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>使用技術</td>
-                              <td>{item.usedTechniques.join(', ')}</td>
-                            </tr>
-                            <tr>
-                              <td>コメント</td>
-                              <td className="text-break">{item.description}</td>
-                            </tr>
-                            <tr>
-                              <td>アピール</td>
-                              <td className="text-break">
-                                {item.sellingPoint}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </Card.Body>
-                    </Col>
-                  </Row>
-                </Card>
-              );
-            })}
-          </div>
+      <div ref={heroRef}>
+        <HeroSection
+          activeSection={activeSection}
+          onNavClick={scrollToSection}
+        />
+      </div>
 
-          {resumePost === undefined || resumePost === null ? (
-            <></>
-          ) : (
-            <div>
-              <Link to={`#${linkedIds.developmentExperience.innerLink}`}>
-                <h4
-                  id={linkedIds.developmentExperience.innerLink}
-                  className="d-inline-block"
-                  style={scrollPaddingTopStyle}
-                >
-                  <span className={titleLeftSideBar}>
-                    {linkedIds.developmentExperience.titleLabel}
-                  </span>
-                </h4>
-              </Link>
-
-              <article
-                className="blog-post"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
-                <p className="mb-4">
-                  {resumePost.frontmatter?.updatedDate} 現在
-                </p>
-                <section
-                  dangerouslySetInnerHTML={{ __html: resumePost.html || '' }}
-                  className="text-break"
-                  itemProp="articleBody"
-                />
-              </article>
-            </div>
-          )}
-        </Col>
-
-        <Col
-          md={sideBarWidth}
-          className="d-none d-sm-none d-md-block position-fixed end-0 border border-dark"
+      <Container fluid className="py-4 px-2 px-md-5">
+        <section
+          ref={snsRef}
+          id="sns"
+          className="mb-5"
+          style={{
+            paddingTop: '50px',
+            marginTop: '-50px',
+          }}
         >
-          <span className="mb-2">Contents</span>
-          <ListGroup variant="flush">
-            <ListGroup.Item
-              href={`#${linkedIds.link.innerLink}`}
-              action
-              active={false}
-            >
-              {linkedIds.link.titleLabel}
-            </ListGroup.Item>
-            <ListGroup.Item
-              href={`#${linkedIds.selfDevelopment.innerLink}`}
-              action
-              active={false}
-            >
-              {linkedIds.selfDevelopment.titleLabel}
-            </ListGroup.Item>
-            <ListGroup.Item
-              href={`#${linkedIds.developmentExperience.innerLink}`}
-              action
-              active={false}
-            >
-              {linkedIds.developmentExperience.titleLabel}
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-      </Row>
+          <h2 className="mb-4">リンク</h2>
+          {renderSNSLinks}
+        </section>
+
+        <section
+          ref={projectsRef}
+          id="projects"
+          className="mb-5"
+          style={{
+            paddingTop: '50px',
+            marginTop: '-50px',
+            minHeight: '600px', // 最小高さを設定
+          }}
+        >
+          <h2 className="mb-4">個人開発</h2>
+          {renderProjects}
+        </section>
+
+        <section
+          ref={experienceRef}
+          id="experience"
+          className="mb-5"
+          style={{
+            paddingTop: '50px',
+            marginTop: '-50px',
+            minHeight: '600px', // 最小高さを設定
+          }}
+        >
+          <h2 className="mb-4">開発経験</h2>
+          <SkillSection />
+        </section>
+      </Container>
     </Layout>
   );
 };
@@ -228,15 +240,4 @@ export default aboutPage;
  *
  * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
  */
-export const Head: HeadFC<AboutPageQuery> = () => <Seo title="About" />;
-
-export const pageQuery = graphql`
-  query AboutPage {
-    markdownRemark(fileAbsolutePath: { regex: "/content/resume/" }) {
-      html
-      frontmatter {
-        updatedDate(formatString: "YYYY/MM/DD")
-      }
-    }
-  }
-`;
+export const Head: HeadFC = () => <Seo title="About" />;
