@@ -46,17 +46,13 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
     <Layout location={location}>
       <Row sm={1} md={2}>
         <Col md={12 - sideBarWidth}>
-          <Link to={`#${linkedIds.link.innerLink}`}>
-            <h4
-              id={linkedIds.link.innerLink}
-              className="d-inline-block"
-              style={scrollPaddingTopStyle}
-            >
-              <span className={titleLeftSideBar}>
-                {linkedIds.link.titleLabel}
-              </span>
-            </h4>
-          </Link>
+          <h2
+            id={linkedIds.link.innerLink}
+            className="d-inline-block"
+            style={scrollPaddingTopStyle}
+          >
+            <span className={titleLeftSideBar}>{linkedIds.link.titleLabel}</span>
+          </h2>
           <div className="ms-3 mt-4 mb-5 ">
             {snsLinkItems.map((item) => (
               <a
@@ -74,17 +70,15 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             ))}
           </div>
 
-          <Link to={`#${linkedIds.selfDevelopment.innerLink}`}>
-            <h4
-              id={linkedIds.selfDevelopment.innerLink}
-              className="d-inline-block"
-              style={scrollPaddingTopStyle}
-            >
-              <span className={titleLeftSideBar}>
-                {linkedIds.selfDevelopment.titleLabel}
-              </span>
-            </h4>
-          </Link>
+          <h2
+            id={linkedIds.selfDevelopment.innerLink}
+            className="d-inline-block"
+            style={scrollPaddingTopStyle}
+          >
+            <span className={titleLeftSideBar}>
+              {linkedIds.selfDevelopment.titleLabel}
+            </span>
+          </h2>
           <div className="mt-4 mb-5">
             {selfDevelopmentItems.map((item) => {
               return (
@@ -159,17 +153,15 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
             <></>
           ) : (
             <div>
-              <Link to={`#${linkedIds.developmentExperience.innerLink}`}>
-                <h4
-                  id={linkedIds.developmentExperience.innerLink}
-                  className="d-inline-block"
-                  style={scrollPaddingTopStyle}
-                >
-                  <span className={titleLeftSideBar}>
-                    {linkedIds.developmentExperience.titleLabel}
-                  </span>
-                </h4>
-              </Link>
+              <h2
+                id={linkedIds.developmentExperience.innerLink}
+                className="d-inline-block"
+                style={scrollPaddingTopStyle}
+              >
+                <span className={titleLeftSideBar}>
+                  {linkedIds.developmentExperience.titleLabel}
+                </span>
+              </h2>
 
               <article
                 className="blog-post"

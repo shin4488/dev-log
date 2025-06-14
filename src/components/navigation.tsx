@@ -19,6 +19,18 @@ const Navigation: React.FC = () => {
       path: '/about',
       label: 'About',
     },
+    {
+      path: '/about#link',
+      label: 'リンク',
+    },
+    {
+      path: '/about#self-development',
+      label: '個人開発',
+    },
+    {
+      path: '/about#development-experience',
+      label: '開発経験',
+    },
   ];
 
   return (
