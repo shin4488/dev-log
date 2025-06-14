@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Container } from 'react-bootstrap';
 import AboutImage from '@/images/my-profile-image.png';
-import '@/style.scss';
 
 interface HeroSectionProps {
   activeSection: string;

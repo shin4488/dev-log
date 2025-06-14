@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { WindowLocation } from '@reach/router';
 import { Container } from 'react-bootstrap';
 import Bio from '@/components/bio';
-import Navigation from '@/components/navigation';
 import '@/style.scss';
 
 interface LayoutParameter {
@@ -33,8 +32,6 @@ const Layout: React.FC<LayoutParameter> = ({
   return (
     // <div className="global-wrapper" data-is-root-path={isRootPath}>
     <div data-is-root-path={isRootPath}>
-      <Navigation />
-
       {useFluidContainer ? (
         <>
           <main>{children}</main>
