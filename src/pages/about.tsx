@@ -136,11 +136,11 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
                               <td>{item.usedTechniques.join(', ')}</td>
                             </tr>
                             <tr>
-                              <td>コメント</td>
+                              <td>概要</td>
                               <td className="text-break">{item.description}</td>
                             </tr>
                             <tr>
-                              <td>アピール</td>
+                              <td>技術アピール</td>
                               <td className="text-break">
                                 {item.sellingPoint}
                               </td>
