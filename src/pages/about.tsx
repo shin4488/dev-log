@@ -42,6 +42,38 @@ const aboutPage: React.FC<PageProps<AboutPageQuery>> = ({ data, location }) => {
     },
   };
 
+  React.useEffect(() => {
+    const sectionIds = [
+      linkedIds.link.innerLink,
+      linkedIds.selfDevelopment.innerLink,
+      linkedIds.developmentExperience.innerLink,
+    ];
+    function onScroll() {
+      const offset = 80;
+      const scrollPos = window.scrollY + offset;
+      let current = sectionIds[0];
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && scrollPos >= el.offsetTop) {
+          current = id;
+        }
+      }
+      sectionIds.forEach((id) => {
+        const nav = document.getElementById(`nav-${id}`);
+        if (nav) {
+          if (id === current) {
+            nav.classList.add('active');
+          } else {
+            nav.classList.remove('active');
+          }
+        }
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <Layout location={location}>
       <Row sm={1} md={2}>

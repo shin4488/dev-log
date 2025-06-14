@@ -9,6 +9,7 @@ import { withPrefix } from 'gatsby';
 interface NavigationItem {
   path: string;
   label: string;
+  sectionId?: string;
 }
 
 const Navigation: React.FC = () => {
@@ -22,14 +23,17 @@ const Navigation: React.FC = () => {
     {
       path: '/about#link',
       label: 'リンク',
+      sectionId: 'link',
     },
     {
       path: '/about#self-development',
       label: '個人開発',
+      sectionId: 'self-development',
     },
     {
       path: '/about#development-experience',
       label: '開発経験',
+      sectionId: 'development-experience',
     },
   ];
 
@@ -69,7 +73,10 @@ const Navigation: React.FC = () => {
               {navigationItems.map((item) => {
                 return (
                   <Nav.Item key={item.path}>
-                    <Nav.Link href={withPrefix(item.path)}>
+                    <Nav.Link
+                      id={item.sectionId ? `nav-${item.sectionId}` : undefined}
+                      href={withPrefix(item.path)}
+                    >
                       {item.label}
                     </Nav.Link>
                   </Nav.Item>
