@@ -1,5 +1,5 @@
 interface SkillLevel {
-  level: number;
+  level: 1 | 2 | 3 | 4 | 5;
   skills: string[];
 }
 
