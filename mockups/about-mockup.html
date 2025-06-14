@@ -4,14 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Mockup</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -90,48 +84,212 @@
 
     <h2 id="projects" class="mb-4">個人開発</h2>
     <div class="row row-cols-1 row-cols-md-2 g-4">
+      <!-- Chrome extension -->
       <div class="col">
         <div class="card project-card h-100 shadow-sm">
-          <a href="https://investee.info" target="_blank" rel="noopener noreferrer">
-            <img src="https://investee.info/logo192.png" class="card-img-top" alt="investee" />
-          </a>
-          <div class="card-body">
-            <h5 class="card-title">investee</h5>
-            <p class="card-text">上場企業の公開済み財務データをグラフ表示するサービス。</p>
+          <div class="row g-0">
+            <div class="col-md-2 text-center">
+              <a href="https://chromewebstore.google.com/detail/jjjlnbhaimbljpnohoelnodggfdoimee" target="_blank" rel="noopener noreferrer">
+                <img src="https://lh3.googleusercontent.com/_xZpV9RW1B24gnNpYz4tJTuok5bFRnFFe4Z9_v4Lmx6rb2jnjHY2IssMb5n8bC-2x7ECnGnS04vLPwkeRu2NM6X83nc=s275-w275-h175" class="img-fluid rounded-start" alt="Chrome Extension" />
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">上場企業の財務データ可視化のChrome拡張機能版</h5>
+                <table class="table">
+                  <tbody>
+                    <tr><th scope="row">サイト</th><td><a href="https://chromewebstore.google.com/detail/jjjlnbhaimbljpnohoelnodggfdoimee" target="_blank" class="text-break">chromewebstore.google.com</a></td></tr>
+                    <tr><th scope="row">開発時期</th><td>2024年10月</td></tr>
+                    <tr><th scope="row">使用技術</th><td>Docker, React.js, Material UI, Recharts, TypeScript, GraphQL, Vite, Google Analytics</td></tr>
+                    <tr><th scope="row">コメント</th><td class="text-break">https://investee.info のChrome拡張機能版。株探やYahoo!ファイナンスなどの株式情報サービスの画面と一緒に使える。</td></tr>
+                    <tr><th scope="row">アピール</th><td class="text-break">企業の検索性は株探やYahoo!ファイナンスなどの株式情報サービスの方が良いため、これらのサービスで企業を検索して財務データは拡張機能側で表示するような使い方ができる。 webサイト版同様に財務データの自動切り替え機能をつけて、操作性を上げた。</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- investee web service -->
       <div class="col">
         <div class="card project-card h-100 shadow-sm">
-          <a href="https://f1c.biz" target="_blank" rel="noopener noreferrer">
-            <img src="https://illustrain.com/img/work/2016/illustrain04-kaisya01.png" class="card-img-top" alt="F1C" />
-          </a>
-          <div class="card-body">
-            <h5 class="card-title">F1C</h5>
-            <p class="card-text">福井のNo.1企業を共有できるサービス。</p>
+          <div class="row g-0">
+            <div class="col-md-2 text-center">
+              <a href="https://investee.info" target="_blank" rel="noopener noreferrer">
+                <img src="https://investee.info/logo192.png" class="img-fluid rounded-start" alt="investee" />
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">上場企業の公開済み財務データを可視化するサービス（investee）</h5>
+                <table class="table">
+                  <tbody>
+                    <tr><th scope="row">サイト</th><td><a href="https://investee.info" target="_blank" class="text-break">https://investee.info</a></td></tr>
+                    <tr><th scope="row">開発時期</th><td>2023年9月〜10月</td></tr>
+                    <tr><th scope="row">使用技術</th><td>Docker, nginx, React.js, Material UI, Recharts, TypeScript, Google Analytics, Ruby, Ruby on Rails, Sidekiq, GraphQL, PostgreSQL, Redis, Ubuntu, さくらVPS</td></tr>
+                    <tr><th scope="row">コメント</th><td class="text-break">前日以前に公開された財務データ（貸借対照表・損益計算書・キャッシュフロー計算書）をグラフ化して一覧表示するサービス。 上場企業の財務データを閲覧・検索できるサービスは世に存在するが、それを可視化して一覧表示するサービスは見当たらなかったため開発した。 ユーザー層としては株など個別企業への投資家をターゲットとしているため、各企業の株探へのリンクをつけており、企業の株価などもすぐチェックできる。 貸借対照表・損益計算書において国際会計基準や金融機関のデータが表示対応していないことが伸びしろ。 今後予定している追加機能として、お気に入り登録・ROAやROEなど経営指標の表示を予定している。</td></tr>
+                    <tr><th scope="row">アピール</th><td class="text-break">財務データの自動切替によってユーザー側で操作せずとも財務3表を繰り返し見れる。またキャッシュフローのタイプによる検索も可能。 訂正財務諸表が提出された場合もそれを取り込んで常に正確な財務データを表示できる。 技術面では、将来的にモバイルアプリを作りたいと考えているが、表示するデータをフロントエンドで自由に選択できるようにフロントエンドとバックエンドのインターフェースにはGraphQLを使用した。</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- F1C service -->
       <div class="col">
         <div class="card project-card h-100 shadow-sm">
-          <a href="https://baseballgames.jp.net" target="_blank" rel="noopener noreferrer">
-            <img src="https://baseballgames.jp.net/image/top.png" class="card-img-top" alt="Baseball Game" />
-          </a>
-          <div class="card-body">
-            <h5 class="card-title">Baseball Game</h5>
-            <p class="card-text">満塁から始まるオンライン野球ゲーム。</p>
+          <div class="row g-0">
+            <div class="col-md-2 text-center">
+              <a href="https://f1c.biz" target="_blank" rel="noopener noreferrer">
+                <img src="https://illustrain.com/img/work/2016/illustrain04-kaisya01.png" class="img-fluid rounded-start" alt="F1C" />
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">福井に拠点のあるNo.1企業を共有し、また他ユーザの共有内容を閲覧できるサービス（F1C）</h5>
+                <table class="table">
+                  <tbody>
+                    <tr><th scope="row">サイト</th><td><a href="https://f1c.biz" target="_blank" class="text-break">https://f1c.biz</a></td></tr>
+                    <tr><th scope="row">開発時期</th><td>2022年5月〜6月</td></tr>
+                    <tr><th scope="row">使用技術</th><td>Docker, nginx, Vue.js, Vuetify, Nuxt.js, TypeScript, Google Analytics, Node.js, Express.js, Firebase (Authentication, Functions), PostgreSQL, Ubuntu, さくらVPS</td></tr>
+                    <tr><th scope="row">コメント</th><td class="text-break">自分自身が一時期、地元である福井の企業を探す機会があったが、なかなか福井にはどのような企業があるのかを探すのが難しいと感じたことが開発のきっかけ。 現在は福井の人口流出が続いているものの、「自分は把握できていないが、優良な企業」はたくさんあると思い、福井への関心が高まることでUターンする人も増えて、個人・企業・地域がWin-Winの関係を作れればという思いで開発。しかし、「個人ユーザには投稿するメリットがない」「企業の人にはこのサービスの認知をされない」など投稿する人の立場に立った企画ができていないという問題が発生している。 （地元の新聞社に新聞記事としてこのサービスの掲載依頼を行ったり、地元の団体のサイトへ掲載依頼を行うもむなしく掲載されず、認知されないという企画倒れなサービスとなっている。） このサービスの開発の記録は以下を参照 https://qiita.com/shin4488/items/65dc5fba6a3df1eeb4f8</td></tr>
+                    <tr><th scope="row">アピール</th><td class="text-break">各企業のホームページに設定されているmetaタグの"og:image"情報の取得を「リアルタイムで取得」から「日次バッチで取得しDB保存」としたことで、リアルタイムの処理負担が減り、投稿取得のサーバサイドの処理時間が1秒ほど短縮した。</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Baseball Game -->
+      <div class="col">
+        <div class="card project-card h-100 shadow-sm">
+          <div class="row g-0">
+            <div class="col-md-2 text-center">
+              <a href="https://baseballgames.jp.net" target="_blank" rel="noopener noreferrer">
+                <img src="https://baseballgames.jp.net/image/top.png" class="img-fluid rounded-start" alt="Baseball Game" />
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">常に満塁から始まる野球盤ゲーム</h5>
+                <table class="table">
+                  <tbody>
+                    <tr><th scope="row">サイト</th><td><a href="https://baseballgames.jp.net" target="_blank" class="text-break">https://baseballgames.jp.net</a></td></tr>
+                    <tr><th scope="row">開発時期</th><td>2021年5月</td></tr>
+                    <tr><th scope="row">使用技術</th><td>Docker, nginx, Vue.js, JavaScript, Gulp, webpack, Google Analytics, Firebase (Authentication, Firestore), Ubuntu, さくらVPS</td></tr>
+                    <tr><th scope="row">コメント</th><td class="text-break">全球が満塁から始まる設定の野球ゲーム。野球好きな人とかかわりあえる場所が欲しいと思ったのが開発のきっかけ。 スマホでプレイすると短い距離からスピードのある球が投げ込まれるため、かなり難しく感じてしまう。 現状、1人対戦しかできないため、2人でオンライン対戦できるようにするのが伸びしろ（WebSocketなど使えばできる...はず）</td></tr>
+                    <tr><th scope="row">アピール</th><td class="text-break">今週分と歴代分のランキングによって、他の人と関わり合えるような機能を作成した。 「バットとボール」「ボールと盤」などの当たり判定には、三角関数やベクトルを利用してより厳密な当たり判定を行うようにした。</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MLB Twitter bot -->
+      <div class="col">
+        <div class="card project-card h-100 shadow-sm">
+          <div class="row g-0">
+            <div class="col-md-2 text-center">
+              <a href="https://twitter.com/mlbbot2" target="_blank" rel="noopener noreferrer">
+                <img src="https://4.bp.blogspot.com/-soWYXYF8VzE/XLAc6evk4lI/AAAAAAABST8/sPABxbJwhlopXnLJNLRMEdnl1lyOphDegCLcBGAs/s400/character_sports_baseball.png" class="img-fluid rounded-start" alt="MLB Bot" />
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">メジャーリーグの順位表をツイートするTwitter bot</h5>
+                <table class="table">
+                  <tbody>
+                    <tr><th scope="row">サイト</th><td><a href="https://twitter.com/mlbbot2" target="_blank" class="text-break">https://twitter.com/mlbbot2</a></td></tr>
+                    <tr><th scope="row">開発時期</th><td>2020年8月</td></tr>
+                    <tr><th scope="row">使用技術</th><td>C#, AWS Lambda, Twitter API, GitHub Actions</td></tr>
+                    <tr><th scope="row">コメント</th><td class="text-break">メジャーリーグの試合のあった日に順位表を教えてくれるTwitter bot。 Lambdaを使用してサーバレスな環境を日次で動かしている。 デプロイを手動で行なっているため、自動化やAWS環境はIaCな形で管理できるようにするのが技術的伸びしろ。 試合がない日にはツイートしないように制御をかけている。 前年にはLINE botを使用して開発を行なっていることもあり、この頃bot開発をとても楽しんでいた。</td></tr>
+                    <tr><th scope="row">アピール</th><td class="text-break">Twitterアカウントさえフォローしておけば、自分から「メジャーリーグ 順位」など能動的に検索せずとも 順位表を教えてくれるようになっており、比較的気軽に使える。</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINE bot -->
+      <div class="col">
+        <div class="card project-card h-100 shadow-sm">
+          <div class="row g-0">
+            <div class="col-md-2 text-center">
+              <a href="https://line.me/R/ti/p/%40244gzids" target="_blank" rel="noopener noreferrer">
+                <img src="https://chojugiga.com/c/choju50_0016/choju50_0016.png" class="img-fluid rounded-start" alt="LINE bot" />
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">トイレのある近くのコンビニ検索・画像内の文字を指定の言語に翻訳するLINE bot</h5>
+                <table class="table">
+                  <tbody>
+                    <tr><th scope="row">サイト</th><td><a href="https://line.me/R/ti/p/%40244gzids" target="_blank" class="text-break">https://line.me/R/ti/p/%40244gzids</a></td></tr>
+                    <tr><th scope="row">開発時期</th><td>2019年9月〜11月（以降、たまにメンテナンス実施）</td></tr>
+                    <tr><th scope="row">使用技術</th><td>LINE Messaging API, Python, Heroku（リリース当時）, Render（Heroku無料枠廃止に伴い使用）, Google Vision API, Google Places API, Firebase (Firestore), Google Apps Script, Google Analytics</td></tr>
+                    <tr><th scope="row">コメント</th><td class="text-break">LINEから位置情報を送ると近くのコンビニ（トイレ付き）を表示して、画像を送ると画像内のテキストを翻訳してくれる。 もともと、近くのレストラン検索Botとして開発を行なっていたが、ホットペッパーのAPI提供が終了してしまったため別路線に切り替えた。 代替としてコンビニ検索を入れている。（ただ検索するだけではGoogleマップと同じになってしまうため、差別化のためにトイレ付きのコンビニを検索するようにした。） ユーザ管理をLINE側で行ってくれるのがとてもありがたい。</td></tr>
+                    <tr><th scope="row">アピール</th><td class="text-break">開発当時、画像の文章を翻訳するサービスがなかったため（少ないながらも）ユーザさんから重宝してもらっていた。 今は、Google翻訳が画像対応できてしまったようで、あまりこのBotで翻訳するメリットがなさそう...。 （技術的なアピールとして）翻訳部分でGoogle翻訳APIを使用してしまうと料金がかかってしまうため、翻訳はGoogle Apps Script（GAS）側で行い無料で翻訳を実現している。 （GAS側でAPIのエンドポイントを公開できるため、自作したGASの翻訳用のAPIを叩いている。）</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shooting Game -->
+      <div class="col">
+        <div class="card project-card h-100 shadow-sm">
+          <div class="row g-0">
+            <div class="col-md-2 text-center">
+              <a href="https://shooting-f0o5.onrender.com/index.html" target="_blank" rel="noopener noreferrer">
+                <img src="https://shooting-f0o5.onrender.com/img/man.png" class="img-fluid rounded-start" alt="Shooting Game" />
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">Shooting Game</h5>
+                <table class="table">
+                  <tbody>
+                    <tr><th scope="row">サイト</th><td><a href="https://shooting-f0o5.onrender.com/index.html" target="_blank" class="text-break">https://shooting-f0o5.onrender.com/index.html</a></td></tr>
+                    <tr><th scope="row">開発時期</th><td>2017年1月〜3月</td></tr>
+                    <tr><th scope="row">使用技術</th><td>JavaScript, Render</td></tr>
+                    <tr><th scope="row">コメント</th><td class="text-break">1分間、球から逃げ続けるシューティングゲーム。大学3年生の時に初めてHTML・CSS・JavaScriptを触った時に作ったもの。 クオリティ的な問題はたくさんあると思うが、当時は結構真剣に作っていた。</td></tr>
+                    <tr><th scope="row">アピール</th><td class="text-break">Renderを使用してサーバコスト・デプロイコストをかけずにデリバリーできるようにした。</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <h2 id="experience" class="mt-5 mb-4">開発経験</h2>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Salesforce (Apex, LWC)</li>
-      <li class="list-group-item">Node.js / TypeScript</li>
-      <li class="list-group-item">Vue.js / React.js</li>
-      <li class="list-group-item">C# / .NET</li>
-    </ul>
+    <p class="mb-3">2023/10/28 現在</p>
+    <article class="mb-5">
+      <h3>業務で扱ってきた主な技術スタック</h3>
+      <p>★★★★☆</p>
+      <p>Salesforce (Apex, Lightning Web Component, Aura Component, Visualforce, プロセスビルダー, フロー, 第2世代管理パッケージ)</p>
+      <p>★★★☆☆</p>
+      <p>Node.js, TypeScript</p>
+      <p>★★☆☆☆</p>
+      <p>C#, Vue.js</p>
+      <p>★☆☆☆☆</p>
+      <p>SQL Server, Jenkins, Ruby on Rails, Datadog, Redis</p>
+      <p>※Salesforceに関して</p>
+      <p>Apex...JavaライクなSalesforce独自のプログラミング言語</p>
+      <p>Lightning Web Component...Vue.jsライクなSalesforce独自のUIフレームワーク</p>
+    </article>
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
