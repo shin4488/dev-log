@@ -11,7 +11,37 @@ interface SelfDevelopmentItem {
   technicalAppeal: string;
 }
 
+// 文章系で現状使ってるのはsummaryとtechnicalAppeal
 export const selfDevelopmentItems: SelfDevelopmentItem[] = [
+  {
+    title: 'Algorithm Visualizer | 視覚的にアルゴリズムを学ぼう',
+    imageUri:
+      'https://algorithm-visualizer-6w68.onrender.com/static/og-image.png',
+    siteUri: 'https://algorithm-visualizer-6w68.onrender.com',
+    developmentStartAt: '2025年9月',
+    developmentEndAt: '',
+    usedTechniques: [
+      'Docker',
+      'Dev Containers',
+      'React.js',
+      'TypeScript',
+      'Mantine',
+      'i18next',
+      'Google Analytics',
+      'Vitest',
+      'husky',
+    ],
+    description: '',
+    sellingPoint: '',
+    summary: `図とアニメーションでアルゴリズムを視覚的に理解できる！
+複数アルゴリズムを同時に見れるので処理速度を比較してみよう。
+英語・日本語に対応していて、操作はスライダーとボタンクリックだけなので誰でも簡単に学習可能。
+アルゴリズムの学びがぐっと身近に！`,
+    technicalAppeal: `i18nextで多言語対応（英日）による言語自動切り替え機能を備える。
+UI描画部分とアルゴリズムのロジック実装部分を分離する疎結合な構成を作成。
+React + TypeScript + Percelを使って軽量シンプルで型安全な開発を実現。
+Docker + Dev Containersで開発者ごとの環境差を排除し、スピーディな開発環境構築が可能。`,
+  },
   {
     title: '上場企業の財務データ可視化のChrome拡張機能版',
     imageUri:

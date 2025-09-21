@@ -23,11 +23,20 @@ export const skillLevels: SkillLevel[] = [
   },
   {
     level: 2,
-    skills: ['C#', 'Vue.js'],
+    skills: ['C#', 'Vue.js', 'Ruby on Rails'],
   },
   {
     level: 1,
-    skills: ['SQL Server', 'Jenkins', 'Ruby on Rails', 'Datadog', 'Redis'],
+    skills: [
+      'Google Cloud',
+      'BigQuery',
+      'Terraform',
+      'GitHub Actions',
+      'SQL Server',
+      'Jenkins',
+      'Datadog',
+      'Redis',
+    ],
   },
 ];
 
@@ -38,6 +47,6 @@ export const salesforceNotes = [
 ];
 
 // 開発経験の更新日
-export const experienceUpdatedDate = '2023/10/28';
+export const experienceUpdatedDate = '2025/09/21';
 
 export { type SkillLevel };
