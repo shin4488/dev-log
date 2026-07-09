@@ -1,10 +1,10 @@
 {
-  "name": "gatsby-blog",
+  "name": "dev-log",
   "private": true,
   "description": "shin4488's blog written by Gatsby and Markdown",
   "version": "1.0.0",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/shin4488/dev-log/issues"
   },
   "dependencies": {
     "bootstrap": "^5.2.0",
@@ -55,14 +55,14 @@
     "ts-jest": "^29.1.1",
     "jest-environment-jsdom": "^29.7.0"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "homepage": "https://shin4488.github.io/dev-log/",
   "keywords": [
     "gatsby"
   ],
   "license": "0BSD",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git+https://github.com/shin4488/dev-log.git"
   },
   "scripts": {
     "gatsby": "gatsby",
@@ -73,7 +73,7 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "generate": "graphql-codegen --config codegen.yml",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "lint": "eslint 'src/**/*.{ts,tsx}' gatsby-*.js",
     "test": "jest"
   }
 }
