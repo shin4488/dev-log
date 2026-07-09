@@ -14,6 +14,37 @@ interface SelfDevelopmentItem {
 // 文章系で現状使ってるのはsummaryとtechnicalAppeal
 export const selfDevelopmentItems: SelfDevelopmentItem[] = [
   {
+    title: '確率分布ビジュアライザー | パラメータを動かして分布を体感しよう',
+    imageUri:
+      'https://shin4488.github.io/probability-distribution-visualization/ogp.png',
+    siteUri:
+      'https://shin4488.github.io/probability-distribution-visualization/',
+    developmentStartAt: '2026年7月',
+    developmentEndAt: '',
+    usedTechniques: [
+      'Docker',
+      'Dev Containers',
+      'React.js',
+      'TypeScript',
+      'Vite',
+      'Chart.js',
+      'Tailwind CSS',
+      'Biome',
+      'Vitest',
+      'GitHub Actions',
+      'GitHub Pages',
+      'Google Analytics',
+    ],
+    description: '',
+    sellingPoint: '',
+    summary: `10種類の確率分布をスライダー操作でリアルタイムに体感できる！
+理論のグラフに標本シミュレーションを重ねて、「理論と実データのズレ」や大数の法則まで目で見て学べる。
+英語・日本語、ダークモードに対応。表示中の状態はそのままURLで共有できるので、授業や資料への引用もかんたん。`,
+    technicalAppeal: `①数学ロジック（純TypeScript）とUIを分離するレイヤードアーキテクチャ。確率計算はlog空間で行い階乗・ガンマ関数のオーバーフローを根本回避
+②「URLが共有可能な状態のすべて」という設計。パラメータ・並び順・言語・テーマをクエリ文字列に常時同期し、共有ボタンなしで状態共有を実現
+③npmサプライチェーン対策として依存を最小限・完全固定し、GitHub Actionsもコミットハッシュ固定。全分布を自動掃引するテスト（確率の総和≈1・サンプラー収束）で品質担保`,
+  },
+  {
     title: 'Algorithm Visualizer | 視覚的にアルゴリズムを学ぼう',
     imageUri:
       'https://algorithm-visualizer-6w68.onrender.com/static/og-image.png',
@@ -39,7 +70,7 @@ export const selfDevelopmentItems: SelfDevelopmentItem[] = [
 アルゴリズムの学びがぐっと身近に！`,
     technicalAppeal: `i18nextで多言語対応（英日）による言語自動切り替え機能を備える。
 UI描画部分とアルゴリズムのロジック実装部分を分離する疎結合な構成を作成。
-React + TypeScript + Percelを使って軽量シンプルで型安全な開発を実現。
+React + TypeScript + Parcelを使って軽量シンプルで型安全な開発を実現。
 Docker + Dev Containersで開発者ごとの環境差を排除し、スピーディな開発環境構築が可能。`,
   },
   {
@@ -113,7 +144,7 @@ ROE・ROA表示やお気に入り登録など新機能も続々追加予定。
   {
     title:
       '福井に拠点のあるNo.1企業を共有し、また他ユーザの共有内容を閲覧できるサービス（F1C）',
-    imageUri: 'https://illustrain.com/img/work/2016/illustrain04-kaisya01.png',
+    imageUri: 'https://f1c.biz/favicon.ico',
     siteUri: 'https://f1c.biz',
     developmentStartAt: '2022年5月',
     developmentEndAt: '6月',
