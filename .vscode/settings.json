@@ -24,6 +24,6 @@
   },
   // 保存時のeslintを有効化
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   }
 }
