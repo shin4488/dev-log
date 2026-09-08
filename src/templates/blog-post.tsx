@@ -2,9 +2,8 @@ import * as React from 'react';
 import { Link, graphql, PageProps, HeadFC } from 'gatsby';
 import Layout from '@/components/layout';
 import Seo from '@/components/seo';
-import { BlogPostBySlugQuery } from '~/gatsby-graphql';
 
-const BlogPostTemplate: React.FC<PageProps<BlogPostBySlugQuery>> = ({
+const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostBySlugQuery>> = ({
   data: { previous, next, markdownRemark: post },
   location,
 }) => {
@@ -71,7 +70,7 @@ const BlogPostTemplate: React.FC<PageProps<BlogPostBySlugQuery>> = ({
   );
 };
 
-export const Head: HeadFC<BlogPostBySlugQuery> = ({
+export const Head: HeadFC<Queries.BlogPostBySlugQuery> = ({
   data: { markdownRemark: post },
 }) => {
   return (

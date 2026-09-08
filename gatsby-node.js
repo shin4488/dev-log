@@ -3,12 +3,7 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
-    resolve: {
-      alias: {
-        '~': __dirname,
-        '@': path.resolve(__dirname, 'src'),
-      },
-    },
+    resolve: { alias: { '~': __dirname, '@': path.resolve(__dirname, 'src') } },
   });
 };
 
@@ -17,7 +12,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const result = await graphql(`
     query markdownPosts {
       posts: allMarkdownRemark(
-        sort: { fields: [frontmatter___createdDate], order: ASC }
+        sort: { frontmatter: { createdDate: ASC } }
         limit: 1000
         filter: { fileAbsolutePath: { regex: "/content/blog/" } }
       ) {
@@ -29,11 +24,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         }
       }
       tags: allMarkdownRemark(
-        sort: { fields: [frontmatter___createdDate], order: ASC }
+        sort: { frontmatter: { createdDate: ASC } }
         limit: 1000
         filter: { fileAbsolutePath: { regex: "/content/blog/" } }
       ) {
-        group(field: frontmatter___tags) {
+        group(field: { frontmatter: { tags: SELECT } }) {
           tag: fieldValue
         }
       }

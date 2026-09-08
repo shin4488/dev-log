@@ -4,10 +4,10 @@ Gatsbyで作る日本語ブログ・自己紹介サイト。記事は `content/b
 
 ## 開発・検証と公開
 
-- コマンドと依存の正は `package.json`。開発は `yarn dev`、コード変更の確認は `yarn lint`・`yarn test`、記事・画面の表示確認は `yarn build` と `yarn serve` を入口にする。必要な検証は変更対象に合わせる。
+- Node 24と `yarn install --frozen-lockfile` を使う。UIライブラリとSassは表示維持のため固定しており、変更時は画面を比較する。コマンドと依存の正は `package.json`。開発は `yarn dev`、コード変更の確認は `yarn lint`・`yarn test`、記事・画面の表示確認は `yarn build` と `yarn serve` を入口にする。必要な検証は変更対象に合わせる。
 - GitHub Pagesのサブパス配信を維持する。`yarn build` の `--prefix-paths` とGatsbyの `pathPrefix` を前提に、アセットを `/...` の絶対パスで参照しない。
 - mainへのpushはサイト公開につながる。公開条件は `.github/workflows/gh-pages.yml`、PRのテストは `.github/workflows/test.yml` を確認する。
-- GraphQLの型を調べる場合はGatsby設定・クエリと `gatsby-graphql.ts` を確認する。通常のUI調査では大きな生成型を先に読まず、生成物を手修正しない。型生成の実行前にscriptsが参照する設定ファイルの存在を確認する。
+- GraphQLの型を調べる場合はGatsby設定・クエリと `gatsby-graphql.ts` を確認する。通常のUI調査では大きな生成型を先に読まず、生成物を手修正しない。Gatsby標準の型生成は `yarn dev` で実行し、生成された `Queries` 名前空間を使う。`yarn typecheck` で型を検証する。
 - 整形は変更したファイルに絞る。`yarn format` は広い範囲を書き換えるため、無関係な差分を含めない。`.env.development` の内容をコミット・ログ・文書に転記しない。
 - 継続する改善候補は [docs/improvement-backlog.md](docs/improvement-backlog.md)を使う。
 
