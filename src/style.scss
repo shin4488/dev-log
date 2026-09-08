@@ -1,13 +1,44 @@
+@import '../node_modules/bootstrap/scss/functions';
+@import '../node_modules/bootstrap/scss/variables';
+
 $dark-color: #333c5e;
 $primary-blue: #2e86de;
 
-$theme-colors: (
-  'primary': $primary-blue,
-  'twitter': #00acee,
-  'qiita': #00ca00,
-  'linkedin': #0e76a8,
-  'nav-bar': $dark-color,
-  'title-left-bar': $dark-color,
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    'primary': $primary-blue,
+    'twitter': #00acee,
+    'qiita': #00ca00,
+    'linkedin': #0e76a8,
+    'nav-bar': $dark-color,
+    'title-left-bar': $dark-color,
+  )
 );
 
+// The site's palette and table surfaces are independent of Bootstrap defaults.
+$headings-color: inherit;
+$body-secondary-color: #6c757d;
+$table-color: var(--bs-body-color);
+$table-bg: transparent;
+
 @import '../node_modules/bootstrap/scss/bootstrap';
+
+// Preserve the heading palette defined by the site stylesheet.
+h1 {
+  --bs-heading-color: var(--color-heading-black);
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+  --bs-heading-color: var(--color-heading);
+}
+
+// Experience notes use the site's neutral surface rather than an alert palette.
+.experience-note {
+  --bs-alert-color: var(--bs-body-color);
+  --bs-alert-bg: transparent;
+  --bs-alert-border-color: transparent;
+}

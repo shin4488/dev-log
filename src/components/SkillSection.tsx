@@ -31,7 +31,7 @@ const SkillSection: React.FC = () => {
                   key={skill}
                   bg="light"
                   text="dark"
-                  className="border me-1 mb-1"
+                  className="border border-2 me-1 mb-1"
                 >
                   {skill}
                 </Badge>
@@ -40,7 +40,7 @@ const SkillSection: React.FC = () => {
           </div>
         ))}
 
-        <Alert variant="info" className="mt-4">
+        <Alert variant="info" className="experience-note mt-4">
           {salesforceNotes.map((note, index) => (
             <p key={index} className={index === 0 ? 'fw-bold mb-2' : 'mb-1'}>
               {note}

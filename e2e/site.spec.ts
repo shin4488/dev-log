@@ -239,3 +239,30 @@ test('F1C icon is served locally even when the F1C site is unavailable', async (
   }));
   expect(state).toEqual({ local: true, width: 600, height: 600 });
 });
+
+test('site theme preserves heading colors, table surfaces and skill borders', async ({
+  page,
+}) => {
+  await page.goto('./');
+  await page.waitForLoadState('networkidle');
+  for (const heading of await page.locator('h2, h3').all()) {
+    await expect(heading).toHaveCSS('color', 'rgb(26, 32, 44)');
+  }
+  const badge = page.locator('.badge.border').first();
+  await expect(badge).toHaveCSS('border-width', '2px');
+  await expect(badge).toHaveCSS('background-color', 'rgb(248, 249, 250)');
+  await expect(badge).toHaveCSS('color', 'rgb(33, 37, 41)');
+  const cell = page.locator('td').first();
+  await expect(cell).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+  await expect(cell).toHaveCSS('color', 'rgb(33, 37, 41)');
+  await expect(page.locator('.text-muted').first()).toHaveCSS(
+    'color',
+    'rgb(108, 117, 125)',
+  );
+  const note = page.getByRole('alert');
+  await expect(note).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+  await expect(note).toHaveCSS('color', 'rgb(33, 37, 41)');
+  await expect(note).toHaveCSS('border-color', 'rgba(0, 0, 0, 0)');
+  await page.goto('2022-08-24-introduction/');
+  await expect(page.locator('h1')).toHaveCSS('color', 'rgb(0, 0, 0)');
+});
