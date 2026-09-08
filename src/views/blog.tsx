@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Link, graphql, PageProps, HeadFC } from 'gatsby';
+import type { BlogData, PageProps } from '@/lib/types';
+import Link from '@/components/Link';
 import Layout from '@/components/layout';
-import Seo from '@/components/seo';
 
-const BlogIndex: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data, location }) => {
+const BlogIndex: React.FC<PageProps<BlogData>> = ({ data, location }) => {
   const posts = data.allMarkdownRemark.nodes;
 
   if (posts.length === 0) {
@@ -45,7 +45,7 @@ const BlogIndex: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data, location
                 </section>
                 {/* タグ */}
                 {post.frontmatter?.tags?.map((tag) => {
-                  const linkToPath = `/tags/${tag}`;
+                  const linkToPath = `/tags/${tag}/`;
                   return (
                     <React.Fragment key={tag}>
                       <Link to={linkToPath} key={linkToPath}>
@@ -64,40 +64,3 @@ const BlogIndex: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data, location
 };
 
 export default BlogIndex;
-
-/**
- * Head export to define metadata for the page
- *
- * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
- */
-export const Head: HeadFC<Queries.IndexPageQuery> = () => <Seo title="Blog" />;
-
-export const query = graphql`
-  query IndexPage($tagName: [String]) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownRemark(
-      sort: { frontmatter: { createdDate: DESC } }
-      filter: {
-        fileAbsolutePath: { regex: "/content/blog/" }
-        frontmatter: { tags: { in: $tagName } }
-      }
-    ) {
-      nodes {
-        excerpt
-        fields {
-          slug
-        }
-        frontmatter {
-          createdDate(formatString: "YYYY/MM/DD")
-          title
-          description
-          tags
-        }
-      }
-    }
-  }
-`;

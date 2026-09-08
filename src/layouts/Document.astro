@@ -1,0 +1,60 @@
+---
+import 'typeface-montserrat';
+import 'typeface-merriweather';
+import '../normalize.css';
+import '../style.css';
+import 'prismjs/themes/prism.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../style.scss';
+import { site, localUrl } from '../lib/site';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = site.description } = Astro.props;
+const measurementId = import.meta.env.PROD
+  ? import.meta.env.GOOGLE_ANALYTICS_MEASUREMENT_ID
+  : undefined;
+
+---
+<!doctype html>
+<html lang="en" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <ClientRouter fallback="swap" />
+    <title>{title} | {site.title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={site.url + 'static/my-profile-image-564c5fa176a060003203d7276dbcce81.png'} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content={site.twitter} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/png" href={localUrl('/favicon-32x32.png')} />
+    <link rel="manifest" href={localUrl('/manifest.webmanifest')} crossorigin="anonymous" />
+    {[48, 72, 96, 144, 192, 256, 384, 512].map(size => <link rel="apple-touch-icon" sizes={`${size}x${size}`} href={localUrl(`/icons/icon-${size}x${size}.png`)} />)}
+    <link rel="alternate" type="application/rss+xml" title="Dev Log RSS Feed" href={localUrl('/rss.xml')} />
+    {measurementId && <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`}></script>
+      <script is:inline define:vars={{ measurementId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', measurementId, { send_page_view: false });
+        document.addEventListener('astro:page-load', () => {
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            gtag('event', 'page_view', { page_path: location.pathname + location.search + location.hash });
+          }));
+        });
+      </script>
+    </>}
+  </head>
+  <body><slot /></body>
+</html>

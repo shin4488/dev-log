@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { ReactNode } from 'react';
-import { WindowLocation } from '@reach/router';
+import type { ReactNode } from 'react';
+import { basePath } from '@/lib/site';
 import { Container } from 'react-bootstrap';
 import Bio from '@/components/bio';
 import '@/style.scss';
 
 interface LayoutParameter {
-  location: WindowLocation;
+  location: { pathname: string };
   children?: ReactNode;
   useFluidContainer?: boolean;
 }
@@ -16,8 +16,7 @@ const Layout: React.FC<LayoutParameter> = ({
   children,
   useFluidContainer = false,
 }) => {
-  // eslint-disable-next-line no-undef
-  const rootPath = `${__PATH_PREFIX__}/`;
+  const rootPath = `${basePath}/`;
   const isRootPath = location.pathname === rootPath;
 
   const footerContent = (

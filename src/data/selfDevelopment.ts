@@ -1,3 +1,5 @@
+import f1cIcon from '@/images/f1c-icon.png?url';
+
 interface SelfDevelopmentItem {
   title: string;
   imageUri: string;
@@ -144,7 +146,7 @@ ROE・ROA表示やお気に入り登録など新機能も続々追加予定。
   {
     title:
       '福井に拠点のあるNo.1企業を共有し、また他ユーザの共有内容を閲覧できるサービス（F1C）',
-    imageUri: 'https://f1c.biz/favicon.ico',
+    imageUri: f1cIcon,
     siteUri: 'https://f1c.biz',
     developmentStartAt: '2022年5月',
     developmentEndAt: '6月',

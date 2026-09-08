@@ -25,3 +25,9 @@ jobs:
         run: yarn build
         env:
           GOOGLE_ANALYTICS_MEASUREMENT_ID: G-TEST
+      - name: Audit dependencies
+        run: yarn audit:dependencies
+      - name: Install browser
+        run: yarn playwright install --with-deps chromium
+      - name: Check pages and interactions
+        run: yarn test:e2e

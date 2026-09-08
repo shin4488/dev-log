@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Link, graphql, PageProps, HeadFC } from 'gatsby';
+import type { PageProps, PostData } from '@/lib/types';
+import Link from '@/components/Link';
 import Layout from '@/components/layout';
-import Seo from '@/components/seo';
 
-const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostBySlugQuery>> = ({
+const BlogPostTemplate: React.FC<PageProps<PostData>> = ({
   data: { previous, next, markdownRemark: post },
   location,
 }) => {
@@ -70,58 +70,4 @@ const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostBySlugQuery>> = ({
   );
 };
 
-export const Head: HeadFC<Queries.BlogPostBySlugQuery> = ({
-  data: { markdownRemark: post },
-}) => {
-  return (
-    <Seo
-      title={post?.frontmatter?.title || ''}
-      description={post?.frontmatter?.description || post?.excerpt || ''}
-      // TODO:og:imageに設定する画像データの用意
-      image={''}
-    />
-  );
-};
-
 export default BlogPostTemplate;
-
-export const pageQuery = graphql`
-  query BlogPostBySlug(
-    $id: String!
-    $previousPostId: String
-    $nextPostId: String
-  ) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    markdownRemark(id: { eq: $id }) {
-      id
-      excerpt(pruneLength: 160)
-      html
-      frontmatter {
-        title
-        createdDate(formatString: "YYYY/MM/DD")
-        updatedDate(formatString: "YYYY/MM/DD")
-        description
-      }
-    }
-    previous: markdownRemark(id: { eq: $previousPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-      }
-    }
-    next: markdownRemark(id: { eq: $nextPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-      }
-    }
-  }
-`;

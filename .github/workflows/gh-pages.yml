@@ -24,20 +24,16 @@ jobs:
           cache: yarn
       - name: Setup Pages
         uses: actions/configure-pages@v2
-        with:
-          # pathPrefixの自動適用
-          static_site_generator: gatsby
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Build with Gatsby
+      - name: Build with Astro
         env:
-          PREFIX_PATHS: 'true'
           GOOGLE_ANALYTICS_MEASUREMENT_ID: ${{ secrets.GOOGLE_ANALYTICS_MEASUREMENT_ID }}
         run: yarn build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./dist
 
   deploy:
     environment:
