@@ -9,7 +9,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import { ReactNode } from 'react';
-import { SeoQuery } from '~/gatsby-graphql';
 
 interface SeoParameter {
   description?: string;
@@ -25,7 +24,7 @@ const Seo: React.FC<SeoParameter> = ({
   image,
   children,
 }) => {
-  const { site }: SeoQuery = useStaticQuery(
+  const { site }: Queries.SeoQuery = useStaticQuery(
     graphql`
       query Seo {
         site {

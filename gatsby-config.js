@@ -4,6 +4,8 @@ require('dotenv').config({
 
 module.exports = {
   pathPrefix: '/dev-log',
+  trailingSlash: 'always',
+  graphqlTypegen: { typesOutputPath: './gatsby-graphql.ts' },
   siteMetadata: {
     title: `Dev Log`,
     author: {
@@ -18,7 +20,11 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-image`,
-    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-sass`,
+      // Sass単体で圧縮するとBOMがCSSの途中に入るため、結合後のWebpackで圧縮する。
+      options: { sassOptions: { outputStyle: 'expanded' } },
+    },
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
@@ -26,17 +32,6 @@ module.exports = {
         pluginConfig: {
           head: true,
         },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-graphql-codegen`,
-      options: {
-        fileName: `./gatsby-graphql.ts`,
-        documentPaths: [
-          './src/**/*.{ts,tsx}',
-          './node_modules/gatsby-*/**/*.js',
-          './gatsby-node.js',
-        ],
       },
     },
     {
@@ -109,7 +104,7 @@ module.exports = {
             query: `
               {
                 allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___createdDate] },
+                  sort: { frontmatter: { createdDate: DESC } },
                 ) {
                   nodes {
                     excerpt

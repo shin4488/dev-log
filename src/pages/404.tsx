@@ -2,9 +2,8 @@ import * as React from 'react';
 import { PageProps, graphql, HeadFC } from 'gatsby';
 import Layout from '@/components/layout';
 import Seo from '@/components/seo';
-import { NotFoundQuery } from '~/gatsby-graphql';
 
-const NotFoundPage: React.FC<PageProps<NotFoundQuery>> = ({ location }) => {
+const NotFoundPage: React.FC<PageProps<Queries.NotFoundQuery>> = ({ location }) => {
   return (
     <Layout location={location}>
       <h1>404: Not Found</h1>
@@ -13,7 +12,7 @@ const NotFoundPage: React.FC<PageProps<NotFoundQuery>> = ({ location }) => {
   );
 };
 
-export const Head: HeadFC<NotFoundQuery> = () => <Seo title="404: Not Found" />;
+export const Head: HeadFC<Queries.NotFoundQuery> = () => <Seo title="404: Not Found" />;
 
 export default NotFoundPage;
 

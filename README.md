@@ -16,7 +16,8 @@ yarn serve          # ビルド結果のローカル配信
 yarn test           # Jest(コンポーネントテスト)
 yarn lint           # ESLint(src配下とgatsby-*.js)
 yarn format         # Prettierで整形
-yarn generate       # GraphQLコード生成(codegen.yml)
+yarn dev            # Gatsby標準のGraphQL型生成も実行
+yarn typecheck      # 生成型を含むTypeScript検証
 yarn clean          # Gatsbyキャッシュ削除(ビルドがおかしい時の最初の一手)
 ```
 

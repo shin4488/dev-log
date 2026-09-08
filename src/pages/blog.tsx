@@ -2,9 +2,8 @@ import * as React from 'react';
 import { Link, graphql, PageProps, HeadFC } from 'gatsby';
 import Layout from '@/components/layout';
 import Seo from '@/components/seo';
-import { IndexPageQuery } from '~/gatsby-graphql';
 
-const BlogIndex: React.FC<PageProps<IndexPageQuery>> = ({ data, location }) => {
+const BlogIndex: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data, location }) => {
   const posts = data.allMarkdownRemark.nodes;
 
   if (posts.length === 0) {
@@ -71,7 +70,7 @@ export default BlogIndex;
  *
  * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
  */
-export const Head: HeadFC<IndexPageQuery> = () => <Seo title="Blog" />;
+export const Head: HeadFC<Queries.IndexPageQuery> = () => <Seo title="Blog" />;
 
 export const query = graphql`
   query IndexPage($tagName: [String]) {
@@ -81,7 +80,7 @@ export const query = graphql`
       }
     }
     allMarkdownRemark(
-      sort: { fields: [frontmatter___createdDate], order: DESC }
+      sort: { frontmatter: { createdDate: DESC } }
       filter: {
         fileAbsolutePath: { regex: "/content/blog/" }
         frontmatter: { tags: { in: $tagName } }

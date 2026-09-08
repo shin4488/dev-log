@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Link, graphql, PageProps, HeadFC } from 'gatsby';
-import { TagListPageQuery } from '~/gatsby-graphql';
 import Layout from '@/components/layout';
 import Seo from '@/components/seo';
 
-const TagList: React.FC<PageProps<TagListPageQuery>> = ({ data, location }) => {
+const TagList: React.FC<PageProps<Queries.TagListPageQuery>> = ({ data, location }) => {
   const tags = data.tags.group;
 
   if (tags.length === 0) {
@@ -32,15 +31,15 @@ const TagList: React.FC<PageProps<TagListPageQuery>> = ({ data, location }) => {
 
 export default TagList;
 
-export const Head: HeadFC<TagListPageQuery> = () => <Seo title="Tags" />;
+export const Head: HeadFC<Queries.TagListPageQuery> = () => <Seo title="Tags" />;
 
 export const query = graphql`
   query TagListPage {
     tags: allMarkdownRemark(
-      sort: { fields: [frontmatter___tags], order: ASC }
+      sort: { frontmatter: { tags: ASC } }
       filter: { fileAbsolutePath: { regex: "/content/blog/" } }
     ) {
-      group(field: frontmatter___tags) {
+      group(field: { frontmatter: { tags: SELECT } }) {
         tag: fieldValue
         totalCount
       }
