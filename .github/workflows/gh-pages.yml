@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 24
           cache: yarn
       - name: Setup Pages
         uses: actions/configure-pages@v2
@@ -28,7 +28,7 @@ jobs:
           # pathPrefixの自動適用
           static_site_generator: gatsby
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: 'true'
