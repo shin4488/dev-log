@@ -39,7 +39,7 @@ describe('HeroSection', () => {
     );
 
     const activeLink = screen.getByText('個人開発');
-    expect(activeLink).toHaveStyle({ borderBottomColor: 'white' });
+    expect(activeLink).toHaveStyle({ borderBottomColor: 'rgb(255, 255, 255)' });
   });
 
   it('ホバー効果が正しく動作する', () => {
@@ -48,10 +48,10 @@ describe('HeroSection', () => {
     const link = screen.getByText('個人開発');
 
     fireEvent.mouseEnter(link);
-    expect(link).toHaveStyle({ borderBottomColor: 'white' });
+    expect(link).toHaveStyle({ borderBottomColor: 'rgb(255, 255, 255)' });
 
     fireEvent.mouseLeave(link);
-    expect(link).toHaveStyle({ borderBottomColor: 'transparent' });
+    expect(link).toHaveStyle({ borderBottomColor: 'rgba(0, 0, 0, 0)' });
   });
 
   it('背景グラデーションが適用される', () => {

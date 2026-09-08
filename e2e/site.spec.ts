@@ -80,6 +80,31 @@ test('profile navigation scrolls, fixes the menu, and updates its active state',
     .toBeLessThan(2);
 });
 
+test('profile links retain their underline on selection and clear hover on exit', async ({
+  page,
+}) => {
+  await page.goto('./');
+  await page.waitForLoadState('networkidle');
+  const hero = page.locator('nav.position-absolute');
+  const link = hero.getByRole('link', { name: '個人開発', exact: true });
+  await expect(link).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
+  await link.hover();
+  await expect(link).toHaveCSS('border-bottom-color', 'rgb(255, 255, 255)');
+  await page.mouse.move(0, 0);
+  await expect(link).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
+  await link.click();
+  const fixed = page.locator('.fixed-top');
+  const selected = fixed.getByRole('link', { name: '個人開発', exact: true });
+  await expect(selected).toHaveCSS('border-bottom-color', 'rgb(46, 134, 222)');
+  const other = fixed.getByRole('link', { name: '開発経験', exact: true });
+  await other.hover();
+  await expect(other).toHaveCSS('border-bottom-color', 'rgb(46, 134, 222)');
+  await page.mouse.move(0, 0);
+  await expect(other).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
+  await expect(selected).toHaveCSS('border-bottom-color', 'rgb(46, 134, 222)');
+  await expect(link).toHaveCSS('border-bottom-color', 'rgb(255, 255, 255)');
+});
+
 test('blog, tag and article links retain their URLs and back navigation', async ({
   page,
 }) => {
