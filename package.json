@@ -22,7 +22,7 @@
     "sass": "1.104.0",
     "sharp": "0.35.4",
     "typeface-merriweather": "0.0.72",
-    "typeface-montserrat": "0.0.75",
+    "typeface-montserrat": "1.1.13",
     "underscore.string": "3.3.6"
   },
   "devDependencies": {
