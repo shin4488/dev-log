@@ -44,6 +44,15 @@ await cp(
   path.join(directory, 'content/blog'),
   { recursive: true },
 );
+const jpegArticle = path.join(directory, 'content/blog/2024-01-01-photo');
+await mkdir(jpegArticle);
+await sharp(path.join(root, 'e2e/fixtures/content/2026-01-01-media/wide.png'))
+  .jpeg()
+  .toFile(path.join(jpegArticle, 'photo.jpg'));
+await writeFile(
+  path.join(jpegArticle, 'index.md'),
+  "---\ntitle: Photo fixture\ncreatedDate: '2024-01-01T00:00:00Z'\n---\n![Photo](./photo.jpg)\n",
+);
 await writeFile(
   path.join(directory, 'content/blog/unlinked-private.txt'),
   'Must never be published',
@@ -187,6 +196,23 @@ assert.ok(
   tags(codeBody, 'a').some(
     (node) => node.properties.href === '../2026-01-01-media/',
   ),
+);
+const photoDocument = fromHtml(
+  await readFile(path.join(output, '2024-01-01-photo/index.html'), 'utf8'),
+);
+const photo = tags(photoDocument, 'img').find(
+  (node) => node.properties.alt === 'Photo',
+);
+const photoMetadata = await sharp(
+  await readFile(
+    path.join(output, photo.properties.src.slice('/dev-log/'.length)),
+  ),
+).metadata();
+assert.equal(photoMetadata.format, 'jpeg');
+assert.equal(
+  photoMetadata.isProgressive,
+  true,
+  'preserve progressive JPEG encoding',
 );
 const feed = await readFile(path.join(output, 'rss.xml'), 'utf8');
 assert.equal(XMLValidator.validate(feed), true);

@@ -51,22 +51,23 @@ async function generate(input, file, hash) {
       ),
     ),
   ];
+  // Preserve the previous image encoder settings as well as layout dimensions.
+  const pipeline = (size) =>
+    sharp(input)
+      .rotate()
+      .resize({ width: size })
+      .png({ compressionLevel: 9, adaptiveFiltering: false, force: false })
+      .jpeg({ quality: 50, progressive: true, force: false })
+      .webp({ quality: 50, force: false });
   const variants = await Promise.all(
     widths.map(async (size) => {
-      const bytes = await sharp(input)
-        .rotate()
-        .resize({ width: size })
-        .toBuffer();
+      const bytes = await pipeline(size).toBuffer();
       const name = `${hash}/${size}/${path.basename(file)}`;
       artifacts.push({ name, bytes });
       return { width: size, url: url(name) };
     }),
   );
-  const placeholder = await sharp(input)
-    .rotate()
-    .resize({ width: 20 })
-    .png()
-    .toBuffer();
+  const placeholder = await pipeline(20).toBuffer();
   return {
     original,
     artifacts,
@@ -74,7 +75,9 @@ async function generate(input, file, hash) {
     ratio: height / width,
     src: variants.find((item) => item.width === displayWidth).url,
     srcset: variants.map((item) => `${item.url} ${item.width}w`).join(',\n'),
-    placeholder: `data:image/png;base64,${placeholder.toString('base64')}`,
+    placeholder: `data:image/${metadata.format};base64,${placeholder.toString(
+      'base64',
+    )}`,
   };
 }
 
