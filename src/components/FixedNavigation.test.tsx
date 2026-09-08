@@ -77,6 +77,6 @@ describe('FixedNavigation', () => {
     expect(link).toHaveStyle({ borderBottomColor: '#2e86de' });
 
     fireEvent.mouseLeave(link);
-    expect(link).toHaveStyle({ borderBottomColor: 'transparent' });
+    expect(link).toHaveStyle({ borderBottomColor: 'rgba(0, 0, 0, 0)' });
   });
 });
