@@ -5,8 +5,6 @@ module.exports = {
     node: true,
     jest: true,
   },
-  // Gatsby組み込み型生成が宣言する名前空間。型の存在・プロパティはtscでも確認する。
-  globals: { Queries: 'readonly' },
   parser: '@typescript-eslint/parser',
   extends: ['eslint:recommended', 'prettier'],
   plugins: ['@typescript-eslint'],

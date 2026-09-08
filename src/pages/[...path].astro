@@ -1,0 +1,69 @@
+---
+import Document from '../layouts/Document.astro';
+import About from '../views/about';
+import Blog from '../views/blog';
+import Tags from '../views/tagList';
+import BlogPost from '../templates/blog-post';
+import { getPosts, getTags } from '../lib/posts';
+import { localUrl } from '../lib/site';
+
+interface Props {
+  kind: string;
+  title: string;
+  posts?: import('../lib/types').Post[];
+  tags?: { tag: string; totalCount: number }[];
+  post?: import('../lib/types').Post;
+  previous?: import('../lib/types').Post | null;
+  next?: import('../lib/types').Post | null;
+}
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const tags = getTags(posts);
+  return [
+    ...[undefined, 'about'].map((path) => ({
+      params: { path },
+      props: { kind: 'about', title: 'About' },
+    })),
+    {
+      params: { path: 'blog' },
+      props: { kind: 'blog', title: 'Blog', posts: [...posts].reverse() },
+    },
+    ...['tags', 'tagList'].map((path) => ({
+      params: { path },
+      props: { kind: 'tags', title: 'Tags', tags },
+    })),
+    ...tags.map(({ tag }) => ({
+      params: { path: `tags/${tag}` },
+      props: {
+        kind: 'blog',
+        title: 'Blog',
+        posts: [...posts]
+          .reverse()
+          .filter((post) => post.frontmatter.tags?.includes(tag)),
+      },
+    })),
+    ...posts.map((post, index) => ({
+      params: { path: post.fields.slug.slice(1, -1) },
+      props: {
+        kind: 'post',
+        title: post.frontmatter.title,
+        post,
+        previous: posts[index - 1] || null,
+        next: posts[index + 1] || null,
+      },
+    })),
+  ];
+}
+const { kind, title, posts, tags, post, previous, next } = Astro.props;
+const location = {
+  pathname: localUrl(`/${Astro.params.path ? Astro.params.path + '/' : ''}`),
+};
+
+---
+<Document title={title} description={post?.frontmatter.description || post?.seoExcerpt}>
+  {kind === 'about' && <About location={location} data={{}} client:load />}
+  {kind === 'blog' && <Blog location={location} data={{ allMarkdownRemark: { nodes: posts! } }} />}
+  {kind === 'tags' && <Tags location={location} data={{ tags: { group: tags! } }} />}
+  {kind === 'post' && <BlogPost location={location} data={{ markdownRemark: post!, previous: previous!, next: next! }} />}
+</Document>

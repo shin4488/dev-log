@@ -6,12 +6,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
           cache: yarn
@@ -25,3 +30,11 @@ jobs:
         run: yarn build
         env:
           GOOGLE_ANALYTICS_MEASUREMENT_ID: G-TEST
+      - name: Check article publishing contracts
+        run: yarn test:content
+      - name: Audit dependencies
+        run: yarn audit:dependencies
+      - name: Install browser
+        run: yarn playwright install --with-deps chromium
+      - name: Check pages and interactions
+        run: yarn test:e2e

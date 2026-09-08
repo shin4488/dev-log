@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IconType } from 'react-icons';
+import type { IconType } from 'react-icons';
 import { FaGithub, FaDev, FaLinkedin } from 'react-icons/fa';
 import { RiFileLine } from 'react-icons/ri';
 import { SiQiita } from 'react-icons/si';

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { PageProps, HeadFC } from 'gatsby';
+import type { PageProps } from '@/lib/types';
 import { Container, Row, Col } from 'react-bootstrap';
-import Seo from '@/components/seo';
 import Layout from '@/components/layout';
 import { selfDevelopmentItems } from '@/data/selfDevelopment';
 import { snsLinkItems } from '@/data/sns';
@@ -234,10 +233,3 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
 };
 
 export default aboutPage;
-
-/**
- * Head export to define metadata for the page
- *
- * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
- */
-export const Head: HeadFC = () => <Seo title="About" />;
