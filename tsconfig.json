@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "baseUrl": ".",
+    "rootDir": ".",
     "paths": { "~/*": ["./*"], "@/*": ["./src/*"] },
     "esModuleInterop": true,
     "skipLibCheck": true
