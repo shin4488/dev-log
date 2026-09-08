@@ -1,3 +1,7 @@
+import { createMarkdownProcessor } from '@astrojs/markdown-remark';
+import { toHtml } from 'hast-util-to-html';
+import { element, renderMedia } from './markdown-media.mjs';
+import { markdownCode } from './markdown-code.mjs';
 import prune from 'underscore.string/prune.js';
 
 // Keep the former plain-text RSS excerpt, including word-boundary truncation.
@@ -28,23 +32,57 @@ export function excerpt() {
   };
 }
 
-export function localLinks() {
+// Let the article pipeline handle both Markdown and raw HTML images identically.
+export function articleNodes() {
   return (tree) => {
+    const definitions = new Map();
+    function collect(node) {
+      if (node.type === 'definition') definitions.set(node.identifier, node);
+      node.children?.forEach(collect);
+    }
+    collect(tree);
     function visit(node) {
-      if (node.tagName === 'a' && typeof node.properties?.href === 'string') {
-        const href = node.properties.href;
-        if (
-          href.startsWith('/') &&
-          !href.startsWith('//') &&
-          !href.startsWith('/dev-log/')
-        ) {
-          node.properties.href = '/dev-log' + href;
+      if (node.type === 'heading')
+        node.data = {
+          ...node.data,
+          hProperties: { 'data-markdown-heading': true },
+        };
+      if (node.type === 'image' || node.type === 'imageReference') {
+        const definition =
+          node.type === 'image' ? node : definitions.get(node.identifier);
+        if (definition) {
+          const image = element('img', {
+            src: definition.url,
+            alt: node.alt || '',
+            ...(definition.title ? { title: definition.title } : {}),
+          });
+          node.type = 'html';
+          node.value = toHtml(image);
         }
-        // Markdown links have always used a normal document navigation.
-        node.properties['data-astro-reload'] = true;
       }
       node.children?.forEach(visit);
     }
     visit(tree);
+  };
+}
+
+export function articleProcessor() {
+  return {
+    name: 'dev-log-articles',
+    options: {},
+    async createRenderer(shared) {
+      const renderer = await createMarkdownProcessor({
+        ...shared,
+        syntaxHighlight: false,
+        remarkPlugins: [articleNodes, markdownCode, excerpt],
+      });
+      return {
+        async render(content, options) {
+          const result = await renderer.render(content, options);
+          result.code = await renderMedia(result.code, options.fileURL);
+          return result;
+        },
+      };
+    },
   };
 }

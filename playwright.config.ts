@@ -13,9 +13,9 @@ export default defineConfig({
     { name: 'mobile', use: { viewport: { width: 390, height: 900 } } },
   ],
   webServer: {
-    command: 'yarn serve --host 127.0.0.1',
+    command: 'node scripts/preview.mjs',
     url: 'http://127.0.0.1:9000/dev-log/',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     env: { ASTRO_TELEMETRY_DISABLED: '1' },
   },
 });

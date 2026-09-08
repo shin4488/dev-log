@@ -11,6 +11,7 @@ const post: Post = {
     updatedDate: '2026/09/09',
   },
   html: '<p>Article body</p>',
+  feedHtml: '<p>Article body</p>',
   excerpt: 'Article body',
   seoExcerpt: 'Article body',
 };

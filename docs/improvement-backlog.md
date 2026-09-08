@@ -9,14 +9,6 @@
 
 ## 基盤・依存関係
 
-### GitHub Actions のコミットハッシュ固定 + Dependabot 導入 — S
-
-actions がタグ参照(`@v3`など)のままで、タグ付け替えによるサプライチェーン攻撃に弱い。probability-distribution-visualization リポジトリで採用済みのポリシーをこちらにも展開する。
-
-1. gh-pages.yml / test.yml の各 action を`uses: owner/repo@<コミットSHA> # vX.Y.Z`形式に変更(SHA は`gh api repos/<owner>/<repo>/git/ref/tags/<tag>`などで取得)
-2. あわせて古いメジャーバージョン(checkout@v3、setup-node@v3、configure-pages@v2)を最新へ
-3. `.github/dependabot.yml`を追加し、`npm`と`github-actions`の 2 エコシステムを週次で監視(Dependabot は SHA 固定を理解してハッシュ+コメントを一緒に更新してくれる)
-
 ### 依存バージョンの完全固定の検討 — S
 
 dependencies が`^`レンジ指定のため、`yarn install`のタイミングで意図しないバージョンが入り得る(yarn.lock がある限り通常は固定されるが、lockfile 再生成時に一斉に動く)。他リポジトリの「完全固定+更新は Dependabot 経由」ポリシーに合わせるか判断する。
@@ -34,7 +26,7 @@ dependencies が`^`レンジ指定のため、`yarn install`のタイミング�
 
 sitemap が存在せず、検索エンジンへのページ一覧の提示が robots.txt 頼み。
 
-1. Astro公式のsitemap連携を検討する
+1. Astro 公式の sitemap 連携を検討する
 2. astro.config.mjs に追加(base `/dev-log` が反映されることを確認)
 3. ビルドして`public/sitemap-*.xml`の URL が`https://shin4488.github.io/dev-log/...`形式か確認
 4. Google Search Console にサイト登録し、sitemap を送信(所有権確認は GA 連携か HTML タグ)

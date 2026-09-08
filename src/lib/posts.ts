@@ -1,3 +1,4 @@
+import { pageArticle } from '../../scripts/markdown-media.mjs';
 import type { MarkdownInstance } from 'astro';
 import type { Post } from './types';
 
@@ -30,7 +31,8 @@ export async function getPosts(): Promise<Post[]> {
               ? formatDate(document.frontmatter.updatedDate)
               : undefined,
           },
-          html,
+          html: pageArticle(html),
+          feedHtml: html,
           excerpt: document.frontmatter.excerpt,
           seoExcerpt: document.frontmatter.seoExcerpt,
         };

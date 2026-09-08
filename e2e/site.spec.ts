@@ -29,8 +29,8 @@ for (const [route, title] of routes) {
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     const response = await page.goto(route);
-    // The explicit 404 document has a 404 status in Astro preview.
-    expect([200, 404]).toContain(response?.status());
+    // Published documents are served successfully, including the explicit 404 page.
+    expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(`${title} | Dev Log`);
     await expect(page.locator('footer')).toContainText('shin4488');
     await page.waitForLoadState('networkidle');
@@ -192,12 +192,9 @@ test('analytics sends one page view for initial load and each internal navigatio
         )
         .map((entry: any) => entry[2].page_path),
     );
-  if (
-    !(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count())
-  ) {
-    expect(await views()).toEqual([]);
-    return;
-  }
+  await expect(
+    page.locator('script[src*="googletagmanager.com/gtag/js"]'),
+  ).toHaveCount(1);
   await expect.poll(views).toEqual(['/dev-log/blog/']);
   await page.getByRole('link', { name: '#gatsby' }).click();
   await expect.poll(views).toEqual(['/dev-log/blog/', '/dev-log/tags/gatsby/']);

@@ -10,6 +10,7 @@ export interface Post {
   excerpt: string;
   seoExcerpt: string;
   html: string;
+  feedHtml: string;
 }
 
 export interface PageProps<T = unknown> {

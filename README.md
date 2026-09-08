@@ -19,8 +19,11 @@ yarn lint
 yarn typecheck           # AstroとTypeScriptの検証
 yarn audit:dependencies  # 全重大度の脆弱性を検査。監査失敗もエラー
 yarn playwright install chromium
-yarn test:e2e            # build後、PC/スマホでページ・操作・RSS・アイコンを検証
+yarn test:content        # 隔離した記事例で画像・添付・コード・RSSの配信を検証
+yarn test:e2e            # G-TESTを設定したbuild後、PC/スマホでページ・操作・RSS・アイコンを検証
 ```
+
+ブラウザテスト前は `GOOGLE_ANALYTICS_MEASUREMENT_ID=G-TEST yarn build` を実行する。テストが専用サーバを起動・終了するため、先にポート 9000 の `yarn serve` を停止する。
 
 変更したファイルのみ Prettier で整形する。`yarn format` は広い範囲を変更するため注意。
 
@@ -65,9 +68,16 @@ tags: [個人開発, gatsby]
 - `/`・`/about/`・`/blog/`・`/tags/`・`/tagList/`・タグ別ページ・記事・`/404/`・`/404.html` を配信する。
 - React 画面と CSS の見た目、スクロール操作、既存リンク先、RSS の既存記事 GUID を維持する。既存の表示上の問題をこの移行と混ぜて修正しない。
 - main への push で `.github/workflows/gh-pages.yml` が `dist/` を GitHub Pages に公開する。
-- PR ではテスト・lint・型チェック・本番ビルド・依存監査・ブラウザ回帰テストを実行する。
+- PR ではテスト・lint・型チェック・本番ビルド・記事配信テスト・依存監査・ブラウザ回帰テストを実行する。Dependabot は npm と GitHub Actions を週次監視する。
+- Actions は検証済みのフル SHA に固定する。ビルドは読み取り権限で実行し、Pages・OIDC の書き込み権限はデプロイのみに付与する。
 - Gatsby 依存・GraphQL 型生成・`resolutions` は使用しない。上位ライブラリが要求する通常の依存範囲で修正版を取り込む。警告の無視やアラートの dismiss で 0 件にしない。
 
 改善候補は [docs/improvement-backlog.md](docs/improvement-backlog.md) を参照。
 
 F1C カードのアイコンは `src/images/f1c-icon.png` に同梱する。元の `https://f1c.biz/favicon.ico` と同一の画像で、外部サイトの一時障害による画像欠けを防ぐ。
+
+記事内のローカル画像は Sharp で最大表示幅 630px の候補画像とプレースホルダーを生成し、原寸画像へのリンクを付ける。既にリンク内にある画像では二重リンクにしない。添付ファイルは内容を変えずに配信し、記事が参照しないファイルは公開しない。旧 CSS が対象にする画像・埋め込み・Prism のクラス名は表示互換性のため維持する。これらは Gatsby パッケージへの依存ではない。
+
+RSS は XMLBuilder でエスケープと GUID 属性を生成する。記事本文の共通 HTML から、ページ用の通常遷移属性を別途付けるため、RSS から属性を文字列置換で除去しない。
+
+`noExternal` は現在の UI パッケージが持つ ESM のディレクトリ参照を Vite に解決させる設定。依存バージョンは変更しない。`/404/` と既存のプロフィール画像 URL は、公開済み URL を維持する恒久的な互換ルートとして残す。
