@@ -27,6 +27,7 @@ export default defineConfig({
     environments: {
       prerender: {
         resolve: {
+          conditions: ['module', 'development|production'],
           noExternal: [
             'react-icons',
             'react-bootstrap',
@@ -40,6 +41,7 @@ export default defineConfig({
       },
       ssr: {
         resolve: {
+          conditions: ['module', 'development|production'],
           noExternal: [
             'react-icons',
             'react-bootstrap',
