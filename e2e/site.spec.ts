@@ -351,20 +351,53 @@ test('canceling a smooth navigation keeps selection at the visible section', asy
   ).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
 });
 
-test('profile selection follows hash loading, resizing and the page bottom', async ({
+test('profile selection follows a directly loaded section link', async ({
   page,
 }) => {
   await page.goto('./#experience');
-  const currentLink = page.locator(
-    'nav.position-absolute [aria-current="location"]',
+  await page.waitForLoadState('networkidle');
+  await expect(
+    page.locator('nav.position-absolute [aria-current="location"]'),
+  ).toHaveText('開発経験');
+  await expect(page.locator('.fixed-top [aria-current="location"]')).toHaveText(
+    '開発経験',
   );
-  await expect(currentLink).toHaveText('開発経験');
+});
+
+test('profile selection follows resizing and the page bottom', async ({
+  page,
+}) => {
+  await page.goto('./');
+  await page.waitForLoadState('networkidle');
   await page.setViewportSize({ width: 1024, height: 1200 });
+  // Viewport changes and font loading can move the document after the command
+  // returns. Let layout settle before issuing the separate scroll action.
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+    });
+  });
   await page.evaluate(() =>
     window.scrollTo({
       top: document.documentElement.scrollHeight,
       behavior: 'instant',
     }),
+  );
+  // Confirm the test reached the bottom rather than accepting a stale selection.
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Math.abs(
+          document.documentElement.scrollHeight -
+            window.innerHeight -
+            window.scrollY,
+        ),
+      ),
+    )
+    .toBeLessThanOrEqual(1);
+  const currentLink = page.locator(
+    'nav.position-absolute [aria-current="location"]',
   );
   await expect(currentLink).toHaveText('開発経験');
   await expect(page.locator('.fixed-top [aria-current="location"]')).toHaveText(
