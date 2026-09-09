@@ -80,7 +80,7 @@ test('profile navigation scrolls, fixes the menu, and updates its active state',
     .toBeLessThan(2);
 });
 
-test('profile links retain their underline on selection and clear hover on exit', async ({
+test('profile links underline only the current section even while hovering', async ({
   page,
 }) => {
   await page.goto('./');
@@ -89,7 +89,8 @@ test('profile links retain their underline on selection and clear hover on exit'
   const link = hero.getByRole('link', { name: '個人開発', exact: true });
   await expect(link).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
   await link.hover();
-  await expect(link).toHaveCSS('border-bottom-color', 'rgb(255, 255, 255)');
+  await expect(link).toHaveCSS('opacity', '0.8');
+  await expect(link).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
   await page.mouse.move(0, 0);
   await expect(link).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
   await link.click();
@@ -98,7 +99,9 @@ test('profile links retain their underline on selection and clear hover on exit'
   await expect(selected).toHaveCSS('border-bottom-color', 'rgb(46, 134, 222)');
   const other = fixed.getByRole('link', { name: '開発経験', exact: true });
   await other.hover();
-  await expect(other).toHaveCSS('border-bottom-color', 'rgb(46, 134, 222)');
+  await expect(other).toHaveCSS('color', 'rgb(46, 134, 222)');
+  await expect(other).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
+  await expect(other).not.toHaveAttribute('aria-current');
   await page.mouse.move(0, 0);
   await expect(other).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
   await expect(selected).toHaveCSS('border-bottom-color', 'rgb(46, 134, 222)');
@@ -265,4 +268,108 @@ test('site theme preserves heading colors, table surfaces and skill borders', as
   await expect(note).toHaveCSS('border-color', 'rgba(0, 0, 0, 0)');
   await page.goto('2022-08-24-introduction/');
   await expect(page.locator('h1')).toHaveCSS('color', 'rgb(0, 0, 0)');
+});
+
+test('profile selection follows manual scrolling in both directions', async ({
+  page,
+}) => {
+  await page.goto('./');
+  await page.waitForLoadState('networkidle');
+  await page.mouse.move(0, 0);
+  const hero = page.locator('nav.position-absolute');
+  const selected = (label: string) =>
+    hero.getByRole('link', { name: label, exact: true });
+  const scrollSectionTo = async (id: string, top: number) => {
+    await page.locator(`#${id}`).evaluate((element, top) => {
+      window.scrollTo({
+        top: window.scrollY + element.getBoundingClientRect().top - top,
+        behavior: 'instant',
+      });
+    }, top);
+  };
+
+  await scrollSectionTo('projects', 100);
+  await expect(selected('リンク')).toHaveCSS(
+    'border-bottom-color',
+    'rgb(255, 255, 255)',
+  );
+  // Both sections remain visible while the project heading crosses the menu.
+  await scrollSectionTo('projects', 25);
+  await expect(selected('個人開発')).toHaveCSS(
+    'border-bottom-color',
+    'rgb(255, 255, 255)',
+  );
+  await scrollSectionTo('projects', 100);
+  await expect(selected('リンク')).toHaveCSS(
+    'border-bottom-color',
+    'rgb(255, 255, 255)',
+  );
+  await expect(selected('個人開発')).toHaveCSS(
+    'border-bottom-color',
+    'rgba(0, 0, 0, 0)',
+  );
+  await scrollSectionTo('projects', 0);
+  await expect(selected('個人開発')).toHaveCSS(
+    'border-bottom-color',
+    'rgb(255, 255, 255)',
+  );
+
+  await scrollSectionTo('experience', 0);
+  await expect(selected('開発経験')).toHaveCSS(
+    'border-bottom-color',
+    'rgb(255, 255, 255)',
+  );
+  await scrollSectionTo('experience', 150);
+  await expect(selected('個人開発')).toHaveCSS(
+    'border-bottom-color',
+    'rgb(255, 255, 255)',
+  );
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await expect(selected('リンク')).toHaveCSS(
+    'border-bottom-color',
+    'rgb(255, 255, 255)',
+  );
+});
+
+test('canceling a smooth navigation keeps selection at the visible section', async ({
+  page,
+}) => {
+  await page.goto('./');
+  await page.waitForLoadState('networkidle');
+  const hero = page.locator('nav.position-absolute');
+  await hero
+    .getByRole('link', { name: '個人開発', exact: true })
+    .evaluate((link) => {
+      (link as HTMLElement).click();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  await expect(
+    hero.getByRole('link', { name: 'リンク', exact: true }),
+  ).toHaveCSS('border-bottom-color', 'rgb(255, 255, 255)');
+  await expect(
+    hero.getByRole('link', { name: '個人開発', exact: true }),
+  ).toHaveCSS('border-bottom-color', 'rgba(0, 0, 0, 0)');
+});
+
+test('profile selection follows hash loading, resizing and the page bottom', async ({
+  page,
+}) => {
+  await page.goto('./#experience');
+  const currentLink = page.locator(
+    'nav.position-absolute [aria-current="location"]',
+  );
+  await expect(currentLink).toHaveText('開発経験');
+  await page.setViewportSize({ width: 1024, height: 1200 });
+  await page.evaluate(() =>
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'instant',
+    }),
+  );
+  await expect(currentLink).toHaveText('開発経験');
+  await expect(page.locator('.fixed-top [aria-current="location"]')).toHaveText(
+    '開発経験',
+  );
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await expect(currentLink).toHaveText('リンク');
 });

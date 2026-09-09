@@ -38,13 +38,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           <a
             key={item.id}
             href={`#${item.id}`}
+            aria-current={activeSection === item.id ? 'location' : undefined}
             className="text-white text-decoration-none d-inline-block position-relative"
             style={{
               borderBottom:
-                hoveredItem === item.id || activeSection === item.id
+                activeSection === item.id
                   ? '2px solid white'
                   : '2px solid transparent',
               paddingBottom: '4px',
+              opacity: hoveredItem === item.id ? 0.8 : 1,
               transition: 'all 0.2s ease-in-out',
             }}
             onMouseEnter={() => setHoveredItem(item.id)}

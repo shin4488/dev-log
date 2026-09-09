@@ -40,6 +40,7 @@ describe('HeroSection', () => {
 
     const activeLink = screen.getByText('個人開発');
     expect(activeLink).toHaveStyle({ borderBottomColor: 'rgb(255, 255, 255)' });
+    expect(activeLink).toHaveAttribute('aria-current', 'location');
   });
 
   it('ホバー効果が正しく動作する', () => {
@@ -48,7 +49,9 @@ describe('HeroSection', () => {
     const link = screen.getByText('個人開発');
 
     fireEvent.mouseEnter(link);
-    expect(link).toHaveStyle({ borderBottomColor: 'rgb(255, 255, 255)' });
+    expect(link).toHaveStyle({ opacity: 0.8 });
+    expect(link).toHaveStyle({ borderBottomColor: 'rgba(0, 0, 0, 0)' });
+    expect(link).not.toHaveAttribute('aria-current');
 
     fireEvent.mouseLeave(link);
     expect(link).toHaveStyle({ borderBottomColor: 'rgba(0, 0, 0, 0)' });
