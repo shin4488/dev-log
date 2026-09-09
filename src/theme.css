@@ -1,0 +1,42 @@
+/* Load after Bootstrap's compiled CSS. Keep the site's palette independent of
+   Bootstrap's Sass implementation and its default table/heading surfaces. */
+:root,
+[data-bs-theme='light'] {
+  --bs-primary: #2e86de;
+  --bs-primary-rgb: 46, 134, 222;
+  --bs-heading-color: inherit;
+  --bs-secondary-color: #6c757d;
+}
+
+.table {
+  --bs-table-color: var(--bs-body-color);
+  --bs-table-bg: transparent;
+}
+
+.text-qiita {
+  --bs-text-opacity: 1;
+  color: rgba(0, 202, 0, var(--bs-text-opacity)) !important;
+}
+
+.text-linkedin {
+  --bs-text-opacity: 1;
+  color: rgba(14, 118, 168, var(--bs-text-opacity)) !important;
+}
+
+h1 {
+  --bs-heading-color: var(--color-heading-black);
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  --bs-heading-color: var(--color-heading);
+}
+
+.experience-note {
+  --bs-alert-color: var(--bs-body-color);
+  --bs-alert-bg: transparent;
+  --bs-alert-border-color: transparent;
+}

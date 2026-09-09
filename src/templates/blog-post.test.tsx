@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import BlogPost from './blog-post';
 import type { Post } from '@/lib/types';

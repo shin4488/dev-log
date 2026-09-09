@@ -73,3 +73,6 @@ yarn-error.log
 # Browser tests
 playwright-report/
 test-results/
+
+# Yarn installation state (packages use the global cache)
+.yarn/
