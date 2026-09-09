@@ -19,11 +19,6 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
   const projectsRef = React.useRef<HTMLElement>(null);
   const experienceRef = React.useRef<HTMLElement>(null);
 
-  // 初期表示時にsnsセクションをアクティブに設定
-  React.useEffect(() => {
-    setActiveSection('sns');
-  }, []);
-
   // セクションへのスクロール関数
   const scrollToSection = React.useCallback((sectionId: string) => {
     const sectionRefs = {
@@ -38,73 +33,69 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
         behavior: 'smooth',
         block: 'start',
       });
-      setActiveSection(sectionId);
     }
   }, []);
 
-  // セクションの位置を監視してアクティブセクションを判定
+  // クリック先ではなく、実際の表示位置から選択状態を決める。
   React.useEffect(() => {
+    const sections = [
+      { id: 'sns', ref: snsRef },
+      { id: 'projects', ref: projectsRef },
+      { id: 'experience', ref: experienceRef },
+    ];
+    let frame: number | null = null;
+
     const checkActiveSection = () => {
-      const sections = [
-        { id: 'sns', ref: snsRef },
-        { id: 'projects', ref: projectsRef },
-        { id: 'experience', ref: experienceRef },
-      ];
-
-      // 画面上端から50px下の位置
+      frame = null;
+      // セクションのスクロール用余白と同じ位置を判定基準にする。
       const targetPosition = 50;
-      let activeSection = 'sns'; // デフォルト
-
-      // 各セクションの位置をチェック
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section.ref.current) {
-          const rect = section.ref.current.getBoundingClientRect();
-          const sectionTop = rect.top;
-
-          // セクションの上端が目標位置（50px）を通過している場合
-          if (sectionTop <= targetPosition) {
-            activeSection = section.id;
-            break;
-          }
+      let currentSection = 'sns';
+      for (const section of sections) {
+        if (
+          section.ref.current &&
+          section.ref.current.getBoundingClientRect().top <= targetPosition
+        ) {
+          currentSection = section.id;
         }
       }
-
-      setActiveSection(activeSection);
+      // 最後の見出しが画面上端まで届かない高さの画面でも選択できる。
+      if (
+        window.scrollY > 0 &&
+        window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 1
+      ) {
+        currentSection = 'experience';
+      }
+      setActiveSection(currentSection);
     };
 
-    // 初回チェック
+    const scheduleCheck = () => {
+      if (frame === null) {
+        frame = window.requestAnimationFrame(checkActiveSection);
+      }
+    };
+
     checkActiveSection();
+    window.addEventListener('scroll', scheduleCheck, { passive: true });
+    window.addEventListener('resize', scheduleCheck);
+    window.addEventListener('pageshow', scheduleCheck);
 
-    // Intersection Observer を使用してスクロール検出の最適化
-    const observerOptions = {
-      root: null,
-      rootMargin: '-50px 0px 0px 0px', // セクションの上端が画面上部から50px下に来たときに反応
-      threshold: 0,
-    };
-
-    const observerCallback = () => {
-      checkActiveSection();
-    };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions,
-    );
-
-    // セクション要素を監視対象に追加（スクロール検出用）
-    if (snsRef.current) {
-      observer.observe(snsRef.current);
-    }
-    if (projectsRef.current) {
-      observer.observe(projectsRef.current);
-    }
-    if (experienceRef.current) {
-      observer.observe(experienceRef.current);
+    // 画像の読み込みや折り返しによる、スクロール以外の位置変化も追う。
+    const observer = new ResizeObserver(scheduleCheck);
+    for (const ref of [heroRef, snsRef, projectsRef, experienceRef]) {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
     }
 
     return () => {
+      window.removeEventListener('scroll', scheduleCheck);
+      window.removeEventListener('resize', scheduleCheck);
+      window.removeEventListener('pageshow', scheduleCheck);
       observer.disconnect();
+      if (frame !== null) {
+        window.cancelAnimationFrame(frame);
+      }
     };
   }, []);
 

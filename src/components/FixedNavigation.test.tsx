@@ -60,6 +60,7 @@ describe('FixedNavigation', () => {
 
     const activeLink = screen.getByText('個人開発');
     expect(activeLink).toHaveStyle({ color: '#2e86de' });
+    expect(activeLink).toHaveAttribute('aria-current', 'location');
   });
 
   it('ホバー効果が正しく動作する', () => {
@@ -74,7 +75,9 @@ describe('FixedNavigation', () => {
     const link = screen.getByText('個人開発');
 
     fireEvent.mouseEnter(link);
-    expect(link).toHaveStyle({ borderBottomColor: '#2e86de' });
+    expect(link).toHaveStyle({ color: '#2e86de' });
+    expect(link).toHaveStyle({ borderBottomColor: 'rgba(0, 0, 0, 0)' });
+    expect(link).not.toHaveAttribute('aria-current');
 
     fireEvent.mouseLeave(link);
     expect(link).toHaveStyle({ borderBottomColor: 'rgba(0, 0, 0, 0)' });
