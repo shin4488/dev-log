@@ -9,6 +9,7 @@
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.0",
     "@astrojs/react": "6.0.5",
+    "@popperjs/core": "^2.11.8",
     "astro": "7.3.1",
     "bootstrap": "5.3.8",
     "fast-xml-parser": "5.11.1",
@@ -19,7 +20,6 @@
     "react-bootstrap": "2.10.10",
     "react-dom": "18.2.0",
     "react-icons": "5.7.0",
-    "sass": "1.104.0",
     "sharp": "0.35.4",
     "typeface-merriweather": "1.1.13",
     "typeface-montserrat": "1.1.13",
@@ -27,25 +27,24 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "1.63.0",
+    "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^15.0.7",
-    "@types/jest": "^30.0.0",
     "@types/node": "^24.13.3",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "^8.21.0",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
+    "eslint": "^10.10.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-config-typescript": "^3.0.0",
-    "eslint-plugin-prettier": "^5.5.6",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^30.5.1",
-    "jest-environment-jsdom": "^30.5.1",
+    "globals": "^17.12.0",
+    "jsdom": "^30.0.1",
     "prettier": "^3.9.6",
-    "ts-jest": "^29.1.1",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vite": "^8.2.2",
+    "vitest": "^5.0.0"
   },
   "homepage": "https://shin4488.github.io/dev-log/",
   "keywords": [
@@ -65,14 +64,20 @@
     "serve": "astro preview --port 9000",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "test": "jest",
+    "test": "vitest run",
     "typecheck": "astro check",
     "test:e2e": "playwright test",
-    "audit:dependencies": "node scripts/audit.mjs",
-    "test:content": "node scripts/test-content.mjs"
+    "audit:dependencies": "yarn npm audit --all --recursive",
+    "test:content": "node scripts/test-content.mjs",
+    "test:dev": "playwright test --config playwright.dev.config.ts"
   },
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "yarn@4.18.0+sha512.fcb8716fe7cd0eece141ffc18b92193a9df9204c1ba83189c288835223fc0bbe64af473bab0d5e9927a7daeb5caf2bb07eb2787cc9338ca040ea125f2a1f2f7e",
+  "dependenciesMeta": {
+    "esbuild": {
+      "built": true
+    }
+  }
 }

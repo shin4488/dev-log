@@ -4,7 +4,7 @@ Astro と React で作る日本語ブログ・自己紹介サイト。記事は 
 
 ## 開発・検証と公開
 
-- Node 24 と `yarn install --frozen-lockfile` を使う。UI ライブラリと Sass は固定しており、変更時は画面を比較する。コマンドと依存の正は `package.json`。開発は `yarn dev`、コード変更の確認は `yarn lint`・`yarn test`、記事・画面の表示確認は `yarn build` と `yarn serve` を入口にする。必要な検証は変更対象に合わせる。
+- Node 24 と Corepack で固定した Yarn と `yarn install --immutable` を使う。UI ライブラリは固定しており、変更時は画面を比較する。コマンドと依存の正は `package.json`。開発は `yarn dev`、コード変更の確認は `yarn lint`・`yarn test`、記事・画面の表示確認は `yarn build` と `yarn serve` を入口にする。必要な検証は変更対象に合わせる。
 - GitHub Pages のサブパス配信を維持する。`astro.config.mjs` の `base` と `trailingSlash` を前提に、アセットを `/...` の絶対パスで参照しない。
 - main への push はサイト公開につながる。公開条件は `.github/workflows/gh-pages.yml`、PR のテストは `.github/workflows/test.yml` を確認する。
 - 基盤・依存の変更時は `yarn typecheck`・`yarn audit:dependencies` も実行する。ページや配信の変更時は本番ビルド後に `yarn test:e2e` を実行し、必要に応じて移行前と PC/スマホの表示を比較する。

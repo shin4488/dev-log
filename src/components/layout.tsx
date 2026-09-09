@@ -3,7 +3,8 @@ import type { ReactNode } from 'react';
 import { basePath } from '@/lib/site';
 import { Container } from 'react-bootstrap';
 import Bio from '@/components/bio';
-import '@/style.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@/theme.css';
 
 interface LayoutParameter {
   location: { pathname: string };

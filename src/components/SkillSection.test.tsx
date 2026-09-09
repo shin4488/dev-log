@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import SkillSection from './SkillSection';
 
 // skillLevel.tsのモック
-jest.mock('@/data/skillLevel', () => ({
+vi.mock('@/data/skillLevel', () => ({
   experienceUpdatedDate: '2023/10/28',
   skillLevels: [
     { level: 4, skills: ['Salesforce', 'Apex'] },
