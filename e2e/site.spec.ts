@@ -226,6 +226,36 @@ test('analytics sends one page view for initial load and each internal navigatio
   await expect.poll(views).toEqual(['/dev-log/blog/']);
   await page.getByRole('link', { name: '#gatsby' }).click();
   await expect.poll(views).toEqual(['/dev-log/blog/', '/dev-log/tags/gatsby/']);
+  await page
+    .getByRole('link', { name: '自己紹介ページを作成しました' })
+    .click();
+  await expect
+    .poll(views)
+    .toEqual([
+      '/dev-log/blog/',
+      '/dev-log/tags/gatsby/',
+      '/dev-log/2022-08-24-introduction/',
+    ]);
+  const latest = await page.evaluate(() =>
+    Array.from((window as any).dataLayer)
+      .filter((entry: any) => entry[1] === 'page_view')
+      .at(-1),
+  );
+  expect((latest as any)[2]).toMatchObject({
+    page_title: '自己紹介ページを作成しました | Dev Log',
+    page_type: 'post',
+    page_location: 'http://127.0.0.1:9000/dev-log/2022-08-24-introduction/',
+    page_referrer: 'http://127.0.0.1:9000/dev-log/tags/gatsby/',
+  });
+  await page.goBack();
+  await expect
+    .poll(views)
+    .toEqual([
+      '/dev-log/blog/',
+      '/dev-log/tags/gatsby/',
+      '/dev-log/2022-08-24-introduction/',
+      '/dev-log/tags/gatsby/',
+    ]);
 });
 
 test('F1C icon is served locally even when the F1C site is unavailable', async ({
@@ -405,4 +435,53 @@ test('profile selection follows resizing and the page bottom', async ({
   );
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await expect(currentLink).toHaveText('リンク');
+});
+
+test('analytics records meaningful section and link interactions on the profile', async ({
+  page,
+  context,
+}) => {
+  await context.route('https://github.com/**', (route) =>
+    route.fulfill({
+      contentType: 'text/html',
+      body: '<title>Test destination</title>',
+    }),
+  );
+  await page.goto('./');
+  const events = (name: string) =>
+    page.evaluate(
+      (name) =>
+        Array.from((window as any).dataLayer || [])
+          .filter((entry: any) => entry[0] === 'event' && entry[1] === name)
+          .map((entry: any) => entry[2]),
+      name,
+    );
+  await page.getByRole('link', { name: '個人開発', exact: true }).click();
+  await expect
+    .poll(() => events('section_view'))
+    .toContainEqual(
+      expect.objectContaining({ section_name: 'projects', page_type: 'about' }),
+    );
+  const project = page
+    .locator('a[data-analytics-event="project_click"]')
+    .first();
+  // Keep navigation local to the test while exercising the actual link click.
+  await project.evaluate((link) =>
+    link.addEventListener('click', (event) => event.preventDefault(), {
+      once: true,
+    }),
+  );
+  await project.click();
+  await expect.poll(() => events('project_click')).toHaveLength(1);
+  const profile = page.locator(
+    'a[data-analytics-event="profile_click"][title="GitHub"]',
+  );
+  const popupPromise = page.waitForEvent('popup');
+  await profile.click();
+  const popup = await popupPromise;
+  await popup.close();
+  await expect
+    .poll(() => events('profile_click'))
+    .toContainEqual(expect.objectContaining({ link_name: 'GitHub' }));
+  expect(await events('page_view')).toHaveLength(1);
 });

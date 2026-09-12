@@ -30,6 +30,11 @@ const BlogPostTemplate: React.FC<PageProps<PostData>> = ({
           dangerouslySetInnerHTML={{ __html: post?.html || '' }}
           itemProp="articleBody"
         />
+        <div
+          data-analytics-article-end
+          aria-hidden="true"
+          style={{ height: 1 }}
+        />
         {previous && next && <hr />}
       </article>
 

@@ -31,6 +31,8 @@ yarn test:e2e            # G-TESTを設定したbuild後、PC/スマホでペー
 
 Google Analytics の `GOOGLE_ANALYTICS_MEASUREMENT_ID` は、本番ビルドでは `.env.production`（gitignore 済み）または CI の既存 GitHub Secret から渡す。未設定時・開発サーバでは計測しない。テストでは実際の計測先へ送信しない。
 
+計測の目的・イベント・GA設定は [docs/analytics.md](docs/analytics.md) を参照。
+
 ## ディレクトリ構成
 
 ```text

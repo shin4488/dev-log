@@ -61,7 +61,7 @@ const location = {
 };
 
 ---
-<Document title={title} description={post?.frontmatter.description || post?.seoExcerpt}>
+<Document pageType={kind} title={title} description={post?.frontmatter.description || post?.seoExcerpt}>
   {kind === 'about' && <About location={location} data={{}} client:load />}
   {kind === 'blog' && <Blog location={location} data={{ allMarkdownRemark: { nodes: posts! } }} />}
   {kind === 'tags' && <Tags location={location} data={{ tags: { group: tags! } }} />}
