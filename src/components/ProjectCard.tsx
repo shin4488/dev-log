@@ -19,6 +19,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
     <Card className="h-100 shadow-sm border">
       <a
         href={item.siteUri}
+        data-analytics-event="project_click"
+        data-analytics-name={item.title}
         target="_blank"
         rel="noopener noreferrer"
         className="text-decoration-none"
@@ -34,6 +36,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
         <Card.Title className="h5 mb-3">
           <a
             href={item.siteUri}
+            data-analytics-event="project_click"
+            data-analytics-name={item.title}
             target="_blank"
             rel="noopener noreferrer"
             className="text-decoration-none text-primary"

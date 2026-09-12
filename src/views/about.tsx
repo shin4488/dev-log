@@ -135,6 +135,8 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
           <a
             key={item.uri}
             href={item.uri}
+            data-analytics-event="profile_click"
+            data-analytics-name={item.title}
             target="_blank"
             rel="noopener noreferrer"
             className="me-4 me-md-5"
@@ -187,7 +189,9 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
             marginTop: '-50px',
           }}
         >
-          <h2 className="mb-4">リンク</h2>
+          <h2 className="mb-4" data-analytics-section="sns">
+            リンク
+          </h2>
           {renderSNSLinks}
         </section>
 
@@ -201,7 +205,9 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
             minHeight: '600px', // 最小高さを設定
           }}
         >
-          <h2 className="mb-4">個人開発</h2>
+          <h2 className="mb-4" data-analytics-section="projects">
+            個人開発
+          </h2>
           {renderProjects}
         </section>
 
@@ -215,7 +221,9 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
             minHeight: '600px', // 最小高さを設定
           }}
         >
-          <h2 className="mb-4">開発経験</h2>
+          <h2 className="mb-4" data-analytics-section="experience">
+            開発経験
+          </h2>
           <SkillSection />
         </section>
       </Container>
