@@ -25,6 +25,19 @@ export default defineConfig({
   ],
   vite: {
     environments: {
+      client: {
+        optimizeDeps: {
+          // ClientRouter imports these through astro:transitions/client after
+          // the initial scan. Prebundle them before serving browser modules so
+          // late discovery cannot invalidate their URLs during a cold start.
+          include: [
+            'astro/virtual-modules/transitions-router.js',
+            'astro/virtual-modules/transitions-types.js',
+            'astro/virtual-modules/transitions-events.js',
+            'astro/virtual-modules/transitions-swap-functions.js',
+          ],
+        },
+      },
       prerender: {
         resolve: {
           conditions: ['module', 'development|production'],
