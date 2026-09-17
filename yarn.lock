@@ -222,9 +222,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/markdown-remark@npm:7.3.0":
-  version: 7.3.0
-  resolution: "@astrojs/markdown-remark@npm:7.3.0"
+"@astrojs/markdown-remark@npm:7.3.1":
+  version: 7.3.1
+  resolution: "@astrojs/markdown-remark@npm:7.3.1"
   dependencies:
     "@astrojs/internal-helpers": "npm:0.11.0"
     "@astrojs/prism": "npm:4.0.2"
@@ -248,7 +248,7 @@ __metadata:
     unist-util-visit: "npm:^5.1.0"
     unist-util-visit-parents: "npm:^6.0.2"
     vfile: "npm:^6.0.3"
-  checksum: 10c0/0da34c0cd35d706b514aa372af7df1ddaef1a0f57048d00cce8b6e426c08c5868354aea1c1c8364a4ffcb48fe64527d463b3941fc5cb1a641368bbf276b49221
+  checksum: 10c0/368c75db60d0f55006c4928f3b28a1e64d593c086d3773bf79295b6b910e00d7d25b2eb5887c40c6c05fb0c5ff9e628107c6bd1bb5106c8e79ef4ac0d1d8d045
   languageName: node
   linkType: hard
 
@@ -3056,7 +3056,7 @@ __metadata:
   resolution: "dev-log@workspace:."
   dependencies:
     "@astrojs/check": "npm:0.9.10"
-    "@astrojs/markdown-remark": "npm:7.3.0"
+    "@astrojs/markdown-remark": "npm:7.3.1"
     "@astrojs/react": "npm:6.0.5"
     "@eslint/js": "npm:^10.0.1"
     "@playwright/test": "npm:1.63.0"
