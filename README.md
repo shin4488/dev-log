@@ -27,6 +27,8 @@ yarn test:e2e            # G-TESTを設定したbuild後、PC/スマホでペー
 
 ブラウザテスト前は `GOOGLE_ANALYTICS_MEASUREMENT_ID=G-TEST yarn build` を実行する。テストが専用サーバを起動・終了するため、先にポート 9000 の `yarn serve` を停止する。`yarn test:dev` の前にはポート 8000 の開発サーバも停止する。
 
+`yarn test:dev` は毎回依存の事前バンドルを作り直し、キャッシュのない初回アクセスとホットリロードを検証する。`ClientRouter` が仮想モジュール経由で読み込む依存は `astro.config.mjs` の `vite.environments.client.optimizeDeps.include` で起動時に処理し、アクセス中の再最適化による504を防ぐ。
+
 変更したファイルのみ Prettier で整形する。`yarn format` は広い範囲を変更するため注意。
 
 Google Analytics の `GOOGLE_ANALYTICS_MEASUREMENT_ID` は、本番ビルドでは `.env.production`（gitignore 済み）または CI の既存 GitHub Secret から渡す。未設定時・開発サーバでは計測しない。テストでは実際の計測先へ送信しない。
