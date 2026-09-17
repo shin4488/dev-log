@@ -14,6 +14,10 @@ updates:
           - '@types/react'
           - '@types/react-dom'
     ignore:
+      # Review major upgrades with Astro and typescript-eslint API support.
+      # Revisit using the migration criteria in docs/improvement-backlog.md.
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
       # Upgrade Node.js and its major type version together (package.json engines).
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']

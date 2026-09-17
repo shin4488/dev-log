@@ -9,6 +9,15 @@
 
 ## 基盤・依存関係
 
+### TypeScriptの次期メジャーへの移行 — M
+
+現在は Astro の型検査と typescript-eslint が共通で対応する6系を使用する。7系には両ツールが必要とするプログラムAPIがなく、単純な置き換えでは型検査とlintが停止する。コンパイラの併用や検査の省略で更新を成立させず、以下の条件を満たした時点で移行する。
+
+1. [Astroの対応状況](https://github.com/withastro/roadmap/discussions/1321)と[typescript-eslintの対応状況](https://github.com/typescript-eslint/typescript-eslint/issues/10940)を確認し、両方の安定版が移行先を正式にサポートしていることを確認する。関連ツールの更新時にもこの条件を再確認する。
+2. TypeScriptと必要な関連ツールを同じPRで更新する。peer依存の上書きや別コンパイラの追加をせず、`.astro`・`.ts`・`.tsx` の検査範囲を維持する。
+3. 固定Yarnのimmutable install、lint、型検査、単体テスト、依存監査、本番ビルド、記事配信、本番・開発時のブラウザテストを実行する。
+4. 対応範囲を確認したうえで `.github/dependabot.yml` の TypeScript メジャー更新の除外を見直す。READMEの対応バージョンも更新する。
+
 ### 依存バージョンの完全固定の検討 — S
 
 dependencies が`^`レンジ指定のため、`yarn install`のタイミングで意図しないバージョンが入り得る(yarn.lock がある限り通常は固定されるが、lockfile 再生成時に一斉に動く)。他リポジトリの「完全固定+更新は Dependabot 経由」ポリシーに合わせるか判断する。

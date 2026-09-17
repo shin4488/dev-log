@@ -17,8 +17,7 @@ yarn build               # 静的HTML・アセットを dist/ に出力
 yarn serve               # http://localhost:9000/dev-log/
 yarn test                # VitestによるReactコンポーネントテスト
 yarn lint
-yarn typecheck           # Astroの検証に続けてTypeScript 7でTS/TSXを検証
-yarn typecheck:ts        # TypeScript 7によるTS/TSXの検証のみ
+yarn typecheck           # Astro・TS・TSXを共通のTypeScriptで検証
 yarn audit:dependencies  # 全重大度の脆弱性を検査。監査失敗もエラー
 yarn playwright install chromium
 yarn test:content        # 隔離した記事例で画像・添付・コード・RSSの配信を検証
@@ -91,6 +90,6 @@ Bootstrap は公式のコンパイル済み CSS を読み込み、サイト固�
 
 Yarn は `node_modules` 方式を使う。インストールスクリプトは原則無効で、ビルドに必要な esbuild だけを許可する。`.yarnrc.yml` の `packageExtensions` は Astro の公開パッケージに不足する TypeScript・WASM ランタイムの依存宣言を補う。上流修正時は Yarn の冗長宣言チェックに従って削除する。監査では開発・間接依存と非推奨パッケージも対象にする。
 
-TypeScript は6と7を併用する。`typescript` は `astro check` と typescript-eslint が必要とする6系のAPIを提供し、`@typescript/native` は公式 `typescript` 7系パッケージのnpmエイリアスとして追加する。`yarn typecheck` は既存のAstro検査を維持したうえで、7系によるTS/TSX検査も実行する。`typecheck:ts` は実行ファイルを直接指定し、同名の `tsc` が6系に解決されることを防ぐ。
+TypeScript は Astro の型検査と typescript-eslint が共通で対応する6系に一本化する。`yarn typecheck` の `astro check` が `.astro`・`.ts`・`.tsx` を検査するため、別バージョンのコンパイラや重複した型検査は追加しない。
 
-これは7系への完全移行ではない。`.astro` ファイルの検査とESLintは引き続き6系を使う。7系には必要なプログラムAPIが未提供のため、[TypeScript公式の併用方針](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0)に沿って分離している。[Astroの対応状況](https://github.com/withastro/roadmap/discussions/1321)と[typescript-eslintの対応状況](https://github.com/typescript-eslint/typescript-eslint/issues/10940)を確認し、両方が対応してから6系を外す。
+Dependabot は TypeScript のマイナー・パッチ更新を継続し、メジャー更新は手動で互換性を確認する。7系への移行は必要なAPIが上流で対応してから行う。[移行条件と確認先](docs/improvement-backlog.md#typescriptの次期メジャーへの移行--m)に従い、関連ツールとまとめて検証する。
