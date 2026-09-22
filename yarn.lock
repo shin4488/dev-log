@@ -273,9 +273,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/react@npm:6.0.5":
-  version: 6.0.5
-  resolution: "@astrojs/react@npm:6.0.5"
+"@astrojs/react@npm:6.0.6":
+  version: 6.0.6
+  resolution: "@astrojs/react@npm:6.0.6"
   dependencies:
     "@astrojs/internal-helpers": "npm:0.11.0"
     "@vitejs/plugin-react": "npm:^5.2.0"
@@ -287,7 +287,7 @@ __metadata:
     "@types/react-dom": ^17.0.17 || ^18.0.6 || ^19.0.0
     react: ^17.0.2 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/d5c68b8212cafbeacd5153d1260dc5279930f3718f10aa48fa331af6676316bd3204e99526aa6b4db5ec8e0272ac8b0b757a80f7d98b4e85eddf45b9d1d425bf
+  checksum: 10c0/7a3e70b7ceafee20a9855c93b49a477c73760b72a9646f04bb950d5bac939e515cd25d57cdefbff084d4807ca8c7a87abfe216c6dacb5fc8e4d286bf42e4fd90
   languageName: node
   linkType: hard
 
@@ -3170,7 +3170,7 @@ __metadata:
   dependencies:
     "@astrojs/check": "npm:0.9.10"
     "@astrojs/markdown-remark": "npm:7.3.1"
-    "@astrojs/react": "npm:6.0.5"
+    "@astrojs/react": "npm:6.0.6"
     "@eslint/js": "npm:^10.0.1"
     "@playwright/test": "npm:1.63.0"
     "@popperjs/core": "npm:^2.11.8"
