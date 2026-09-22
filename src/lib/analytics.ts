@@ -43,6 +43,7 @@ export function startPageAnalytics(): () => void {
     ) {
       return;
     }
+    // 遷移先のクエリやフラグメントに含まれ得るトークン・個人情報を計測先へ送らない。
     const url = new URL(link.href);
     send(eventName!, {
       link_name: link.dataset.analyticsName || '',
