@@ -2,7 +2,7 @@
   "name": "dev-log",
   "private": true,
   "description": "shin4488's blog written with Astro, React and Markdown",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "bugs": {
     "url": "https://github.com/shin4488/dev-log/issues"
   },
