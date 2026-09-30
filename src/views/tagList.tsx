@@ -12,7 +12,7 @@ const TagList: React.FC<PageProps<TagData>> = ({ data, location }) => {
 
   return (
     <Layout location={location}>
-      <div style={{ wordWrap: 'break-word' }}>
+      <div className="text-break">
         {tags.map((tag) => {
           const tagName = tag.tag;
           return (

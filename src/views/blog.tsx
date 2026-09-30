@@ -25,8 +25,8 @@ const BlogIndex: React.FC<PageProps<BlogData>> = ({ data, location }) => {
                 itemType="http://schema.org/Article"
               >
                 {/* タイトル・更新日時 */}
-                <header>
-                  <h2>
+                <header className="mb-3">
+                  <h2 className="mt-0 mb-2">
                     <Link to={slug || ''} itemProp="url">
                       <span itemProp="headline">{title}</span>
                     </Link>
@@ -36,6 +36,7 @@ const BlogIndex: React.FC<PageProps<BlogData>> = ({ data, location }) => {
                 {/* 説明 */}
                 <section>
                   <p
+                    className="mb-0"
                     dangerouslySetInnerHTML={{
                       __html:
                         post.frontmatter?.description || post.excerpt || '',

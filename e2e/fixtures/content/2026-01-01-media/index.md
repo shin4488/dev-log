@@ -7,7 +7,7 @@ tags: [fixture, 日本語]
 
 ## Media
 
-![Wide image](./wide.png "A wide image")
+![Wide image](./wide.png 'A wide image')
 
 [![Linked image](./wide.png)](https://example.com/)
 
@@ -22,7 +22,7 @@ tags: [fixture, 日本語]
 <object width="400" height="200" data="about:blank"></object>
 
 ```js
-const greeting = "hello";
+const greeting = 'hello';
 console.log(greeting);
 ```
 

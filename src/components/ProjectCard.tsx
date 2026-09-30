@@ -29,7 +29,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
           variant="top"
           src={item.imageUri}
           alt={item.title}
-          style={{ height: '200px', objectFit: 'contain' }}
+          className="object-fit-contain"
+          height={200}
         />
       </a>
       <Card.Body className="p-3">
