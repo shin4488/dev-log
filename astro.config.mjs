@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import { mkdir, copyFile } from 'node:fs/promises';
-import { articleProcessor } from './scripts/markdown.mjs';
 
 export default defineConfig({
   site: 'https://shin4488.github.io',
@@ -67,8 +66,5 @@ export default defineConfig({
         },
       },
     },
-  },
-  markdown: {
-    processor: articleProcessor(),
   },
 });

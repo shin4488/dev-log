@@ -2,16 +2,7 @@ import { stat, utimes } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { test, expect } from './fixtures';
 
-for (const route of [
-  '',
-  'about/',
-  'blog/',
-  '2022-08-24-introduction/',
-  'tags/',
-  'tags/gatsby/',
-  'tags/個人開発/',
-  'tagList/',
-]) {
+for (const route of ['', 'about/']) {
   test(`development route ${route || '/'} renders without diagnostics`, async ({
     page,
   }) => {

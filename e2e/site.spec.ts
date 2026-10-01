@@ -12,12 +12,6 @@ test.beforeEach(async ({ page }) => {
 const routes = [
   ['', 'About'],
   ['about/', 'About'],
-  ['blog/', 'Blog'],
-  ['2022-08-24-introduction/', '自己紹介ページを作成しました'],
-  ['tags/', 'Tags'],
-  ['tags/gatsby/', 'Blog'],
-  ['tags/個人開発/', 'Blog'],
-  ['tagList/', 'Tags'],
   ['404/', '404: Not Found'],
   ['404.html', '404: Not Found'],
 ];
@@ -108,70 +102,30 @@ test('profile links underline only the current section even while hovering', asy
   await expect(link).toHaveCSS('border-bottom-color', 'rgb(255, 255, 255)');
 });
 
-test('blog, tag and article links retain their URLs and back navigation', async ({
-  page,
-}) => {
-  await page.goto('blog/');
-  await expect(page.getByRole('link', { name: '#gatsby' })).toHaveAttribute(
-    'href',
-    '/dev-log/tags/gatsby/',
-  );
-  await page.getByRole('link', { name: '#gatsby' }).click();
-  await expect(page).toHaveURL(/\/tags\/gatsby\/$/);
-  await page
-    .getByRole('link', { name: '自己紹介ページを作成しました' })
-    .click();
-  await expect(page.locator('[itemprop="articleBody"]')).toContainText(
-    '社会人になってから',
-  );
-  await expect(page.getByRole('link', { name: 'こちら' })).toHaveAttribute(
-    'href',
-    '/dev-log/about',
-  );
-  await expect(page.locator('article header')).toContainText(
-    '作成日：2022/08/24',
-  );
-  await page.goBack();
-  await expect(page).toHaveURL(/\/tags\/gatsby\/$/);
-});
-
-test('RSS retains the item identity, excerpt, and full article', async ({
-  page,
+test('removed publishing routes return 404 and the profile has no feed link', async ({
   request,
+  page,
 }) => {
-  const response = await request.get('rss.xml');
-  expect(response.ok()).toBeTruthy();
-  const xml = await response.text();
+  for (const route of [
+    'blog/',
+    '2022-08-24-introduction/',
+    'tags/',
+    'tags/gatsby/',
+    'tags/個人開発/',
+    'tagList/',
+    'rss.xml',
+    'media/2026-01-01-media/sample.txt',
+  ]) {
+    const response = await request.get(route);
+    expect(response.status(), route).toBe(404);
+  }
   await page.goto('./');
-  const feed = await page.evaluate((xml) => {
-    const document = new DOMParser().parseFromString(xml, 'application/xml');
-    const item = [...document.querySelectorAll('item')].find(
-      (item) =>
-        item.querySelector('guid')?.textContent ===
-        'https://shin4488.github.io/dev-log/2022-08-24-introduction/',
-    )!;
-    return {
-      title: document.querySelector('channel > title')?.textContent,
-      count: document.querySelectorAll('item').length,
-      guid: item.querySelector('guid')?.textContent,
-      permalink: item.querySelector('guid')?.getAttribute('isPermaLink'),
-      excerpt: item.querySelector('description')?.textContent,
-      content: item.getElementsByTagNameNS(
-        'http://purl.org/rss/1.0/modules/content/',
-        'encoded',
-      )[0]?.textContent,
-    };
-  }, xml);
-  expect(feed.title).toBe('Dev Log RSS Feed');
-  expect(feed.count).toBeGreaterThanOrEqual(1);
-  expect(feed.guid).toBe(
-    'https://shin4488.github.io/dev-log/2022-08-24-introduction/',
-  );
-  expect(feed.permalink).toBe('false');
-  expect(feed.excerpt).toBe(
-    '社会人になってから、個人開発でサービス公開を年に1回のペースで行ってきました。…',
-  );
-  expect(feed.content).toContain('<a href="/dev-log/about">こちら</a>');
+  await expect(
+    page.locator('link[rel="alternate"][type="application/rss+xml"]'),
+  ).toHaveCount(0);
+  await expect(
+    page.locator('a[href*="/blog/"], a[href*="/tags/"], a[href*="/tagList/"]'),
+  ).toHaveCount(0);
 });
 
 test('manifest icons and social preview image remain available', async ({
@@ -211,7 +165,7 @@ test('manifest icons and social preview image remain available', async ({
 test('analytics sends one page view for initial load and each internal navigation', async ({
   page,
 }) => {
-  await page.goto('blog/');
+  await page.goto('./');
   const views = () =>
     page.evaluate(() =>
       Array.from((window as any).dataLayer || [])
@@ -223,39 +177,31 @@ test('analytics sends one page view for initial load and each internal navigatio
   await expect(
     page.locator('script[src*="googletagmanager.com/gtag/js"]'),
   ).toHaveCount(1);
-  await expect.poll(views).toEqual(['/dev-log/blog/']);
-  await page.getByRole('link', { name: '#gatsby' }).click();
-  await expect.poll(views).toEqual(['/dev-log/blog/', '/dev-log/tags/gatsby/']);
-  await page
-    .getByRole('link', { name: '自己紹介ページを作成しました' })
-    .click();
-  await expect
-    .poll(views)
-    .toEqual([
-      '/dev-log/blog/',
-      '/dev-log/tags/gatsby/',
-      '/dev-log/2022-08-24-introduction/',
-    ]);
+  await expect.poll(views).toEqual(['/dev-log/']);
+  await page.evaluate(() => {
+    const link = document.createElement('a');
+    link.id = 'profile-route';
+    link.href = '/dev-log/about/';
+    link.textContent = 'About';
+    document.body.append(link);
+  });
+  await page.locator('#profile-route').click();
+  await expect.poll(views).toEqual(['/dev-log/', '/dev-log/about/']);
   const latest = await page.evaluate(() =>
     Array.from((window as any).dataLayer)
       .filter((entry: any) => entry[1] === 'page_view')
       .at(-1),
   );
   expect((latest as any)[2]).toMatchObject({
-    page_title: '自己紹介ページを作成しました | Dev Log',
-    page_type: 'post',
-    page_location: 'http://127.0.0.1:9000/dev-log/2022-08-24-introduction/',
-    page_referrer: 'http://127.0.0.1:9000/dev-log/tags/gatsby/',
+    page_title: 'About | Dev Log',
+    page_type: 'about',
+    page_location: 'http://127.0.0.1:9000/dev-log/about/',
+    page_referrer: 'http://127.0.0.1:9000/dev-log/',
   });
   await page.goBack();
   await expect
     .poll(views)
-    .toEqual([
-      '/dev-log/blog/',
-      '/dev-log/tags/gatsby/',
-      '/dev-log/2022-08-24-introduction/',
-      '/dev-log/tags/gatsby/',
-    ]);
+    .toEqual(['/dev-log/', '/dev-log/about/', '/dev-log/']);
 });
 
 test('F1C icon is served locally even when the F1C site is unavailable', async ({
@@ -296,8 +242,6 @@ test('site theme preserves heading colors, table surfaces and skill borders', as
   await expect(note).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await expect(note).toHaveCSS('color', 'rgb(33, 37, 41)');
   await expect(note).toHaveCSS('border-color', 'rgba(0, 0, 0, 0)');
-  await page.goto('2022-08-24-introduction/');
-  await expect(page.locator('h1')).toHaveCSS('color', 'rgb(0, 0, 0)');
 });
 
 test('profile selection follows manual scrolling in both directions', async ({

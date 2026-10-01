@@ -97,43 +97,7 @@ export function startPageAnalytics(): () => void {
     .querySelectorAll('[data-analytics-section]')
     .forEach((element) => sections.observe(element));
 
-  // 「読了」の断定ではなく、本文末尾到達＋表示中の累計30秒という目安。
-  const articleEnd = document.querySelector('[data-analytics-article-end]');
-  let endReached = false;
-  let readSent = false;
-  let visibleTime = 0;
-  let lastTick = performance.now();
-  let wasVisible = !document.hidden;
-  const checkRead = () => {
-    const now = performance.now();
-    if (wasVisible) {
-      visibleTime += now - lastTick;
-    }
-    lastTick = now;
-    wasVisible = !document.hidden;
-    if (
-      articleEnd &&
-      !document.hidden &&
-      endReached &&
-      visibleTime >= 30_000 &&
-      !readSent
-    ) {
-      readSent = true;
-      send('article_read');
-    }
-  };
-  const article = new IntersectionObserver((entries) => {
-    if (!document.hidden && entries.some((entry) => entry.isIntersecting)) {
-      endReached = true;
-      checkRead();
-    }
-  });
-  if (articleEnd) {
-    article.observe(articleEnd);
-  }
-  const interval = articleEnd ? setInterval(checkRead, 1000) : undefined;
   const onVisibility = () => {
-    checkRead();
     for (const element of visible) {
       cancel(element);
       if (!document.hidden) {
@@ -148,8 +112,6 @@ export function startPageAnalytics(): () => void {
     document.removeEventListener('auxclick', onClick);
     document.removeEventListener('visibilitychange', onVisibility);
     sections.disconnect();
-    article.disconnect();
     timers.forEach(clearTimeout);
-    clearInterval(interval);
   };
 }

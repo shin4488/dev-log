@@ -1,7 +1,7 @@
 # Dev Log
 
-個人開発の記録や技術記事を発信するブログ 兼 ポートフォリオサイトです。  
-Astro、React、Markdown を組み合わせて構築し、GitHub Actions 経由で GitHub Pages に静的ホスティングしています。
+個人開発の制作物や開発経験を紹介するポートフォリオサイトです。
+Astro と React を組み合わせて構築し、GitHub Actions 経由で GitHub Pages に静的ホスティングしています。
 
 - **公開サイト**: [https://shin4488.github.io/dev-log/](https://shin4488.github.io/dev-log/)
 
@@ -11,7 +11,7 @@ Astro、React、Markdown を組み合わせて構築し、GitHub Actions 経由�
 
 ```mermaid
 flowchart LR
-    Source["記事 (content/blog/)<br>プロフィール (src/data/)"] --> Build["Astro ビルド<br>(React + Markdown 処理)"]
+    Source["プロフィール (src/data/)"] --> Build["Astro ビルド<br>(React)"]
     Build --> Dist["静的サイト出力<br>(dist/)"]
     Dist -->|"GitHub Actions (push to main)"| Pages["GitHub Pages 配信"]
 ```
@@ -21,7 +21,6 @@ flowchart LR
 ## 主な技術スタック
 
 - **フレームワーク**: Astro, React
-- **コンテンツ管理**: Markdown, Frontmatter
 - **スタイリング**: Vanilla CSS, Bootstrap
 - **テスト・品質管理**: Vitest, Playwright, Prettier, TypeScript
 - **パッケージマネージャ**: Yarn (v4)
@@ -56,37 +55,15 @@ yarn test:e2e     # Playwright によるブラウザ回帰テスト
 
 ---
 
-## 記事の執筆フロー
-
-1. `content/blog/<日付-スラッグ>/index.md` を作成します。
-2. フロントマターにメタデータを記載し、Markdown本文を執筆します。
-
-```markdown
----
-title: 記事のタイトル
-createdDate: '2026-09-19T00:00:00.000Z'
-description: 一覧や検索エンジン向けの説明文
-tags: [個人開発, Web]
----
-
-ここから記事の本文を Markdown 形式で記述します。
-```
-
-- 記事内で使用する画像は、同じディレクトリ（`content/blog/<日付-スラッグ>/`）内に配置して相対パスで参照できます。
-- `yarn dev` でプレビューを確認しながら執筆を進められます。
-
----
-
 ## ディレクトリ構成
 
 ```text
 dev-log/
-├── content/blog/         # ブログ記事（1記事1ディレクトリ: index.md + 画像）
 ├── src/
 │   ├── pages/            # Astro のルーティング・静的ページ生成
 │   ├── views/            # トップページや自己紹介などの React 画面
 │   ├── components/       # 共有 UI コンポーネント
 │   ├── layouts/          # ページレイアウト・共通ヘッダー/フッター
 │   └── data/             # スキル一覧や作品リンクなどのプロフィールデータ
-└── public/               # ファビコンなどの静的アセット
+└── static/               # ファビコンなどの静的アセット
 ```
