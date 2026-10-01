@@ -6,24 +6,44 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../theme.css';
 import { site, localUrl } from '../lib/site';
 import { ClientRouter } from 'astro:transitions';
+import { localeUrl, locales, messages, languagePreferenceKey, type Locale } from '../lib/i18n';
 
 interface Props {
   title: string;
   description?: string;
   pageType?: string;
+  locale?: Locale;
+  pagePath?: string;
 }
-const { title, description = site.description, pageType = 'other' } = Astro.props;
+const { title, locale = 'ja', description = messages[locale].description, pageType = 'other', pagePath = '/' } = Astro.props;
+const canonicalUrl = new URL(localeUrl(locale, pagePath), site.url).href;
 const measurementId = import.meta.env.PROD
   ? import.meta.env.GOOGLE_ANALYTICS_MEASUREMENT_ID
   : undefined;
 
 ---
 <!doctype html>
-<html lang="en" transition:animate="none">
+<html lang={locale} transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {locale === 'ja' && pageType === 'about' && pagePath === '/' && <script is:inline data-astro-rerun define:vars={{ languagePreferenceKey, englishUrl: localeUrl('en') }}>
+      // Only the entry URL negotiates language; shared content URLs remain explicit.
+      const requested = new URLSearchParams(window.location.search).get('lang');
+      let saved;
+      try {
+        saved = window.localStorage.getItem(languagePreferenceKey);
+      } catch {}
+      const supported = value => value === 'ja' || value === 'en';
+      const browserLanguage = navigator.languages
+        .map(language => language.toLowerCase().split('-')[0])
+        .find(supported);
+      const preferred = supported(requested) ? requested : supported(saved) ? saved : browserLanguage || 'ja';
+      if (preferred === 'en') {
+        window.location.replace(`${englishUrl}${window.location.search}${window.location.hash}`);
+      }
+    </script>}
     <ClientRouter fallback="swap" />
     <title>{title} | {site.title}</title>
     <meta name="description" content={description} />
@@ -31,6 +51,12 @@ const measurementId = import.meta.env.PROD
     <meta property="og:description" content={description} />
     <meta property="og:image" content={site.url + 'static/my-profile-image-564c5fa176a060003203d7276dbcce81.png'} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={locale === 'ja' ? 'ja_JP' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'ja' ? 'en_US' : 'ja_JP'} />
+    <link rel="canonical" href={canonicalUrl} />
+    {locales.map(language => <link rel="alternate" hreflang={language} href={new URL(localeUrl(language, pagePath), site.url).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(localeUrl('ja', pagePath), site.url).href} />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:creator" content={site.twitter} />
     <meta name="twitter:title" content={title} />

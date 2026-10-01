@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Card, Badge, Table } from 'react-bootstrap';
+import { messages, type Locale } from '@/lib/i18n';
 
 interface ProjectItem {
   title: string;
@@ -12,9 +13,11 @@ interface ProjectItem {
 
 interface ProjectCardProps {
   item: ProjectItem;
+  locale?: Locale;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ item, locale = 'ja' }) => {
+  const text = messages[locale];
   return (
     <Card className="h-100 shadow-sm border">
       <a
@@ -50,11 +53,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
           <tbody>
             <tr>
               <th scope="row" className="fw-bold" style={{ width: '18%' }}>
-                使用技術
+                {text.technologies}
               </th>
               <td>
                 {item.usedTechniques.map((tech) => (
-                  <Badge key={tech} bg="secondary" className="me-1 mb-1">
+                  <Badge
+                    key={tech}
+                    bg="secondary"
+                    className="me-1 mb-1 text-wrap text-start"
+                  >
                     {tech}
                   </Badge>
                 ))}
@@ -62,13 +69,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
             </tr>
             <tr>
               <th scope="row" className="fw-bold">
-                概要
+                {text.summary}
               </th>
               <td className="text-break">{item.summary}</td>
             </tr>
             <tr>
               <th scope="row" className="fw-bold">
-                技術アピール
+                {text.technicalHighlights}
               </th>
               <td className="text-break">{item.technicalAppeal}</td>
             </tr>

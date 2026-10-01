@@ -1,14 +1,20 @@
 import * as React from 'react';
+import { messages, type Locale } from '@/lib/i18n';
 
-const Bio: React.FC = () => {
+const Bio: React.FC<{ locale?: Locale }> = ({ locale = 'ja' }) => {
+  const text = messages[locale];
   return (
     <div>
       <div>
-        このサイト内への要望などございましたら、GitHubの
-        <a href="https://github.com/shin4488/dev-log/issues" target="_blank">
+        {text.feedbackBefore}
+        <a
+          href="https://github.com/shin4488/dev-log/issues"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Issues
         </a>
-        を登録していただけますと幸いです。
+        {text.feedbackAfter}
       </div>
     </div>
   );

@@ -10,13 +10,16 @@ test.beforeEach(async ({ page }) => {
 });
 
 const routes = [
-  ['', 'About'],
-  ['about/', 'About'],
-  ['404/', '404: Not Found'],
-  ['404.html', '404: Not Found'],
+  ['', '自己紹介', 'ja'],
+  ['about/', '自己紹介', 'ja'],
+  ['en/', 'About', 'en'],
+  ['en/about/', 'About', 'en'],
+  ['404/', '404: ページが見つかりません', 'ja'],
+  ['404.html', '404: ページが見つかりません', 'ja'],
+  ['en/404/', '404: Page not found', 'en'],
 ];
 
-for (const [route, title] of routes) {
+for (const [route, title, locale] of routes) {
   test(`published route ${
     route || '/'
   } has its content and local assets`, async ({ page }) => {
@@ -26,6 +29,7 @@ for (const [route, title] of routes) {
     // Published documents are served successfully, including the explicit 404 page.
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(`${title} | Dev Log`);
+    await expect(page.locator('html')).toHaveAttribute('lang', locale);
     await expect(page.locator('footer')).toContainText('shin4488');
     await page.waitForLoadState('networkidle');
     expect(errors).toEqual([]);
@@ -77,14 +81,22 @@ test('profile navigation scrolls, fixes the menu, and updates its active state',
 test('profile fits narrow screens without horizontal scrolling', async ({
   page,
 }) => {
-  for (const width of [320, 390, 767, 768]) {
-    await page.setViewportSize({ width, height: 844 });
-    await page.goto('./');
-    await page.waitForLoadState('networkidle');
-    expect(
-      await page.evaluate(() => document.documentElement.scrollWidth),
-      `profile width at ${width}px`,
-    ).toBeLessThanOrEqual(width);
+  for (const route of ['./', 'en/']) {
+    for (const width of [320, 390, 767, 768]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto(route);
+      await page.waitForLoadState('networkidle');
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+        `${route} profile width at ${width}px`,
+      ).toBeLessThanOrEqual(width);
+      await page.locator('nav.position-absolute a[href="#projects"]').click();
+      await expect(page.locator('.fixed-top')).toBeVisible();
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+        `${route} fixed navigation width at ${width}px`,
+      ).toBeLessThanOrEqual(width);
+    }
   }
 });
 
@@ -207,7 +219,7 @@ test('analytics sends one page view for initial load and each internal navigatio
       .at(-1),
   );
   expect((latest as any)[2]).toMatchObject({
-    page_title: 'About | Dev Log',
+    page_title: '自己紹介 | Dev Log',
     page_type: 'about',
     page_location: 'http://127.0.0.1:9000/dev-log/about/',
     page_referrer: 'http://127.0.0.1:9000/dev-log/',
@@ -442,4 +454,258 @@ test('analytics records meaningful section and link interactions on the profile'
     .poll(() => events('profile_click'))
     .toContainEqual(expect.objectContaining({ link_name: 'GitHub' }));
   expect(await events('page_view')).toHaveLength(1);
+});
+
+for (const route of ['', 'about/']) {
+  test(`language switching on ${route || '/'} translates the portfolio and survives reload`, async ({
+    page,
+  }) => {
+    await page.goto(route);
+    const switcher = page.getByRole('navigation', {
+      name: '表示言語',
+      exact: true,
+    });
+    await expect(
+      switcher.getByRole('link', { name: '日本語' }),
+    ).toHaveAttribute('aria-current', 'page');
+    await switcher.getByRole('link', { name: 'English' }).click();
+    await expect(page).toHaveURL(new RegExp(`/dev-log/en/${route}$`));
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page).toHaveTitle('About | Dev Log');
+    await expect(page.locator('#projects h2')).toHaveText('Projects');
+    await expect(page.locator('.card')).toHaveCount(9);
+    await expect(page.locator('.card').first()).toContainText(
+      'Probability Distribution Visualizer',
+    );
+    await expect(page.locator('#experience')).toContainText('Process Builder');
+    await expect(page.locator('#experience')).toContainText(
+      'As of September 21, 2025',
+    );
+    await expect(page.locator('footer')).toContainText(
+      'For suggestions about this site',
+    );
+    // The language control is the only Japanese text on the English page.
+    const mainText = await page.locator('main').innerText();
+    expect(mainText.replace('日本語', '')).not.toMatch(
+      /[\u3040-\u30ff\u3400-\u9fff]/u,
+    );
+    await page.reload();
+    await expect(page.locator('#projects h2')).toHaveText('Projects');
+    await page
+      .getByRole('navigation', { name: 'Language', exact: true })
+      .getByRole('link', { name: '日本語' })
+      .click();
+    await expect(page).toHaveURL(new RegExp(`/dev-log/${route}$`));
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+    await expect(page.locator('.card').first()).toContainText(
+      '確率分布ビジュアライザー',
+    );
+  });
+}
+
+test('language switching preserves a directly linked section and works with browser history', async ({
+  page,
+}) => {
+  await page.goto('about/#experience');
+  await page
+    .getByRole('navigation', { name: '表示言語', exact: true })
+    .getByRole('link', { name: 'English' })
+    .click();
+  await expect(page).toHaveURL(/\/dev-log\/en\/about\/#experience$/);
+  await expect(page.locator('.fixed-top [aria-current="location"]')).toHaveText(
+    'Experience',
+  );
+  await page.goBack();
+  await expect(page).toHaveURL(/\/dev-log\/about\/#experience$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+  await expect(page.locator('#experience h2')).toHaveText('開発経験');
+});
+
+test('English navigation scrolls and keeps the current section selected', async ({
+  page,
+}) => {
+  await page.goto('en/');
+  await page.waitForLoadState('networkidle');
+  await page.getByRole('link', { name: 'Projects', exact: true }).click();
+  const fixed = page.locator('.fixed-top');
+  await expect(fixed.locator('[aria-current="location"]')).toHaveText(
+    'Projects',
+  );
+  await fixed.getByRole('link', { name: 'Experience', exact: true }).click();
+  await expect(fixed.locator('[aria-current="location"]')).toHaveText(
+    'Experience',
+  );
+  await fixed.getByRole('link', { name: 'Links', exact: true }).click();
+  await expect
+    .poll(() =>
+      page
+        .locator('#sns')
+        .evaluate((element) => Math.abs(element.getBoundingClientRect().top)),
+    )
+    .toBeLessThan(2);
+  await expect(
+    page.locator('nav.position-absolute [aria-current="location"]'),
+  ).toHaveText('Links');
+});
+
+test('localized page metadata links to the matching language variants', async ({
+  page,
+}) => {
+  for (const route of ['', 'about/', 'en/', 'en/about/']) {
+    await page.goto(route);
+    const english = route.startsWith('en/');
+    const pagePath = route.endsWith('about/') ? 'about/' : '';
+    const origin = 'https://shin4488.github.io/dev-log/';
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      `${origin}${route}`,
+    );
+    await expect(page.locator('link[hreflang="ja"]')).toHaveAttribute(
+      'href',
+      `${origin}${pagePath}`,
+    );
+    await expect(page.locator('link[hreflang="en"]')).toHaveAttribute(
+      'href',
+      `${origin}en/${pagePath}`,
+    );
+    await expect(page.locator('link[hreflang="x-default"]')).toHaveAttribute(
+      'href',
+      `${origin}${pagePath}`,
+    );
+    await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute(
+      'content',
+      english ? 'en_US' : 'ja_JP',
+    );
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      english ? /personal projects/ : /個人開発/,
+    );
+  }
+});
+
+test('404 language controls and home links use the selected language', async ({
+  page,
+}) => {
+  await page.goto('404.html');
+  await page.getByRole('link', { name: 'English', exact: true }).click();
+  await expect(page).toHaveURL(/\/dev-log\/en\/404\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    '404: Page not found',
+  );
+  await expect(
+    page.getByRole('link', { name: 'Back to home' }),
+  ).toHaveAttribute('href', '/dev-log/en/');
+  await page.getByRole('link', { name: '日本語', exact: true }).click();
+  await expect(page).toHaveURL(/\/dev-log\/404\/$/);
+  await expect(
+    page.getByRole('link', { name: 'トップページへ戻る' }),
+  ).toHaveAttribute('href', '/dev-log/');
+  await page.getByRole('link', { name: 'トップページへ戻る' }).click();
+  await expect(page.locator('#projects h2')).toHaveText('個人開発');
+});
+
+test.describe('static localized pages', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('both languages and the switcher are available without JavaScript', async ({
+    page,
+  }) => {
+    await page.goto('./');
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+    await page.getByRole('link', { name: 'English', exact: true }).click();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.locator('#projects h2')).toHaveText('Projects');
+    await expect(page.locator('.card').first()).toContainText(
+      'Probability Distribution Visualizer',
+    );
+    await page.getByRole('link', { name: '日本語', exact: true }).click();
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+  });
+});
+
+test.describe('browser language preferences', () => {
+  test.use({ locale: 'en-US' });
+
+  test('first visit follows the browser and an explicit choice persists across visits', async ({
+    page,
+    context,
+  }) => {
+    await page.goto('./');
+    await expect(page).toHaveURL(/\/dev-log\/en\/$/);
+    await expect(page.locator('#projects h2')).toHaveText('Projects');
+    await page.getByRole('link', { name: '日本語', exact: true }).click();
+    await expect(page).toHaveURL(/\/dev-log\/$/);
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+    await page.reload();
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+    const nextVisit = await context.newPage();
+    await nextVisit.goto('http://127.0.0.1:9000/dev-log/');
+    await expect(nextVisit.locator('#projects h2')).toHaveText('個人開発');
+    await nextVisit.close();
+    await page.getByRole('link', { name: 'English', exact: true }).click();
+    await page.goto('./');
+    await expect(page).toHaveURL(/\/dev-log\/en\/$/);
+  });
+
+  test('automatic language selection preserves a linked section', async ({
+    page,
+  }) => {
+    await page.goto('./#experience');
+    await expect(page).toHaveURL(/\/dev-log\/en\/#experience$/);
+    await expect(
+      page.locator('.fixed-top [aria-current="location"]'),
+    ).toHaveText('Experience');
+  });
+
+  test('explicit content URLs take priority over the browser language', async ({
+    page,
+  }) => {
+    await page.goto('about/');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+    await page.getByRole('link', { name: 'English', exact: true }).click();
+    await page.goto('about/');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+  });
+
+  test('language switching works when browser storage is blocked', async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'localStorage', {
+        get() {
+          throw new DOMException('Storage is blocked', 'SecurityError');
+        },
+      });
+    });
+    await page.goto('./');
+    await expect(page).toHaveURL(/\/dev-log\/en\/$/);
+    await page.getByRole('link', { name: '日本語', exact: true }).click();
+    await expect(page).toHaveURL(/\/dev-log\/\?lang=ja$/);
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+    await page.reload();
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+  });
+});
+
+test('a saved English choice takes priority over a Japanese browser', async ({
+  page,
+}) => {
+  await page.goto('./');
+  await page.getByRole('link', { name: 'English', exact: true }).click();
+  await page.goto('./');
+  await expect(page).toHaveURL(/\/dev-log\/en\/$/);
+  await expect(page.locator('#projects h2')).toHaveText('Projects');
+});
+
+test.describe('unsupported browser languages', () => {
+  test.use({ locale: 'fr-FR' });
+
+  test('falls back to Japanese when no preferred language is supported', async ({
+    page,
+  }) => {
+    await page.goto('./');
+    await expect(page).toHaveURL(/\/dev-log\/$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+  });
 });

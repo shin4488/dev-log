@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { Badge, Alert } from 'react-bootstrap';
 import {
-  skillLevels,
-  salesforceNotes,
+  getSkillLevels,
+  getSalesforceNotes,
   experienceUpdatedDate,
   type SkillLevel,
 } from '@/data/skillLevel';
+import { messages, type Locale } from '@/lib/i18n';
 
-const SkillSection: React.FC = () => {
+const SkillSection: React.FC<{ locale?: Locale }> = ({ locale = 'ja' }) => {
+  const text = messages[locale];
   const renderStars = (level: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <span key={i} className={i < level ? 'text-warning' : 'text-muted'}>
@@ -18,11 +20,11 @@ const SkillSection: React.FC = () => {
 
   return (
     <div>
-      <p className="mb-3 text-muted">{experienceUpdatedDate} 現在</p>
+      <p className="mb-3 text-muted">{text.updated(experienceUpdatedDate)}</p>
       <div className="position-relative ms-4 ps-3 border-start border-primary border-2">
-        <h3 className="mb-4">業務で扱ってきた主な技術スタック</h3>
+        <h3 className="mb-4">{text.experienceTitle}</h3>
 
-        {skillLevels.map((skillLevel: SkillLevel) => (
+        {getSkillLevels(locale).map((skillLevel: SkillLevel) => (
           <div key={skillLevel.level} className="mb-4">
             <div className="mb-2">{renderStars(skillLevel.level)}</div>
             <div>
@@ -31,7 +33,7 @@ const SkillSection: React.FC = () => {
                   key={skill}
                   bg="light"
                   text="dark"
-                  className="border border-2 me-1 mb-1"
+                  className="border border-2 me-1 mb-1 text-wrap text-start"
                 >
                   {skill}
                 </Badge>
@@ -41,7 +43,7 @@ const SkillSection: React.FC = () => {
         ))}
 
         <Alert variant="info" className="experience-note mt-4">
-          {salesforceNotes.map((note, index) => (
+          {getSalesforceNotes(locale).map((note, index) => (
             <p key={index} className={index === 0 ? 'fw-bold mb-2' : 'mb-1'}>
               {note}
             </p>

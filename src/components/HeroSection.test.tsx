@@ -12,7 +12,7 @@ describe('HeroSection', () => {
   it('プロフィール画像が表示される', () => {
     render(<HeroSection activeSection="sns" onNavClick={mockOnNavClick} />);
 
-    const profileImage = screen.getByAltText('Profile picture');
+    const profileImage = screen.getByAltText('shin4488のプロフィール画像');
     expect(profileImage).toBeInTheDocument();
     expect(profileImage).toHaveAttribute('src');
   });
