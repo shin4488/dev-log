@@ -1,4 +1,4 @@
-name: GitHub Pages for my blog
+name: GitHub Pages for my portfolio
 
 on:
   # マージされたプルリクエストは常にプッシュになる

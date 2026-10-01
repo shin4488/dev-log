@@ -1,7 +1,7 @@
 export const basePath = '/dev-log';
 export const site = {
   title: 'Dev Log',
-  description: "shin4488's development log",
+  description: "shin4488's portfolio",
   url: `https://shin4488.github.io${basePath}/`,
   twitter: 'shin44880',
 };

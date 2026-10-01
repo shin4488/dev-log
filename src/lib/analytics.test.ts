@@ -112,33 +112,34 @@ it('counts a section only after a continuous visible second, once per page', () 
   );
 });
 
-it('requires the article end and 30 visible seconds, excluding time in the background', () => {
-  document.body.innerHTML = '<div data-analytics-article-end></div>';
+it('counts a section only after a full visible second following a background tab', () => {
+  document.body.innerHTML =
+    '<h2 data-analytics-section="projects">個人開発</h2>';
   cleanup = startPageAnalytics();
-  vi.advanceTimersByTime(20_000);
+  intersect(0, true);
+  vi.advanceTimersByTime(900);
   hidden = true;
   document.dispatchEvent(new Event('visibilitychange'));
   vi.advanceTimersByTime(60_000);
   hidden = false;
   document.dispatchEvent(new Event('visibilitychange'));
-  vi.advanceTimersByTime(10_000);
+  vi.advanceTimersByTime(900);
   expect(window.gtag).toHaveBeenCalledTimes(1);
-  intersect(1, true);
+  vi.advanceTimersByTime(100);
   expect(window.gtag).toHaveBeenLastCalledWith(
     'event',
-    'article_read',
-    expect.any(Object),
+    'section_view',
+    expect.objectContaining({ section_name: 'projects' }),
   );
   vi.advanceTimersByTime(60_000);
   expect(window.gtag).toHaveBeenCalledTimes(2);
 });
 
-it('cancels unfinished visibility and reading measurements when leaving a page', () => {
+it('cancels unfinished section measurements when leaving a page', () => {
   document.body.innerHTML =
-    '<h2 data-analytics-section="projects">個人開発</h2><div data-analytics-article-end></div>';
+    '<h2 data-analytics-section="projects">個人開発</h2>';
   cleanup = startPageAnalytics();
   intersect(0, true);
-  intersect(1, true);
   cleanup();
   vi.advanceTimersByTime(60_000);
   expect(window.gtag).toHaveBeenCalledTimes(1);

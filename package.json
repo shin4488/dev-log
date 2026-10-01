@@ -1,29 +1,23 @@
 {
   "name": "dev-log",
   "private": true,
-  "description": "shin4488's blog written with Astro, React and Markdown",
+  "description": "shin4488's portfolio written with Astro and React",
   "version": "1.1.0",
   "bugs": {
     "url": "https://github.com/shin4488/dev-log/issues"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "7.3.1",
     "@astrojs/react": "7.0.0",
     "@popperjs/core": "^2.11.8",
     "astro": "7.3.5",
     "bootstrap": "5.3.8",
-    "fast-xml-parser": "5.11.1",
-    "hast-util-from-html": "2.0.3",
-    "hast-util-to-html": "9.0.5",
-    "prismjs": "^1.28.0",
     "react": "19.3.0",
     "react-bootstrap": "2.10.10",
     "react-dom": "19.3.0",
     "react-icons": "5.7.0",
     "sharp": "0.35.4",
     "typeface-merriweather": "1.1.13",
-    "typeface-montserrat": "1.1.13",
-    "underscore.string": "3.3.6"
+    "typeface-montserrat": "1.1.13"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
@@ -49,8 +43,7 @@
   "homepage": "https://shin4488.github.io/dev-log/",
   "keywords": [
     "astro",
-    "react",
-    "markdown"
+    "react"
   ],
   "license": "0BSD",
   "repository": {
@@ -68,7 +61,6 @@
     "typecheck": "astro check",
     "test:e2e": "playwright test",
     "audit:dependencies": "yarn npm audit --all --recursive",
-    "test:content": "node scripts/test-content.mjs",
     "test:dev": "playwright test --config playwright.dev.config.ts"
   },
   "engines": {

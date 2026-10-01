@@ -219,27 +219,6 @@ a:focus {
   text-decoration: none;
 }
 
-/* Custom classes */
-
-.post-list-item {
-  margin-bottom: var(--spacing-8);
-  margin-top: var(--spacing-8);
-}
-
-.post-list-item h2 {
-  font-size: var(--fontSize-4);
-  color: var(--color-primary);
-}
-
-.blog-post header p {
-  font-size: var(--fontSize-2);
-  font-family: var(--font-heading);
-}
-
-.gatsby-highlight {
-  margin-bottom: var(--spacing-8);
-}
-
 /* Media queries */
 
 @media (max-width: 42rem) {
