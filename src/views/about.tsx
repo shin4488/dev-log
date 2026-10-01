@@ -2,14 +2,16 @@ import * as React from 'react';
 import type { PageProps } from '@/lib/types';
 import { Container, Row, Col } from 'react-bootstrap';
 import Layout from '@/components/layout';
-import { selfDevelopmentItems } from '@/data/selfDevelopment';
+import { getSelfDevelopmentItems } from '@/data/selfDevelopment';
+import { messages } from '@/lib/i18n';
 import { snsLinkItems } from '@/data/sns';
 import HeroSection from '@/components/HeroSection';
 import ProjectCard from '@/components/ProjectCard';
 import SkillSection from '@/components/SkillSection';
 import FixedNavigation from '@/components/FixedNavigation';
 
-const aboutPage: React.FC<PageProps> = ({ location }) => {
+const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
+  const text = messages[locale];
   const [activeSection, setActiveSection] = React.useState('sns');
   const [isNavFixed, setIsNavFixed] = React.useState(false);
 
@@ -154,28 +156,31 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
   const renderProjects = React.useMemo(
     () => (
       <Row xs={1} md={2} className="gy-4 gx-3 gx-md-4">
-        {selfDevelopmentItems.map((item) => (
+        {getSelfDevelopmentItems(locale).map((item) => (
           <Col key={item.siteUri}>
-            <ProjectCard item={item} />
+            <ProjectCard item={item} locale={locale} />
           </Col>
         ))}
       </Row>
     ),
-    [],
+    [locale],
   );
 
   return (
-    <Layout location={location} useFluidContainer={true}>
+    <Layout location={location} locale={locale} useFluidContainer={true}>
       <FixedNavigation
         isFixed={isNavFixed}
         activeSection={activeSection}
         onNavClick={scrollToSection}
+        locale={locale}
       />
 
       <div ref={heroRef}>
         <HeroSection
           activeSection={activeSection}
           onNavClick={scrollToSection}
+          locale={locale}
+          pathname={location.pathname}
         />
       </div>
 
@@ -190,7 +195,7 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
           }}
         >
           <h2 className="mb-4" data-analytics-section="sns">
-            リンク
+            {text.sections.sns}
           </h2>
           {renderSNSLinks}
         </section>
@@ -206,7 +211,7 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
           }}
         >
           <h2 className="mb-4" data-analytics-section="projects">
-            個人開発
+            {text.sections.projects}
           </h2>
           {renderProjects}
         </section>
@@ -222,9 +227,9 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
           }}
         >
           <h2 className="mb-4" data-analytics-section="experience">
-            開発経験
+            {text.sections.experience}
           </h2>
-          <SkillSection />
+          <SkillSection locale={locale} />
         </section>
       </Container>
     </Layout>

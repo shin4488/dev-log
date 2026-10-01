@@ -4,37 +4,38 @@ import 'typeface-merriweather/index.css';
 import '../style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../theme.css';
-import { site, localUrl } from '../lib/site';
+import { localUrl } from '../lib/site';
 import { ClientRouter } from 'astro:transitions';
+import { messages, type Locale } from '../lib/i18n';
+import { createPageMetadata } from '../lib/pageMetadata';
+import PreferredLanguage from '../components/PreferredLanguage.astro';
 
 interface Props {
   title: string;
   description?: string;
   pageType?: string;
+  locale?: Locale;
+  pagePath?: string;
 }
-const { title, description = site.description, pageType = 'other' } = Astro.props;
+const { title, locale = 'ja', description = messages[locale].description, pageType = 'other', pagePath = '/' } = Astro.props;
+const metadata = createPageMetadata({ title, locale, description, pagePath });
 const measurementId = import.meta.env.PROD
   ? import.meta.env.GOOGLE_ANALYTICS_MEASUREMENT_ID
   : undefined;
 
 ---
 <!doctype html>
-<html lang="en" transition:animate="none">
+<html lang={locale} transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {(pageType === 'not_found' || (locale === 'ja' && pageType === 'about' && pagePath === '/')) && <PreferredLanguage redirectToPage={pageType !== 'not_found'} />}
     <ClientRouter fallback="swap" />
-    <title>{title} | {site.title}</title>
-    <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={site.url + 'static/my-profile-image-564c5fa176a060003203d7276dbcce81.png'} />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:creator" content={site.twitter} />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <title>{metadata.title}</title>
+    {metadata.meta.map(tag => <meta {...tag} />)}
+    <link rel="canonical" href={metadata.canonicalUrl} />
+    {metadata.alternates.map(({ language, url }) => <link rel="alternate" hreflang={language} href={url} />)}
     <link rel="icon" type="image/png" href={localUrl('/favicon-32x32.png')} />
     <link rel="manifest" href={localUrl('/manifest.webmanifest')} crossorigin="anonymous" />
     {[48, 72, 96, 144, 192, 256, 384, 512].map(size => <link rel="apple-touch-icon" sizes={`${size}x${size}`} href={localUrl(`/icons/icon-${size}x${size}.png`)} />)}
@@ -52,10 +53,20 @@ const measurementId = import.meta.env.PROD
   <body data-page-type={pageType}><slot /></body>
   <script>
     import { startPageAnalytics } from '../lib/analytics';
+    import { isLocale, messages } from '../lib/i18n';
+    import { applyPageMetadata, createPageMetadata } from '../lib/pageMetadata';
     let cleanup = () => {};
     document.addEventListener('astro:before-swap', () => cleanup());
     document.addEventListener('astro:page-load', () => {
       cleanup();
+      const preferred = document.documentElement.dataset.preferredLocale;
+      if (document.body.dataset.pageType === 'not_found' && isLocale(preferred)) {
+        applyPageMetadata(createPageMetadata({
+          title: messages[preferred].notFoundTitle,
+          locale: preferred,
+          pagePath: '/404/',
+        }));
+      }
       cleanup = startPageAnalytics();
     });
   </script>

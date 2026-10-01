@@ -1,6 +1,6 @@
 # 開発ガイド
 
-Astro と React で作る日本語の自己紹介・ポートフォリオサイト。自己紹介データは `src/data/`、ルートは `src/pages/`、画面は `src/views/`・`src/components/`。起動手順は [README](README.md)の該当節を参照する。
+Astro と React で作る日本語・英語の自己紹介・ポートフォリオサイト。自己紹介データは `src/data/`、共通の多言語文言とURL処理は `src/lib/i18n.ts`、ルートは `src/pages/`、画面は `src/views/`・`src/components/`。起動手順と各言語のURLは [README](README.md)の該当節を参照する。
 
 ## 開発・検証と公開
 

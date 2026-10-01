@@ -1,8 +1,9 @@
 ---
 import Document from '../layouts/Document.astro';
 import NotFound from '../views/404';
+import { messages, localeUrl } from '../lib/i18n';
 
 ---
-<Document pageType="not_found" title="404: Not Found">
-  <NotFound location={{ pathname: '/dev-log/404.html' }} data={undefined as never} />
+<Document pageType="not_found" title={messages.ja.notFoundTitle} pagePath="/404/">
+  <NotFound location={{ pathname: localeUrl('ja', '/404/') }} data={undefined as never} client:load />
 </Document>

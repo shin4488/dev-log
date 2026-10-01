@@ -1,26 +1,12 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import SkillSection from './SkillSection';
-
-// skillLevel.tsのモック
-vi.mock('@/data/skillLevel', () => ({
-  experienceUpdatedDate: '2023/10/28',
-  skillLevels: [
-    { level: 4, skills: ['Salesforce', 'Apex'] },
-    { level: 3, skills: ['Node.js', 'TypeScript'] },
-    { level: 2, skills: ['C#', 'Vue.js'] },
-  ],
-  salesforceNotes: [
-    '※Salesforceに関して',
-    'Apex...JavaライクなSalesforce独自のプログラミング言語',
-  ],
-}));
 
 describe('SkillSection', () => {
   it('更新日が表示される', () => {
     render(<SkillSection />);
 
-    expect(screen.getByText('2023/10/28 現在')).toBeInTheDocument();
+    expect(screen.getByText('2025/09/21 現在')).toBeInTheDocument();
   });
 
   it('セクションタイトルが表示される', () => {

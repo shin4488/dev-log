@@ -4,6 +4,7 @@ export default defineConfig({
   testDir: './e2e',
   testMatch: 'site.spec.ts',
   use: {
+    locale: 'ja-JP',
     baseURL: 'http://127.0.0.1:9000/dev-log/',
     launchOptions: process.env.PLAYWRIGHT_CHROME_PATH
       ? { executablePath: process.env.PLAYWRIGHT_CHROME_PATH }
