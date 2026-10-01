@@ -467,7 +467,7 @@ test('language switching translates the portfolio and survives reload', async ({
   await expect(page).toHaveURL(/\/dev-log\/en\/$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page).toHaveTitle('About | Dev Log');
-  await expect(page.locator('#projects h2')).toHaveText('Projects');
+  await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
   await expect(page.locator('.card')).toHaveCount(9);
   await expect(page.locator('.card').first()).toContainText(
     'Probability Distribution Visualizer',
@@ -485,7 +485,7 @@ test('language switching translates the portfolio and survives reload', async ({
     /[\u3040-\u30ff\u3400-\u9fff]/u,
   );
   await page.reload();
-  await expect(page.locator('#projects h2')).toHaveText('Projects');
+  await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
   await page
     .getByRole('navigation', { name: 'Language', exact: true })
     .getByRole('link', { name: '日本語' })
@@ -525,10 +525,12 @@ test('English navigation scrolls and keeps the current section selected', async 
 }) => {
   await page.goto('en/');
   await page.waitForLoadState('networkidle');
-  await page.getByRole('link', { name: 'Projects', exact: true }).click();
+  await page
+    .getByRole('link', { name: 'Personal Projects', exact: true })
+    .click();
   const fixed = page.locator('.fixed-top');
   await expect(fixed.locator('[aria-current="location"]')).toHaveText(
-    'Projects',
+    'Personal Projects',
   );
   await fixed.getByRole('link', { name: 'Experience', exact: true }).click();
   await expect(fixed.locator('[aria-current="location"]')).toHaveText(
@@ -612,7 +614,7 @@ test.describe('static localized pages', () => {
     await expect(page.locator('#projects h2')).toHaveText('個人開発');
     await page.getByRole('link', { name: 'English', exact: true }).click();
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-    await expect(page.locator('#projects h2')).toHaveText('Projects');
+    await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
     await expect(page.locator('.card').first()).toContainText(
       'Probability Distribution Visualizer',
     );
@@ -630,7 +632,7 @@ test.describe('browser language preferences', () => {
   }) => {
     await page.goto('./');
     await expect(page).toHaveURL(/\/dev-log\/en\/$/);
-    await expect(page.locator('#projects h2')).toHaveText('Projects');
+    await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
     await page.getByRole('link', { name: '日本語', exact: true }).click();
     await expect(page).toHaveURL(/\/dev-log\/$/);
     await expect(page.locator('#projects h2')).toHaveText('個人開発');
@@ -694,7 +696,7 @@ test('a saved English choice takes priority over a Japanese browser', async ({
   await page.getByRole('link', { name: 'English', exact: true }).click();
   await page.goto('./');
   await expect(page).toHaveURL(/\/dev-log\/en\/$/);
-  await expect(page.locator('#projects h2')).toHaveText('Projects');
+  await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
 });
 
 test.describe('unsupported browser languages', () => {

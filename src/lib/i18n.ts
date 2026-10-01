@@ -29,7 +29,11 @@ export const messages = {
     description:
       "shin4488's portfolio, featuring personal projects and professional development experience.",
     language: 'Language',
-    sections: { sns: 'Links', projects: 'Projects', experience: 'Experience' },
+    sections: {
+      sns: 'Links',
+      projects: 'Personal Projects',
+      experience: 'Experience',
+    },
     profileImage: "shin4488's profile picture",
     technologies: 'Technologies',
     summary: 'Overview',
