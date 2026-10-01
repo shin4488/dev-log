@@ -15,9 +15,7 @@ async function expectNotFoundLanguage(page: Page, locale: 'ja' | 'en') {
       { exact: true },
     ),
   ).toBeVisible();
-  await expect(page.locator('footer')).toContainText(
-    english ? 'For suggestions about this site' : 'このサイトへのご要望は',
-  );
+  await expect(page.locator('footer')).toHaveText(/^© \d{4} shin4488$/);
   await expect(
     page.getByRole('link', {
       name: english ? 'Back to home' : 'トップページへ戻る',
@@ -90,7 +88,7 @@ for (const [route, title, locale] of routes) {
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(`${title} | Dev Log`);
     await expect(page.locator('html')).toHaveAttribute('lang', locale);
-    await expect(page.locator('footer')).toContainText('shin4488');
+    await expect(page.locator('footer')).toHaveText(/^© \d{4} shin4488$/);
     await page.waitForLoadState('networkidle');
     expect(errors).toEqual([]);
     expect(
@@ -538,9 +536,7 @@ test('language switching translates the portfolio and survives reload', async ({
   await expect(page.locator('#experience')).toContainText(
     'As of September 21, 2025',
   );
-  await expect(page.locator('footer')).toContainText(
-    'For suggestions about this site',
-  );
+  await expect(page.locator('footer')).toHaveText(/^© \d{4} shin4488$/);
   // The language control is the only Japanese text on the English page.
   const mainText = await page.locator('main').innerText();
   expect(mainText.replace('日本語', '')).not.toMatch(

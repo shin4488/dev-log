@@ -2,7 +2,6 @@ import * as React from 'react';
 import type { ReactNode } from 'react';
 import { localeUrl, type Locale } from '@/lib/i18n';
 import { Container } from 'react-bootstrap';
-import Bio from '@/components/bio';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/theme.css';
 
@@ -25,9 +24,7 @@ const Layout: React.FC<LayoutParameter> = ({
   const footerContent = (
     <>
       <hr />
-      <footer className="py-4">
-        <Bio locale={locale} /> © {new Date().getFullYear()} shin4488
-      </footer>
+      <footer className="py-4">© {new Date().getFullYear()} shin4488</footer>
     </>
   );
 

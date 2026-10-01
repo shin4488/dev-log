@@ -22,8 +22,6 @@ export const messages = {
     technicalHighlights: '技術アピール',
     experienceTitle: '業務で扱ってきた主な技術スタック',
     updated: (date: string) => `${date} 現在`,
-    feedbackBefore: 'このサイトへのご要望は、GitHubの',
-    feedbackAfter: 'にお寄せください。',
     notFoundTitle: '404: ページが見つかりません',
     notFoundMessage: 'お探しのページは見つかりませんでした。',
     backHome: 'トップページへ戻る',
@@ -53,8 +51,6 @@ export const messages = {
       }).format(new Date(Date.UTC(year, month - 1, day)));
       return `As of ${formatted}`;
     },
-    feedbackBefore: 'For suggestions about this site, please open an issue on ',
-    feedbackAfter: '.',
     notFoundTitle: '404: Page not found',
     notFoundMessage: 'The page you are looking for could not be found.',
     backHome: 'Back to home',
