@@ -5,6 +5,10 @@ export type Locale = (typeof locales)[number];
 export type LocalizedText = Record<Locale, string>;
 export const languagePreferenceKey = 'dev-log.language';
 
+export function isLocale(value: unknown): value is Locale {
+  return locales.some((locale) => locale === value);
+}
+
 export const messages = {
   ja: {
     pageTitle: '自己紹介',

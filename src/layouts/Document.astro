@@ -4,9 +4,11 @@ import 'typeface-merriweather/index.css';
 import '../style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../theme.css';
-import { site, localUrl } from '../lib/site';
+import { localUrl } from '../lib/site';
 import { ClientRouter } from 'astro:transitions';
-import { localeUrl, locales, messages, languagePreferenceKey, type Locale } from '../lib/i18n';
+import { messages, type Locale } from '../lib/i18n';
+import { createPageMetadata } from '../lib/pageMetadata';
+import PreferredLanguage from '../components/PreferredLanguage.astro';
 
 interface Props {
   title: string;
@@ -16,7 +18,7 @@ interface Props {
   pagePath?: string;
 }
 const { title, locale = 'ja', description = messages[locale].description, pageType = 'other', pagePath = '/' } = Astro.props;
-const canonicalUrl = new URL(localeUrl(locale, pagePath), site.url).href;
+const metadata = createPageMetadata({ title, locale, description, pagePath });
 const measurementId = import.meta.env.PROD
   ? import.meta.env.GOOGLE_ANALYTICS_MEASUREMENT_ID
   : undefined;
@@ -28,39 +30,12 @@ const measurementId = import.meta.env.PROD
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    {locale === 'ja' && pageType === 'about' && pagePath === '/' && <script is:inline data-astro-rerun define:vars={{ languagePreferenceKey, englishUrl: localeUrl('en') }}>
-      // Only the entry URL negotiates language; shared content URLs remain explicit.
-      const requested = new URLSearchParams(window.location.search).get('lang');
-      let saved;
-      try {
-        saved = window.localStorage.getItem(languagePreferenceKey);
-      } catch {}
-      const supported = value => value === 'ja' || value === 'en';
-      const browserLanguage = navigator.languages
-        .map(language => language.toLowerCase().split('-')[0])
-        .find(supported);
-      const preferred = supported(requested) ? requested : supported(saved) ? saved : browserLanguage || 'ja';
-      if (preferred === 'en') {
-        window.location.replace(`${englishUrl}${window.location.search}${window.location.hash}`);
-      }
-    </script>}
+    {(pageType === 'not_found' || (locale === 'ja' && pageType === 'about' && pagePath === '/')) && <PreferredLanguage redirectToPage={pageType !== 'not_found'} />}
     <ClientRouter fallback="swap" />
-    <title>{title} | {site.title}</title>
-    <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={site.url + 'static/my-profile-image-564c5fa176a060003203d7276dbcce81.png'} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:locale" content={locale === 'ja' ? 'ja_JP' : 'en_US'} />
-    <meta property="og:locale:alternate" content={locale === 'ja' ? 'en_US' : 'ja_JP'} />
-    <link rel="canonical" href={canonicalUrl} />
-    {locales.map(language => <link rel="alternate" hreflang={language} href={new URL(localeUrl(language, pagePath), site.url).href} />)}
-    <link rel="alternate" hreflang="x-default" href={new URL(localeUrl('ja', pagePath), site.url).href} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:creator" content={site.twitter} />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <title>{metadata.title}</title>
+    {metadata.meta.map(tag => <meta {...tag} />)}
+    <link rel="canonical" href={metadata.canonicalUrl} />
+    {metadata.alternates.map(({ language, url }) => <link rel="alternate" hreflang={language} href={url} />)}
     <link rel="icon" type="image/png" href={localUrl('/favicon-32x32.png')} />
     <link rel="manifest" href={localUrl('/manifest.webmanifest')} crossorigin="anonymous" />
     {[48, 72, 96, 144, 192, 256, 384, 512].map(size => <link rel="apple-touch-icon" sizes={`${size}x${size}`} href={localUrl(`/icons/icon-${size}x${size}.png`)} />)}
@@ -78,10 +53,20 @@ const measurementId = import.meta.env.PROD
   <body data-page-type={pageType}><slot /></body>
   <script>
     import { startPageAnalytics } from '../lib/analytics';
+    import { isLocale, messages } from '../lib/i18n';
+    import { applyPageMetadata, createPageMetadata } from '../lib/pageMetadata';
     let cleanup = () => {};
     document.addEventListener('astro:before-swap', () => cleanup());
     document.addEventListener('astro:page-load', () => {
       cleanup();
+      const preferred = document.documentElement.dataset.preferredLocale;
+      if (document.body.dataset.pageType === 'not_found' && isLocale(preferred)) {
+        applyPageMetadata(createPageMetadata({
+          title: messages[preferred].notFoundTitle,
+          locale: preferred,
+          pagePath: '/404/',
+        }));
+      }
       cleanup = startPageAnalytics();
     });
   </script>

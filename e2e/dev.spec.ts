@@ -24,6 +24,31 @@ test('removed duplicate profile URLs return 404 in development', async ({
   }
 });
 
+test.describe('development 404 language preferences', () => {
+  test.use({ locale: 'en-US' });
+
+  test('unknown URLs use the browser language and retain a later selection', async ({
+    page,
+  }) => {
+    const response = await page.goto('ja/');
+    expect(response?.status()).toBe(404);
+    await expect(page).toHaveURL(/\/dev-log\/ja\/$/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      '404: Page not found',
+    );
+    await expect(page).toHaveTitle('404: Page not found | Dev Log');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await page.getByRole('link', { name: '日本語', exact: true }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      '404: ページが見つかりません',
+    );
+    const nextError = await page.goto('en/missing/');
+    expect(nextError?.status()).toBe(404);
+    await expect(page).toHaveTitle('404: ページが見つかりません | Dev Log');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+  });
+});
+
 test('CSS and React hot updates retain the document and working navigation', async ({
   page,
 }) => {
