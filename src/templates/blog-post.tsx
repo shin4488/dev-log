@@ -19,7 +19,9 @@ const BlogPostTemplate: React.FC<PageProps<PostData>> = ({
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline">{post.frontmatter?.title}</h1>
+          <h1 className="m-0 mb-3" itemProp="headline">
+            {post.frontmatter?.title}
+          </h1>
           <p>
             作成日：{post.frontmatter?.createdDate}
             {post.frontmatter?.updatedDate &&
@@ -40,15 +42,7 @@ const BlogPostTemplate: React.FC<PageProps<PostData>> = ({
 
       {/* 前後の記事へのリンク */}
       <nav className="blog-post-nav">
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
+        <ul className="d-flex flex-wrap justify-content-between list-unstyled m-0">
           <li>
             {previous && (
               <>

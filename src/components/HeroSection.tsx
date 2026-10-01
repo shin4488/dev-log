@@ -29,8 +29,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <img
           src={AboutImage}
           alt="Profile picture"
-          className="rounded-circle mb-3 border border-4 border-white"
-          style={{ width: '140px', height: '140px', objectFit: 'cover' }}
+          className="rounded-circle mb-3 border border-4 border-white object-fit-cover"
+          width={140}
+          height={140}
         />
       </Container>
       <nav className="position-absolute bottom-0 start-0 w-100 d-flex justify-content-center gap-4 pb-2">

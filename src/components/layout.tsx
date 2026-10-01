@@ -23,14 +23,13 @@ const Layout: React.FC<LayoutParameter> = ({
   const footerContent = (
     <>
       <hr />
-      <footer>
+      <footer className="py-4">
         <Bio /> © {new Date().getFullYear()} shin4488
       </footer>
     </>
   );
 
   return (
-    // <div className="global-wrapper" data-is-root-path={isRootPath}>
     <div data-is-root-path={isRootPath}>
       {useFluidContainer ? (
         <>
