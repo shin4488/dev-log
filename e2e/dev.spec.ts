@@ -2,7 +2,7 @@ import { stat, utimes } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { test, expect } from './fixtures';
 
-for (const route of ['', 'about/', 'en/', 'en/about/']) {
+for (const route of ['', 'en/']) {
   test(`development route ${route || '/'} renders without diagnostics`, async ({
     page,
   }) => {
@@ -15,6 +15,14 @@ for (const route of ['', 'about/', 'en/', 'en/about/']) {
     ).toHaveCount(0);
   });
 }
+
+test('removed duplicate profile URLs return 404 in development', async ({
+  request,
+}) => {
+  for (const route of ['about/', 'en/about/']) {
+    expect((await request.get(route)).status(), route).toBe(404);
+  }
+});
 
 test('CSS and React hot updates retain the document and working navigation', async ({
   page,

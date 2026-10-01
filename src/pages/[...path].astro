@@ -1,23 +1,21 @@
 ---
 import Document from '../layouts/Document.astro';
 import About from '../views/about';
-import { localeUrl, messages, type Locale } from '../lib/i18n';
+import { locales, localeUrl, messages, type Locale } from '../lib/i18n';
 
 export function getStaticPaths() {
-  return (['ja', 'en'] as const).flatMap((locale) =>
-    [undefined, 'about'].map((path) => ({
-      params: { path: locale === 'en' ? ['en', path].filter(Boolean).join('/') : path },
-      props: { locale, pagePath: path ? `/${path}/` : '/' },
-    })),
-  );
+  return locales.map((locale) => ({
+    params: { path: locale === 'en' ? 'en' : undefined },
+    props: { locale },
+  }));
 }
-interface Props { locale: Locale; pagePath: string }
-const { locale, pagePath } = Astro.props;
+interface Props { locale: Locale }
+const { locale } = Astro.props;
 const location = {
-  pathname: localeUrl(locale, pagePath),
+  pathname: localeUrl(locale),
 };
 
 ---
-<Document pageType="about" title={messages[locale].pageTitle} locale={locale} pagePath={pagePath}>
+<Document pageType="about" title={messages[locale].pageTitle} locale={locale}>
   <About location={location} locale={locale} data={{}} client:load />
 </Document>
