@@ -74,6 +74,20 @@ test('profile navigation scrolls, fixes the menu, and updates its active state',
     .toBeLessThan(2);
 });
 
+test('profile fits narrow screens without horizontal scrolling', async ({
+  page,
+}) => {
+  for (const width of [320, 390, 767, 768]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('./');
+    await page.waitForLoadState('networkidle');
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+      `profile width at ${width}px`,
+    ).toBeLessThanOrEqual(width);
+  }
+});
+
 test('profile links underline only the current section even while hovering', async ({
   page,
 }) => {

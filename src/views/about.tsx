@@ -153,7 +153,7 @@ const aboutPage: React.FC<PageProps> = ({ location }) => {
 
   const renderProjects = React.useMemo(
     () => (
-      <Row xs={1} md={2} className="g-4">
+      <Row xs={1} md={2} className="gy-4 gx-3 gx-md-4">
         {selfDevelopmentItems.map((item) => (
           <Col key={item.siteUri}>
             <ProjectCard item={item} />
