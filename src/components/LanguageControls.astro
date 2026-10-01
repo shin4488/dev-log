@@ -1,0 +1,24 @@
+---
+import { languagePreferenceKey, locales } from '../lib/i18n';
+---
+<script is:inline define:vars={{ languagePreferenceKey, locales }}>
+  // Register before modules load. Astro runs this identical script once per document.
+  document.addEventListener('click', event => {
+    const link = event.target instanceof Element
+      ? event.target.closest('.language-switcher a[data-language]')
+      : null;
+    if (!(link instanceof HTMLAnchorElement) || !locales.includes(link.dataset.language)) {
+      return;
+    }
+    const language = link.dataset.language;
+    const url = new URL(link.href);
+    url.hash = window.location.hash;
+    try {
+      window.localStorage.setItem(languagePreferenceKey, language);
+    } catch {
+      // An explicit URL choice works when browser storage is blocked.
+      url.searchParams.set('lang', language);
+    }
+    link.href = url.href;
+  }, { capture: true });
+</script>

@@ -83,6 +83,7 @@ JavaScriptを無効にした場合も、日英のページ表示とリンクで�
 `src/data/selfDevelopment.ts`、技術名と注釈の翻訳は `src/data/skillLevel.ts` にあります。
 ブラウザの言語判定は `src/components/PreferredLanguage.astro`、メタデータの生成・更新は
 `src/lib/pageMetadata.ts` に集約しています。
+切り替え操作の保存は `src/components/LanguageControls.astro` で、Reactの初期化前から処理します。
 
 ## ディレクトリ構成
 

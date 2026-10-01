@@ -1,10 +1,4 @@
-import {
-  languageUrl,
-  languagePreferenceKey,
-  locales,
-  messages,
-  type Locale,
-} from '@/lib/i18n';
+import { languageUrl, locales, messages, type Locale } from '@/lib/i18n';
 
 interface LanguageSwitcherProps {
   locale: Locale;
@@ -23,23 +17,10 @@ export default function LanguageSwitcher({
             key={language}
             href={languageUrl(pathname, language)}
             lang={language}
+            data-language={language}
             hrefLang={language}
             aria-current={language === locale ? 'page' : undefined}
             className={`btn ${language === locale ? 'btn-light' : 'btn-outline-light'}`}
-            onClick={(event) => {
-              const url = new URL(
-                languageUrl(pathname, language),
-                window.location.origin,
-              );
-              url.hash = window.location.hash;
-              try {
-                window.localStorage.setItem(languagePreferenceKey, language);
-              } catch {
-                // An explicit URL choice still works when browser storage is blocked.
-                url.searchParams.set('lang', language);
-              }
-              event.currentTarget.href = url.href;
-            }}
           >
             {language === 'ja' ? '日本語' : 'English'}
           </a>

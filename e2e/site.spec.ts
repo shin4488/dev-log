@@ -254,6 +254,7 @@ test('manifest icons and social preview image remain available', async ({
 
 test('analytics sends one page view for initial load and each internal navigation', async ({
   page,
+  baseURL,
 }) => {
   await page.goto('./');
   const views = () =>
@@ -278,8 +279,8 @@ test('analytics sends one page view for initial load and each internal navigatio
   expect((latest as any)[2]).toMatchObject({
     page_title: 'About | Dev Log',
     page_type: 'about',
-    page_location: 'http://127.0.0.1:9000/dev-log/en/',
-    page_referrer: 'http://127.0.0.1:9000/dev-log/',
+    page_location: new URL('en/', baseURL).href,
+    page_referrer: baseURL,
   });
   await page.getByRole('link', { name: '日本語', exact: true }).click();
   await expect.poll(views).toEqual(['/dev-log/', '/dev-log/en/', '/dev-log/']);
@@ -664,6 +665,53 @@ test('404 language controls and home links use the selected language', async ({
   await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
 });
 
+for (const [route, destination] of [
+  ['404.html', 'en/404/'],
+  ['./#experience', 'en/#experience'],
+]) {
+  test(`language selection on ${route} works before React loads`, async ({
+    page,
+    baseURL,
+  }) => {
+    let allowModules = false;
+    let releaseModules!: () => void;
+    const modules = new Promise<void>((resolve) => {
+      releaseModules = resolve;
+    });
+    await page.route('**/_astro/*.js', async (route) => {
+      if (!allowModules) await modules;
+      await route.continue();
+    });
+    try {
+      await page.goto(route, { waitUntil: 'commit' });
+      await page
+        .getByRole('link', { name: 'English', exact: true })
+        .click({ noWaitAfter: true });
+      await page.waitForURL(new URL(destination, baseURL).href, {
+        waitUntil: 'commit',
+      });
+    } finally {
+      allowModules = true;
+      releaseModules();
+    }
+    await page.waitForLoadState('networkidle');
+    expect(
+      await page.evaluate(() =>
+        window.localStorage.getItem('dev-log.language'),
+      ),
+    ).toBe('en');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page).toHaveTitle(
+      route === '404.html'
+        ? '404: Page not found | Dev Log'
+        : 'About | Dev Log',
+    );
+    await page.goto('./');
+    await expect(page).toHaveURL(new URL('en/', baseURL).href);
+    await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
+  });
+}
+
 test('unknown URLs retain their 404 response and follow a Japanese browser', async ({
   page,
 }) => {
@@ -803,6 +851,7 @@ test.describe('browser language preferences', () => {
   test('first visit follows the browser and an explicit choice persists across visits', async ({
     page,
     context,
+    baseURL,
   }) => {
     await page.goto('./');
     await expect(page).toHaveURL(/\/dev-log\/en\/$/);
@@ -813,7 +862,7 @@ test.describe('browser language preferences', () => {
     await page.reload();
     await expect(page.locator('#projects h2')).toHaveText('個人開発');
     const nextVisit = await context.newPage();
-    await nextVisit.goto('http://127.0.0.1:9000/dev-log/');
+    await nextVisit.goto(baseURL!);
     await expect(nextVisit.locator('#projects h2')).toHaveText('個人開発');
     await nextVisit.close();
     await page.getByRole('link', { name: 'English', exact: true }).click();

@@ -9,6 +9,7 @@ import { ClientRouter } from 'astro:transitions';
 import { messages, type Locale } from '../lib/i18n';
 import { createPageMetadata } from '../lib/pageMetadata';
 import PreferredLanguage from '../components/PreferredLanguage.astro';
+import LanguageControls from '../components/LanguageControls.astro';
 
 interface Props {
   title: string;
@@ -30,6 +31,7 @@ const measurementId = import.meta.env.PROD
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <LanguageControls />
     {(pageType === 'not_found' || (locale === 'ja' && pageType === 'about' && pagePath === '/')) && <PreferredLanguage redirectToPage={pageType !== 'not_found'} />}
     <ClientRouter fallback="swap" />
     <title>{metadata.title}</title>
