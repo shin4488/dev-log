@@ -40,12 +40,6 @@ sitemap が存在せず、検索エンジンへのページ一覧の提示が ro
 3. ビルドして`public/sitemap-*.xml`の URL が`https://shin4488.github.io/dev-log/...`形式か確認
 4. Google Search Console にサイト登録し、sitemap を送信(所有権確認は GA 連携か HTML タグ)
 
-## その他
-
-### LICENSE ファイルの見直し — S(判断のみ)
-
-`LICENSE`(0BSD)と package.json の`"license": "0BSD"`は スターターの初期値のまま。自己紹介文まで 0BSD(事実上の放棄)で公開する意図があるかを確認し、意図と違えばコード部分とコンテンツ部分のライセンスを分けるなど検討する。
-
 ---
 
 ## 実施記録
