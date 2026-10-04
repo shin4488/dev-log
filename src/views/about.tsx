@@ -141,11 +141,14 @@ const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
             data-analytics-name={item.title}
             target="_blank"
             rel="noopener noreferrer"
-            className="me-4 me-md-5"
-            style={{ color: 'inherit', ...item.style }}
+            className="me-4 me-md-5 text-reset"
             title={item.title}
           >
-            <item.iconComponent size={35} className={item.className} />
+            <item.iconComponent
+              size={35}
+              className={item.className}
+              color={item.color}
+            />
           </a>
         ))}
       </div>

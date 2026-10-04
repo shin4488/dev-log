@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { IconType } from 'react-icons';
 import { FaGithub, FaDev, FaLinkedin } from 'react-icons/fa';
 import { RiFileLine } from 'react-icons/ri';
@@ -7,7 +6,7 @@ import { SiZenn } from 'react-icons/si';
 
 interface SnsLink {
   className?: string;
-  style?: React.CSSProperties;
+  color?: string;
   uri: string;
   title: string;
   iconComponent: IconType;
@@ -26,7 +25,7 @@ const snsLinkItems: SnsLink[] = [
     iconComponent: SiQiita,
   },
   {
-    style: { color: '#3EA8FF' },
+    color: '#3EA8FF',
     uri: 'https://zenn.dev/shin4488',
     title: 'Zenn',
     iconComponent: SiZenn,
