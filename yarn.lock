@@ -2819,7 +2819,6 @@ __metadata:
     react-dom: "npm:19.3.0"
     react-icons: "npm:5.7.0"
     sharp: "npm:0.35.4"
-    typeface-merriweather: "npm:1.1.13"
     typeface-montserrat: "npm:1.1.13"
     typescript: "npm:^6.0.3"
     vite: "npm:^8.3.1"
@@ -5224,13 +5223,6 @@ __metadata:
   dependencies:
     prelude-ls: "npm:^1.2.1"
   checksum: 10c0/7b3fd0ed43891e2080bf0c5c504b418fbb3e5c7b9708d3d015037ba2e6323a28152ec163bcb65212741fa5d2022e3075ac3c76440dbd344c9035f818e8ecee58
-  languageName: node
-  linkType: hard
-
-"typeface-merriweather@npm:1.1.13":
-  version: 1.1.13
-  resolution: "typeface-merriweather@npm:1.1.13"
-  checksum: 10c0/812bbe9bbd5102640c77ab271943996cacfc67958851afb62575a85fb90f5f65f50f4d9d877233661273ecbecfb11341c84716b7b79df2f0e7ce35a8ada2ff92
   languageName: node
   linkType: hard
 
