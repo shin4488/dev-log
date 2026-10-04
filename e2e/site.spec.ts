@@ -252,6 +252,27 @@ test('manifest icons and social preview image remain available', async ({
   expect((await request.get(new URL(og!).pathname)).ok()).toBeTruthy();
 });
 
+test('sitemap lists only the canonical top page of each language', async ({
+  request,
+}) => {
+  const origin = 'https://shin4488.github.io/dev-log/';
+  const locations = async (path: string) => {
+    const response = await request.get(path);
+    expect(response.status(), path).toBe(200);
+    return Array.from(
+      (await response.text()).matchAll(/<loc>([^<]+)<\/loc>/g),
+      ([, url]) => url,
+    );
+  };
+  const urls: string[] = [];
+  for (const sitemap of await locations('sitemap-index.xml')) {
+    expect(sitemap.startsWith(origin), sitemap).toBe(true);
+    urls.push(...(await locations(sitemap.slice(origin.length))));
+  }
+  // Not-found pages stay out, and every URL keeps the trailing slash.
+  expect(urls.sort()).toEqual([origin, `${origin}en/`]);
+});
+
 test('analytics sends one page view for initial load and each internal navigation', async ({
   page,
   baseURL,
