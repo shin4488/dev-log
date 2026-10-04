@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import { mkdir, copyFile } from 'node:fs/promises';
 
 export default defineConfig({
@@ -9,6 +10,10 @@ export default defineConfig({
   publicDir: './static',
   integrations: [
     react(),
+    sitemap({
+      // The integration skips only the root 404 page by default.
+      filter: (page) => !page.endsWith('/404/'),
+    }),
     {
       name: 'legacy-404-url',
       hooks: {

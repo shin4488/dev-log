@@ -29,17 +29,6 @@ dependencies が`^`レンジ指定のため、`yarn install`のタイミング�
 
 コンポーネント・ページ・操作のテストは `yarn test` と `yarn test:e2e` で実行する。新しい機能の追加時は、その仕様に対応する検証も追加する。
 
-## SEO・コンテンツ
-
-### sitemap.xml の生成 — S
-
-sitemap が存在せず、検索エンジンへのページ一覧の提示が robots.txt 頼み。
-
-1. Astro 公式の sitemap 連携を検討する
-2. astro.config.mjs に追加(base `/dev-log` が反映されることを確認)
-3. ビルドして`public/sitemap-*.xml`の URL が`https://shin4488.github.io/dev-log/...`形式か確認
-4. Google Search Console にサイト登録し、sitemap を送信(所有権確認は GA 連携か HTML タグ)
-
 ---
 
 ## 実施記録
