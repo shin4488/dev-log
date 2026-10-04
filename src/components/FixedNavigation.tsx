@@ -35,7 +35,7 @@ const FixedNavigation: React.FC<FixedNavigationProps> = ({
               key={item.id}
               href={`#${item.id}`}
               aria-current={activeSection === item.id ? 'location' : undefined}
-              className="px-2 px-md-3 fw-semibold text-decoration-none d-inline-block position-relative"
+              className="px-2 px-md-3 pb-1 fw-semibold text-decoration-none d-inline-block position-relative"
               onClick={(e) => {
                 e.preventDefault();
                 onNavClick(item.id);
@@ -43,7 +43,6 @@ const FixedNavigation: React.FC<FixedNavigationProps> = ({
               onMouseEnter={() => setHoveredItem(item.id)}
               onMouseLeave={() => setHoveredItem(null)}
               style={{
-                cursor: 'pointer',
                 color:
                   activeSection === item.id || hoveredItem === item.id
                     ? '#2e86de'
@@ -52,7 +51,6 @@ const FixedNavigation: React.FC<FixedNavigationProps> = ({
                   activeSection === item.id
                     ? '2px solid #2e86de'
                     : '2px solid transparent',
-                paddingBottom: '4px',
                 transition: 'all 0.2s ease-in-out',
               }}
             >
