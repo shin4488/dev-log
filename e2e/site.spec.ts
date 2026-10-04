@@ -778,6 +778,15 @@ test.describe('static localized pages', () => {
     await expect(page.locator('#projects h2')).toHaveText('個人開発');
   });
 
+  test('the top page publishes the Search Console ownership tag', async ({
+    page,
+  }) => {
+    await page.goto('./');
+    await expect(
+      page.locator('head meta[name="google-site-verification"]'),
+    ).toHaveAttribute('content', 'BpJ8UFxSjN-fSbSWVOPzCSSoK__ezemT3cC5chyN8q0');
+  });
+
   test('404 pages and language links remain available without JavaScript', async ({
     page,
   }) => {

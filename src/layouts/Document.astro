@@ -3,7 +3,7 @@ import 'typeface-montserrat/index.css';
 import '../style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../theme.css';
-import { localUrl } from '../lib/site';
+import { localUrl, site } from '../lib/site';
 import { ClientRouter } from 'astro:transitions';
 import { messages, type Locale } from '../lib/i18n';
 import { createPageMetadata } from '../lib/pageMetadata';
@@ -35,6 +35,7 @@ const measurementId = import.meta.env.PROD
     <ClientRouter fallback="swap" />
     <title>{metadata.title}</title>
     {metadata.meta.map(tag => <meta {...tag} />)}
+    <meta name="google-site-verification" content={site.googleSiteVerification} />
     <link rel="canonical" href={metadata.canonicalUrl} />
     {metadata.alternates.map(({ language, url }) => <link rel="alternate" hreflang={language} href={url} />)}
     <link rel="icon" type="image/png" href={localUrl('/favicon-32x32.png')} />

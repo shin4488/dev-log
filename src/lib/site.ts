@@ -4,6 +4,9 @@ export const site = {
   description: "shin4488's portfolio",
   url: `https://shin4488.github.io${basePath}/`,
   twitter: 'shin44880',
+  // Proves ownership of the Search Console property for this URL. Keep it
+  // published while the property is in use.
+  googleSiteVerification: 'BpJ8UFxSjN-fSbSWVOPzCSSoK__ezemT3cC5chyN8q0',
 };
 
 export function localUrl(path: string): string {
