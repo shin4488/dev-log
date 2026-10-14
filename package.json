@@ -7,7 +7,7 @@
     "url": "https://github.com/shin4488/dev-log/issues"
   },
   "dependencies": {
-    "@astrojs/react": "7.0.0",
+    "@astrojs/react": "7.0.1",
     "@astrojs/sitemap": "3.7.4",
     "@popperjs/core": "^2.11.8",
     "astro": "7.3.8",
