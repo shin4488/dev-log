@@ -2,7 +2,7 @@ import { stat, utimes } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { test, expect } from './fixtures';
 
-for (const route of ['', 'en/']) {
+for (const route of ['', 'ja/']) {
   test(`development route ${route || '/'} renders without diagnostics`, async ({
     page,
   }) => {
@@ -30,9 +30,9 @@ test.describe('development 404 language preferences', () => {
   test('unknown URLs use the browser language and retain a later selection', async ({
     page,
   }) => {
-    const response = await page.goto('ja/');
+    const response = await page.goto('missing/');
     expect(response?.status()).toBe(404);
-    await expect(page).toHaveURL(/\/dev-log\/ja\/$/);
+    await expect(page).toHaveURL(/\/dev-log\/missing\/$/);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       '404: Page not found',
     );
@@ -42,7 +42,7 @@ test.describe('development 404 language preferences', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       '404: ページが見つかりません',
     );
-    const nextError = await page.goto('en/missing/');
+    const nextError = await page.goto('ja/missing/');
     expect(nextError?.status()).toBe(404);
     await expect(page).toHaveTitle('404: ページが見つかりません | Dev Log');
     await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
@@ -63,7 +63,7 @@ test('CSS and React hot updates retain the document and working navigation', asy
       }
     }),
   );
-  await page.goto('./');
+  await page.goto('ja/');
   await page.waitForLoadState('networkidle');
   await page.getByRole('link', { name: '個人開発', exact: true }).click();
   await expect(page.locator('.fixed-top')).toBeVisible();

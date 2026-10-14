@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../theme.css';
 import { localUrl, site } from '../lib/site';
 import { ClientRouter } from 'astro:transitions';
-import { messages, type Locale } from '../lib/i18n';
+import { defaultLocale, messages, type Locale } from '../lib/i18n';
 import { createPageMetadata } from '../lib/pageMetadata';
 import PreferredLanguage from '../components/PreferredLanguage.astro';
 import LanguageControls from '../components/LanguageControls.astro';
@@ -17,7 +17,7 @@ interface Props {
   locale?: Locale;
   pagePath?: string;
 }
-const { title, locale = 'ja', description = messages[locale].description, pageType = 'other', pagePath = '/' } = Astro.props;
+const { title, locale = defaultLocale, description = messages[locale].description, pageType = 'other', pagePath = '/' } = Astro.props;
 const metadata = createPageMetadata({ title, locale, description, pagePath });
 const measurementId = import.meta.env.PROD
   ? import.meta.env.GOOGLE_ANALYTICS_MEASUREMENT_ID
@@ -31,7 +31,7 @@ const measurementId = import.meta.env.PROD
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <LanguageControls />
-    {(pageType === 'not_found' || (locale === 'ja' && pageType === 'about' && pagePath === '/')) && <PreferredLanguage redirectToPage={pageType !== 'not_found'} />}
+    {(pageType === 'not_found' || (locale === defaultLocale && pageType === 'about' && pagePath === '/')) && <PreferredLanguage redirectToPage={pageType !== 'not_found'} />}
     <ClientRouter fallback="swap" />
     <title>{metadata.title}</title>
     {metadata.meta.map(tag => <meta {...tag} />)}
