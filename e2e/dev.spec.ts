@@ -38,6 +38,9 @@ test.describe('development 404 language preferences', () => {
     );
     await expect(page).toHaveTitle('404: Page not found | Dev Log');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    // The development server hydrates slowly. Clicking earlier changes the
+    // link before React hydrates it and logs a hydration mismatch.
+    await expect(page.locator('astro-island[ssr]')).toHaveCount(0);
     await page.getByRole('link', { name: '日本語', exact: true }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       '404: ページが見つかりません',
