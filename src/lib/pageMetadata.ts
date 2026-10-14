@@ -1,4 +1,10 @@
-import { localeUrl, locales, messages, type Locale } from './i18n';
+import {
+  defaultLocale,
+  localeUrl,
+  locales,
+  messages,
+  type Locale,
+} from './i18n';
 import { site } from './site';
 
 interface PageMetadataOptions {
@@ -43,7 +49,10 @@ export function createPageMetadata({
     alternates: [...locales, 'x-default' as const].map((language) => ({
       language,
       url: new URL(
-        localeUrl(language === 'x-default' ? 'ja' : language, pagePath),
+        localeUrl(
+          language === 'x-default' ? defaultLocale : language,
+          pagePath,
+        ),
         site.url,
       ).href,
     })),

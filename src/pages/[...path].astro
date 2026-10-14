@@ -1,11 +1,11 @@
 ---
 import Document from '../layouts/Document.astro';
 import About from '../views/about';
-import { locales, localeUrl, messages, type Locale } from '../lib/i18n';
+import { defaultLocale, locales, localeUrl, messages, type Locale } from '../lib/i18n';
 
 export function getStaticPaths() {
   return locales.map((locale) => ({
-    params: { path: locale === 'en' ? 'en' : undefined },
+    params: { path: locale === defaultLocale ? undefined : locale },
     props: { locale },
   }));
 }

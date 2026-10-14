@@ -3,6 +3,9 @@ import { basePath, localUrl } from './site';
 export const locales = ['ja', 'en'] as const;
 export type Locale = (typeof locales)[number];
 export type LocalizedText = Record<Locale, string>;
+// The site root serves this language, which also covers unsupported browser
+// languages. The others live under /<locale>/.
+export const defaultLocale: Locale = 'en';
 export const languagePreferenceKey = 'dev-log.language';
 
 export function isLocale(value: unknown): value is Locale {
@@ -66,11 +69,14 @@ export function navigationItems(locale: Locale) {
 
 // Content paths are relative to the site root; assets continue to use localUrl.
 export function localeUrl(locale: Locale, path = '/') {
-  return localUrl(`${locale === 'en' ? '/en' : ''}${path}`);
+  return localUrl(`${locale === defaultLocale ? '' : `/${locale}`}${path}`);
 }
 
+const localePrefix = new RegExp(
+  `^/(?:${locales.filter((locale) => locale !== defaultLocale).join('|')})(?=/|$)`,
+);
+
 export function languageUrl(pathname: string, locale: Locale) {
-  const path =
-    pathname.slice(basePath.length).replace(/^\/en(?=\/|$)/, '') || '/';
+  const path = pathname.slice(basePath.length).replace(localePrefix, '') || '/';
   return localeUrl(locale, path === '/404.html' ? '/404/' : path);
 }

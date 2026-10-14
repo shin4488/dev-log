@@ -3,11 +3,18 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import { mkdir, copyFile } from 'node:fs/promises';
 
+const base = '/dev-log';
+
 export default defineConfig({
   site: 'https://shin4488.github.io',
-  base: '/dev-log',
+  base,
   trailingSlash: 'always',
   publicDir: './static',
+  // Links to the previous English URL lead to the English root page.
+  // Redirect destinations do not receive the base path automatically.
+  redirects: {
+    '/en/': `${base}/`,
+  },
   integrations: [
     react(),
     sitemap({
