@@ -22,7 +22,12 @@ const localeUrls = Object.fromEntries(locales.map(locale => [locale, localeUrl(l
   document.documentElement.dataset.preferredLocale = preferred;
   // Search crawlers render as English browsers. Redirecting only from the
   // English root keeps every language page indexable at its own URL.
-  if (redirectToPage && preferred !== defaultLocale) {
+  // Redirect only when the page is opened, not on page swaps that rerun this
+  // script or on history traversal, so the Back button can reach the English
+  // page.
+  const opening = document.readyState === 'loading'
+    && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward';
+  if (redirectToPage && opening && preferred !== defaultLocale) {
     window.location.replace(`${localeUrls[preferred]}${window.location.search}${window.location.hash}`);
   }
 </script>

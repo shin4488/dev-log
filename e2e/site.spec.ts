@@ -926,6 +926,38 @@ test.describe('browser language preferences', () => {
     await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
   });
 
+  test('going back to the top page after choosing Japanese keeps it in English', async ({
+    page,
+  }) => {
+    // Navigating during a page transition skips it and reports an error.
+    const transitionEnded = () =>
+      expect(page.locator('html')).not.toHaveAttribute('data-astro-transition');
+    const expectEnglishTop = async () => {
+      // A redirect would start a new page load, so wait before checking.
+      await page.waitForLoadState('networkidle');
+      await expect(page).toHaveURL(/\/dev-log\/$/);
+      await expect(page.locator('#projects h2')).toHaveText(
+        'Personal Projects',
+      );
+      await transitionEnded();
+    };
+    await page.goto('./');
+    await page.getByRole('link', { name: '日本語', exact: true }).click();
+    await expect(page).toHaveURL(/\/dev-log\/ja\/$/);
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+    await transitionEnded();
+    await page.goBack();
+    await expectEnglishTop();
+    // History also works across full page loads.
+    await page.goto('ja/');
+    await page.goBack();
+    await expectEnglishTop();
+    // Reloading opens the page again and follows the saved choice.
+    await page.reload();
+    await expect(page).toHaveURL(/\/dev-log\/ja\/$/);
+    await expect(page.locator('#projects h2')).toHaveText('個人開発');
+  });
+
   test('the Japanese URL takes priority over a saved English choice', async ({
     page,
   }) => {
