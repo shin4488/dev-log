@@ -31,12 +31,12 @@ const selfDevelopmentItems: SelfDevelopmentItem[] = [
       'Render',
     ],
     summary: {
-      ja: '同じ暗号資産でも、取引所によって価格は少しずつ違います。BinanceとOKXの価格をリアルタイムで比べ、安い方で買って高い方で売ったとき、手数料を払っても利益が残るタイミングを見つけます。取引する金額を入れると見込みの利益がわかり、利益が出ていた時間帯も履歴で振り返れます。',
-      en: 'The same cryptocurrency often trades at slightly different prices on different exchanges. This tool compares Binance and OKX in real time and spots moments when buying on one and selling on the other would still turn a profit after fees. Enter a trade amount to see the expected profit, and look back at past profitable windows in the history.',
+      ja: '暗号資産取引所のBinanceとOKXの価格差をリアルタイムで監視し、手数料を差し引いても利益が出るアービトラージ（裁定取引）のチャンスを見つけます。取引額を入力すると想定利益がすぐにわかり、過去にチャンスがあった時間帯も履歴で確認できます。',
+      en: 'Monitors price gaps between the Binance and OKX crypto exchanges in real time and spots arbitrage opportunities that remain profitable after fees. Enter a trade amount to see the expected profit instantly, and check the history for times when opportunities appeared.',
     },
     technicalAppeal: {
-      ja: '板に並ぶ注文を順に突き合わせ、手数料を引いても利益が出る数量まで計算。最良価格だけで比べるより、実際に取引できる利益に近い値がわかります。小数の計算誤差に左右されず、わずかな価格差も正しく判定できるよう、金額は10進数で計算しています。取引所との接続が切れてもGoのサーバーが自動でつなぎ直すので、画面を開いておくだけで監視を続けられます。',
-      en: 'Walks through the order books level by level to find how much can be traded at a profit after fees, giving a more realistic figure than comparing best prices alone. Prices and amounts use decimal arithmetic so floating-point errors do not distort thin price gaps. The Go server reconnects automatically when an exchange connection drops, so monitoring continues as long as the page is open.',
+      ja: '価格差はすぐに消えるため、板情報はWebSocketで受け取り、Goで2つの取引所を並行処理。画面への配信は端末ごとに最新の状態だけを保持する仕組みにし、通信の遅い端末があっても他の端末に影響しないようにしました。利益計算は純粋関数に切り出してテストし、CIではデータ競合の検出テストや脆弱性検査も自動で実行しています。',
+      en: "Because price gaps close quickly, order book updates stream in over WebSocket, and a Go backend handles both exchanges concurrently. Each client's send queue keeps only the latest state, so a slow connection does not delay other users. Profit calculations are isolated as pure functions with tests, and CI automatically runs race-detection tests and vulnerability scans.",
     },
   },
   {
