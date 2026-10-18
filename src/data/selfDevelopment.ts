@@ -26,19 +26,17 @@ const selfDevelopmentItems: SelfDevelopmentItem[] = [
       'TypeScript',
       'Vite',
       'Vitest',
-      'Binance API',
-      'OKX API',
       'Docker',
       'GitHub Actions',
       'Render',
     ],
     summary: {
-      ja: '暗号資産の取引所間の価格差から、手数料を引いても利益が出る取引を見つけます。BinanceとOKXの板をリアルタイムに比べ、指定した金額での利益や、利益が出た期間の履歴を確認できます。注文は出さず、検知と表示だけを行います。',
-      en: 'Find crypto trades between exchanges that stay profitable after fees. Compare Binance and OKX order books in real time, check the profit for an amount you choose, and review when profitable windows occurred. It only detects and displays opportunities and never places orders.',
+      ja: '同じ暗号資産でも、取引所によって価格は少しずつ違います。BinanceとOKXの価格をリアルタイムで比べ、安い方で買って高い方で売ったとき、手数料を払っても利益が残るタイミングを見つけます。取引する金額を入れると見込みの利益がわかり、利益が出ていた時間帯も履歴で振り返れます。',
+      en: 'The same cryptocurrency often trades at slightly different prices on different exchanges. This tool compares Binance and OKX in real time and spots moments when buying on one and selling on the other would still turn a profit after fees. Enter a trade amount to see the expected profit, and look back at past profitable windows in the history.',
     },
     technicalAppeal: {
-      ja: '板の厚みと手数料から、利益が出る数量と純利益を計算。浮動小数点の誤差を避けるため、金額は10進数で扱います。Goで両取引所のWebSocketを受信し、切断時の自動再接続と画面へのリアルタイム配信を実装しています。',
-      en: 'Calculates the profitable quantity and net profit from order book depth and fees, using decimal arithmetic to avoid floating-point errors. A Go backend subscribes to both exchanges over WebSocket, reconnects automatically, and pushes updates to the UI in real time.',
+      ja: '板に並ぶ注文を順に突き合わせ、手数料を引いても利益が出る数量まで計算。最良価格だけで比べるより、実際に取引できる利益に近い値がわかります。小数の計算誤差に左右されず、わずかな価格差も正しく判定できるよう、金額は10進数で計算しています。取引所との接続が切れてもGoのサーバーが自動でつなぎ直すので、画面を開いておくだけで監視を続けられます。',
+      en: 'Walks through the order books level by level to find how much can be traded at a profit after fees, giving a more realistic figure than comparing best prices alone. Prices and amounts use decimal arithmetic so floating-point errors do not distort thin price gaps. The Go server reconnects automatically when an exchange connection drops, so monitoring continues as long as the page is open.',
     },
   },
   {
