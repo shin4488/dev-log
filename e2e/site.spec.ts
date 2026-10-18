@@ -571,9 +571,9 @@ test('language switching translates the portfolio and survives reload', async ({
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page).toHaveTitle('About | Dev Log');
   await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
-  await expect(page.locator('.card')).toHaveCount(9);
+  await expect(page.locator('.card')).toHaveCount(10);
   await expect(page.locator('.card').first()).toContainText(
-    'Probability Distribution Visualizer',
+    'Crypto Arbitrage Detector | Spot price gaps between exchanges',
   );
   await expect(page.locator('#experience')).toContainText('Process Builder');
   await expect(page.locator('#experience')).toContainText(
@@ -595,7 +595,7 @@ test('language switching translates the portfolio and survives reload', async ({
   await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
   await expect(page.locator('#projects h2')).toHaveText('個人開発');
   await expect(page.locator('.card').first()).toContainText(
-    '確率分布ビジュアライザー',
+    'Crypto Arbitrage Detector｜取引所間の価格差を検知',
   );
 });
 
@@ -796,7 +796,7 @@ test.describe('static localized pages', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
     await expect(page.locator('#projects h2')).toHaveText('個人開発');
     await expect(page.locator('.card').first()).toContainText(
-      '確率分布ビジュアライザー',
+      'Crypto Arbitrage Detector｜取引所間の価格差を検知',
     );
     await page.getByRole('link', { name: 'English', exact: true }).click();
     await expect(page.locator('#projects h2')).toHaveText('Personal Projects');

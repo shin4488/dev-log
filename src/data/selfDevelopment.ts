@@ -1,3 +1,4 @@
+import cryptoArbitrageDetectorIcon from '@/images/crypto-arbitrage-detector-icon.png?url';
 import f1cIcon from '@/images/f1c-icon.png?url';
 import type { Locale, LocalizedText } from '@/lib/i18n';
 
@@ -11,6 +12,35 @@ interface SelfDevelopmentItem {
 }
 
 const selfDevelopmentItems: SelfDevelopmentItem[] = [
+  {
+    title: {
+      ja: 'Crypto Arbitrage Detector｜取引所間の価格差を検知',
+      en: 'Crypto Arbitrage Detector | Spot price gaps between exchanges',
+    },
+    imageUri: cryptoArbitrageDetectorIcon,
+    siteUri: 'https://crypto-arbitrage-detector-bk6u.onrender.com/',
+    usedTechniques: [
+      'Go',
+      'Gorilla WebSocket',
+      'React',
+      'TypeScript',
+      'Vite',
+      'Vitest',
+      'Binance API',
+      'OKX API',
+      'Docker',
+      'GitHub Actions',
+      'Render',
+    ],
+    summary: {
+      ja: '暗号資産の取引所間の価格差から、手数料を引いても利益が出る取引を見つけます。BinanceとOKXの板をリアルタイムに比べ、指定した金額での利益や、利益が出た期間の履歴を確認できます。注文は出さず、検知と表示だけを行います。',
+      en: 'Find crypto trades between exchanges that stay profitable after fees. Compare Binance and OKX order books in real time, check the profit for an amount you choose, and review when profitable windows occurred. It only detects and displays opportunities and never places orders.',
+    },
+    technicalAppeal: {
+      ja: '板の厚みと手数料から、利益が出る数量と純利益を計算。浮動小数点の誤差を避けるため、金額は10進数で扱います。Goで両取引所のWebSocketを受信し、切断時の自動再接続と画面へのリアルタイム配信を実装しています。',
+      en: 'Calculates the profitable quantity and net profit from order book depth and fees, using decimal arithmetic to avoid floating-point errors. A Go backend subscribes to both exchanges over WebSocket, reconnects automatically, and pushes updates to the UI in real time.',
+    },
+  },
   {
     title: {
       ja: '確率分布ビジュアライザー',
