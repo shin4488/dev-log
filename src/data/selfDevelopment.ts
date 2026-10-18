@@ -1,3 +1,4 @@
+import cryptoArbitrageDetectorIcon from '@/images/crypto-arbitrage-detector-icon.png?url';
 import f1cIcon from '@/images/f1c-icon.png?url';
 import type { Locale, LocalizedText } from '@/lib/i18n';
 
@@ -11,6 +12,33 @@ interface SelfDevelopmentItem {
 }
 
 const selfDevelopmentItems: SelfDevelopmentItem[] = [
+  {
+    title: {
+      ja: 'Crypto Arbitrage Detector｜取引所間の価格差を検知',
+      en: 'Crypto Arbitrage Detector | Spot price gaps between exchanges',
+    },
+    imageUri: cryptoArbitrageDetectorIcon,
+    siteUri: 'https://crypto-arbitrage-detector-bk6u.onrender.com/',
+    usedTechniques: [
+      'Go',
+      'Gorilla WebSocket',
+      'React',
+      'TypeScript',
+      'Vite',
+      'Vitest',
+      'Docker',
+      'GitHub Actions',
+      'Render',
+    ],
+    summary: {
+      ja: '暗号資産取引所のBinanceとOKXの価格差をリアルタイムで監視し、手数料を差し引いても利益が出るアービトラージ（裁定取引）のチャンスを見つけます。取引額を入力すると想定利益がすぐにわかり、過去にチャンスがあった時間帯も履歴で確認できます。',
+      en: 'Monitors price gaps between the Binance and OKX crypto exchanges in real time and spots arbitrage opportunities that remain profitable after fees. Enter a trade amount to see the expected profit instantly, and check the history for times when opportunities appeared.',
+    },
+    technicalAppeal: {
+      ja: '価格差はすぐに消えるため、板情報はWebSocketで受け取り、Goで2つの取引所を並行処理。画面への配信は端末ごとに最新の状態だけを保持する仕組みにし、通信の遅い端末があっても他の端末に影響しないようにしました。利益計算は純粋関数に切り出してテストし、CIではデータ競合の検出テストや脆弱性検査も自動で実行しています。',
+      en: "Because price gaps close quickly, order book updates stream in over WebSocket, and a Go backend handles both exchanges concurrently. Each client's send queue keeps only the latest state, so a slow connection does not delay other users. Profit calculations are isolated as pure functions with tests, and CI automatically runs race-detection tests and vulnerability scans.",
+    },
+  },
   {
     title: {
       ja: '確率分布ビジュアライザー',
