@@ -62,7 +62,7 @@ describe('HeroSection', () => {
 
     const heroContainer = screen.getByText('リンク').closest('div');
     expect(heroContainer).toHaveStyle({
-      background: 'linear-gradient(120deg, #1d976c, #2e86de)',
+      backgroundImage: 'linear-gradient(120deg, #1d976c, #2e86de)',
     });
   });
 });
