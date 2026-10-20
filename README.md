@@ -22,7 +22,7 @@ flowchart LR
 
 - **フレームワーク**: Astro, React
 - **スタイリング**: Vanilla CSS, Bootstrap
-- **テスト・品質管理**: Vitest, Playwright, Prettier, TypeScript
+- **テスト・品質管理**: Vitest, Playwright, Biome, TypeScript
 - **パッケージマネージャ**: Yarn (v4)
 
 ---
@@ -48,7 +48,7 @@ yarn serve
 
 ```bash
 yarn typecheck    # TypeScript の型検査
-yarn lint         # ESLint による静的解析
+yarn lint         # Biome による静的解析
 yarn test         # Vitest によるコンポーネントテスト
 yarn test:e2e     # Playwright によるブラウザ回帰テスト
 ```

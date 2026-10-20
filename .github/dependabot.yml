@@ -29,7 +29,7 @@ updates:
         dependency-type: development
         update-types: ['minor', 'patch']
     ignore:
-      # Review major upgrades with Astro and typescript-eslint API support.
+      # Review major upgrades with Astro type-checking support.
       # Revisit using the migration criteria in docs/improvement-backlog.md.
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major']

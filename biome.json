@@ -1,0 +1,54 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json}"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "all",
+      "semicolons": "always"
+    }
+  },
+  "linter": {
+    "includes": ["src/**/*.{ts,tsx}"],
+    "rules": {
+      "preset": "recommended",
+      "suspicious": {
+        "noConsole": "warn",
+        "noVar": "error",
+        "noArrayIndexKey": "off",
+        "useIterableCallbackReturn": "off"
+      },
+      "style": {
+        "useConst": "error",
+        "useBlockStatements": "error",
+        "useImportType": "off",
+        "useExportType": "off",
+        "noNonNullAssertion": "off"
+      },
+      "complexity": {
+        "useLiteralKeys": "warn"
+      },
+      "correctness": {
+        "noUnsafeOptionalChaining": "error",
+        "noUnreachable": "error",
+        "noUnusedVariables": "error",
+        "noUnusedFunctionParameters": "error"
+      }
+    }
+  },
+  "assist": {
+    "enabled": false
+  }
+}
