@@ -198,6 +198,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@astrojs/internal-helpers@npm:0.13.0":
+  version: 0.13.0
+  resolution: "@astrojs/internal-helpers@npm:0.13.0"
+  dependencies:
+    "@types/hast": "npm:^3.0.5"
+    "@types/mdast": "npm:^4.0.4"
+    picomatch: "npm:^4.0.7"
+    retext-smartypants: "npm:^6.2.0"
+    shiki: "npm:^4.5.0"
+    smol-toml: "npm:^1.9.1"
+    unified: "npm:^11.0.5"
+    yaml: "npm:^2.9.1"
+  checksum: 10c0/c0c930ef9b48d8d16da63b83da0e9c3c2b47b5c1821aa8067fde7eba4cfd55423743dbeb3f8455d9e1708389ed85047a01a5de334e6ecc7f75f8382deaddd9c8
+  languageName: node
+  linkType: hard
+
 "@astrojs/language-server@npm:^2.16.7":
   version: 2.16.16
   resolution: "@astrojs/language-server@npm:2.16.16"
@@ -255,15 +271,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/react@npm:7.0.1":
-  version: 7.0.1
-  resolution: "@astrojs/react@npm:7.0.1"
+"@astrojs/react@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@astrojs/react@npm:7.1.0"
   dependencies:
-    "@astrojs/internal-helpers": "npm:0.12.0"
-    "@vitejs/plugin-react": "npm:^6.1.1"
-    devalue: "npm:^5.9.4"
+    "@astrojs/internal-helpers": "npm:0.13.0"
+    "@vitejs/plugin-react": "npm:^6.1.2"
+    devalue: "npm:^6.0.2"
     ultrahtml: "npm:^1.7.0"
-    vite: "npm:^8.3.0"
+    vite: "npm:^8.3.4"
   peerDependencies:
     "@types/react": ^17.0.50 || ^18.0.21 || ^19.0.0
     "@types/react-dom": ^17.0.17 || ^18.0.6 || ^19.0.0
@@ -273,7 +289,7 @@ __metadata:
   peerDependenciesMeta:
     oxc-transform-react:
       optional: true
-  checksum: 10c0/6e51ec092875cb13d952fc6b646908e5f0bbb37990e64cd5a4ff6773488277def4260976045b7dcf22b4aaf5c7d3069a23d4bfdb69a2d2980526330b0a5f618c
+  checksum: 10c0/7391aadb630af7a193b962c82babdec0d52e1e182bb329f87448df039bb0afe143f1bafb783eef8874da66b8690c95bf4b2ab75a8f47d11a4fd988c966c98f82
   languageName: node
   linkType: hard
 
@@ -1895,15 +1911,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^6.1.1":
-  version: 6.1.1
-  resolution: "@vitejs/plugin-react@npm:6.1.1"
+"@vitejs/plugin-react@npm:^6.1.2":
+  version: 6.1.2
+  resolution: "@vitejs/plugin-react@npm:6.1.2"
   dependencies:
     "@rolldown/pluginutils": "npm:^1.0.1"
   peerDependencies:
     "@rolldown/plugin-babel": ^0.1.7 || ^0.2.0
     babel-plugin-react-compiler: ^1.0.0
-    oxc-transform-react: ^0.145.0
+    oxc-transform-react: ^0.152.0
     vite: ^8.0.0
   peerDependenciesMeta:
     "@rolldown/plugin-babel":
@@ -1912,7 +1928,7 @@ __metadata:
       optional: true
     oxc-transform-react:
       optional: true
-  checksum: 10c0/4599b37ee19ebee289782b177642e3002afa9b74cb57a2c0e2a601053c7ebb47f9ef178ab605ff1217de1d23069948a8d366447bfac0d9fb2f17afee5368acd0
+  checksum: 10c0/5c49e9098455e40662c60e7e3daf81088f8f3dc94dbd55746c310fc08a47962321c432dab202d5c240c91bf951c6a62ea64784b183e7ed47e6f9378d6e00e565
   languageName: node
   linkType: hard
 
@@ -2603,7 +2619,7 @@ __metadata:
   resolution: "dev-log@workspace:."
   dependencies:
     "@astrojs/check": "npm:0.9.10"
-    "@astrojs/react": "npm:7.0.1"
+    "@astrojs/react": "npm:7.1.0"
     "@astrojs/sitemap": "npm:3.7.4"
     "@eslint/js": "npm:^10.0.1"
     "@playwright/test": "npm:1.64.1"
@@ -2639,6 +2655,13 @@ __metadata:
   version: 5.9.4
   resolution: "devalue@npm:5.9.4"
   checksum: 10c0/d621083acce13d7812418ed07d99f027f83ee00ba591a2d2eab4c9436e1491ebce7bc1a92aa4c1fb7903c31c0e3c0a3cdf8662bf31644742202e003c04c17e33
+  languageName: node
+  linkType: hard
+
+"devalue@npm:^6.0.2":
+  version: 6.0.3
+  resolution: "devalue@npm:6.0.3"
+  checksum: 10c0/c553d95469ea5d28211456991dc308bd09947ea47b39583e47d16073621f2ea5d09c1390eb8cfcf1757097ba83327d7dae652b6804e0625693430677c193f03f
   languageName: node
   linkType: hard
 
@@ -4647,7 +4670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^4.4.3":
+"shiki@npm:^4.4.3, shiki@npm:^4.5.0":
   version: 4.5.0
   resolution: "shiki@npm:4.5.0"
   dependencies:
@@ -4691,7 +4714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"smol-toml@npm:^1.9.0":
+"smol-toml@npm:^1.9.0, smol-toml@npm:^1.9.1":
   version: 1.9.1
   resolution: "smol-toml@npm:1.9.1"
   checksum: 10c0/8acccf7bbc063f29405f58f5014ab39bf4eb9d7f0e000e5e3f140f7d4d6ead5696681a7c15260d1f2910213012c0af43b31a05bf94f704b0bdf39989fba08c02
@@ -5220,7 +5243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^8.3.0, vite@npm:^8.3.1, vite@npm:^8.3.4":
+"vite@npm:^8.3.1, vite@npm:^8.3.4":
   version: 8.3.4
   resolution: "vite@npm:8.3.4"
   dependencies:
