@@ -5,6 +5,9 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
+    # Wait a week after each release; this does not delay security updates.
+    cooldown:
+      default-days: 7
     groups:
       react:
         # Keep the runtime, renderer, and their types on the same major version.
@@ -13,6 +16,18 @@ updates:
           - 'react-dom'
           - '@types/react'
           - '@types/react-dom'
+      astro:
+        # Astro and its integrations build on Vite, so test them in one pull request.
+        patterns:
+          - 'astro'
+          - '@astrojs/*'
+          - 'vite'
+      production-dependencies:
+        dependency-type: production
+        update-types: ['minor', 'patch']
+      development-dependencies:
+        dependency-type: development
+        update-types: ['minor', 'patch']
     ignore:
       # Review major upgrades with Astro and typescript-eslint API support.
       # Revisit using the migration criteria in docs/improvement-backlog.md.
@@ -25,3 +40,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns: ['*']
