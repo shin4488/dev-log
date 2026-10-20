@@ -11,9 +11,9 @@
 
 ### TypeScriptの次期メジャーへの移行 — M
 
-現在は Astro の型検査と typescript-eslint が共通で対応する6系を使用する。7系には両ツールが必要とするプログラムAPIがなく、単純な置き換えでは型検査とlintが停止する。コンパイラの併用や検査の省略で更新を成立させず、以下の条件を満たした時点で移行する。
+現在は Astro の型検査が対応する6系を使用する。7系には型検査に必要なプログラムAPIがなく、単純な置き換えでは型検査が停止する。lint は TypeScript に依存しない Biome で行う。コンパイラの併用や検査の省略で更新を成立させず、以下の条件を満たした時点で移行する。
 
-1. [Astroの対応状況](https://github.com/withastro/roadmap/discussions/1321)と[typescript-eslintの対応状況](https://github.com/typescript-eslint/typescript-eslint/issues/10940)を確認し、両方の安定版が移行先を正式にサポートしていることを確認する。関連ツールの更新時にもこの条件を再確認する。
+1. [Astroの対応状況](https://github.com/withastro/roadmap/discussions/1321)を確認し、安定版が移行先を正式にサポートしていることを確認する。関連ツールの更新時にもこの条件を再確認する。
 2. TypeScriptと必要な関連ツールを同じPRで更新する。peer依存の上書きや別コンパイラの追加をせず、`.astro`・`.ts`・`.tsx` の検査範囲を維持する。
 3. 固定Yarnのimmutable install、lint、型検査、単体テスト、依存監査、本番ビルド、本番・開発時のブラウザテストを実行する。
 4. 対応範囲を確認したうえで `.github/dependabot.yml` の TypeScript メジャー更新の除外を見直す。READMEの対応バージョンも更新する。
