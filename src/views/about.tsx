@@ -170,7 +170,7 @@ const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
   );
 
   return (
-    <Layout location={location} locale={locale} useFluidContainer={true}>
+    <Layout useFluidContainer={true}>
       <FixedNavigation
         isFixed={isNavFixed}
         activeSection={activeSection}

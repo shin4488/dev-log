@@ -1,8 +1,6 @@
 {
   "search.exclude": {
-    "**/node_modules": true,
-    "**/public": true,
-    ".cache": true
+    "**/node_modules": true
   },
   "files.exclude": {
     "**/node_modules": true
