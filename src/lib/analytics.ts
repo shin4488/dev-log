@@ -6,6 +6,7 @@ declare global {
   }
 }
 
+// Astro の画面遷移では document.referrer が変わらないため、直前に計測したページを参照元にする。
 let previousPage: string | undefined;
 
 // Astro のページ差し替えごとに、表示判定と時間の計測を作り直す。

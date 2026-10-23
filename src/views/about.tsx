@@ -15,13 +15,11 @@ const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
   const [activeSection, setActiveSection] = React.useState('sns');
   const [isNavFixed, setIsNavFixed] = React.useState(false);
 
-  // セクションのrefを作成
   const heroRef = React.useRef<HTMLDivElement>(null);
   const snsRef = React.useRef<HTMLElement>(null);
   const projectsRef = React.useRef<HTMLElement>(null);
   const experienceRef = React.useRef<HTMLElement>(null);
 
-  // セクションへのスクロール関数
   const scrollToSection = React.useCallback((sectionId: string) => {
     const sectionRefs = {
       sns: snsRef,
@@ -60,7 +58,7 @@ const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
           currentSection = section.id;
         }
       }
-      // 最後の見出しが画面上端まで届かない高さの画面でも選択できる。
+      // ページ末尾までスクロールしても最後の見出しが判定位置に届かない場合も、最後のセクションを選択する。
       if (
         window.scrollY > 0 &&
         window.scrollY + window.innerHeight >=
@@ -101,7 +99,7 @@ const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
     };
   }, []);
 
-  // ヒーローセクションの監視（ナビゲーション固定用）
+  // ヒーローが画面から完全に外れている間だけ、上部に固定したナビゲーションを表示する。
   React.useEffect(() => {
     const observerOptions = {
       root: null,
@@ -111,7 +109,6 @@ const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        // ヒーローセクションが見えなくなったらナビゲーションを固定
         setIsNavFixed(!entry.isIntersecting);
       });
     };
@@ -210,7 +207,7 @@ const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
           style={{
             paddingTop: '50px',
             marginTop: '-50px',
-            minHeight: '600px', // 最小高さを設定
+            minHeight: '600px',
           }}
         >
           <h2 className="mb-4" data-analytics-section="projects">
@@ -226,7 +223,7 @@ const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
           style={{
             paddingTop: '50px',
             marginTop: '-50px',
-            minHeight: '600px', // 最小高さを設定
+            minHeight: '600px',
           }}
         >
           <h2 className="mb-4" data-analytics-section="experience">

@@ -5,18 +5,14 @@
   "files.exclude": {
     "**/node_modules": true
   },
-  // 保存時に不要な空白文字を自動で削除
   "files.trimTrailingWhitespace": true,
-  // 保存時のBiomeによる整形を有効化
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "biomejs.biome",
-  // markdownは整形しない
   "[markdown]": {
-    // markdownは 行末の半角スペース2つで改行なので、消さないようにする
+    // Markdownは行末の半角スペース2つで改行するため、保存時に削除しない
     "files.trimTrailingWhitespace": false,
     "editor.formatOnSave": false
   },
-  // 保存時にBiomeの自動修正を適用
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit"
   }

@@ -25,14 +25,12 @@ describe('SkillSection', () => {
     expect(screen.getByText('Vue.js')).toBeInTheDocument();
   });
 
-  it('星の数が正しく表示される', () => {
+  it('レベルを示す黄色の星が表示される', () => {
     render(<SkillSection />);
 
-    // 星が表示されることを確認
     const stars = screen.getAllByText('★');
     expect(stars.length).toBeGreaterThan(0);
 
-    // 黄色い星（レベル表示）が存在することを確認
     const yellowStars = stars.filter((star) =>
       star.classList.contains('text-warning'),
     );

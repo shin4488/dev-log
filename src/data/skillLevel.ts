@@ -73,7 +73,7 @@ export function getSalesforceNotes(locale: Locale) {
   return salesforceNotes.map((note) => note[locale]);
 }
 
-// 開発経験の更新日
+// 日本語版はそのまま表示し、英語版は `YYYY/MM/DD` として年・月・日に分けて書式を変える。
 export const experienceUpdatedDate = '2025/09/21';
 
 export { type SkillLevel };

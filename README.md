@@ -3,9 +3,7 @@
 個人開発の制作物や開発経験を紹介するポートフォリオサイトです。
 Astro と React を組み合わせて構築し、GitHub Actions 経由で GitHub Pages に静的ホスティングしています。
 
-- **公開サイト**: [https://shin4488.github.io/dev-log/](https://shin4488.github.io/dev-log/)
-
----
+公開サイト: <https://shin4488.github.io/dev-log/>
 
 ## サイトの構成と公開フロー
 
@@ -16,16 +14,14 @@ flowchart LR
     Dist -->|"GitHub Actions (push to main)"| Pages["GitHub Pages 配信"]
 ```
 
----
-
 ## 主な技術スタック
 
-- **フレームワーク**: Astro, React
-- **スタイリング**: Vanilla CSS, Bootstrap
-- **テスト・品質管理**: Vitest, Playwright, Biome, TypeScript
-- **パッケージマネージャ**: Yarn (v4)
-
----
+| 分類                 | 技術                                  |
+| -------------------- | ------------------------------------- |
+| フレームワーク       | Astro, React                          |
+| スタイリング         | Vanilla CSS, Bootstrap                |
+| テスト・品質管理     | Vitest, Playwright, Biome, TypeScript |
+| パッケージマネージャ | Yarn (v4)                             |
 
 ## 開発環境のセットアップ
 
@@ -49,11 +45,13 @@ yarn serve
 ```bash
 yarn typecheck    # TypeScript の型検査
 yarn lint         # Biome による静的解析
-yarn test         # Vitest によるコンポーネントテスト
-yarn test:e2e     # Playwright によるブラウザ回帰テスト
-```
+yarn test         # Vitest による単体テスト
+yarn test:dev     # Playwright による開発サーバでのページ表示とホットリロードのテスト
 
----
+# Playwright による本番ビルドのページ表示と操作のテスト（計測のテストのため、仮の測定IDでビルドする）
+GOOGLE_ANALYTICS_MEASUREMENT_ID=G-TEST yarn build
+yarn test:e2e
+```
 
 ## 多言語対応
 
@@ -80,10 +78,8 @@ yarn test:e2e     # Playwright によるブラウザ回帰テスト
 JavaScriptを無効にした場合も、日英のページ表示とリンクでの言語切り替えを利用できます。
 404の自動判定にはJavaScriptを使い、無効時は通常の404を英語、`/dev-log/ja/404/` を日本語で表示します。
 
-共通の表示文言とURLの処理は `src/lib/i18n.ts`、作品の翻訳は
-`src/data/selfDevelopment.ts`、技術名と注釈の翻訳は `src/data/skillLevel.ts` にあります。
-ブラウザの言語判定は `src/components/PreferredLanguage.astro`、メタデータの生成・更新は
-`src/lib/pageMetadata.ts` に集約しています。
+共通の表示文言とURLの処理は `src/lib/i18n.ts`、作品の翻訳は `src/data/selfDevelopment.ts`、技術名と注釈の翻訳は `src/data/skillLevel.ts` にあります。
+ブラウザの言語判定は `src/components/PreferredLanguage.astro`、メタデータの生成・更新は `src/lib/pageMetadata.ts` に集約しています。
 切り替え操作の保存は `src/components/LanguageControls.astro` で、Reactの初期化前から処理します。
 
 ## ディレクトリ構成
@@ -92,9 +88,11 @@ JavaScriptを無効にした場合も、日英のページ表示とリンクで�
 dev-log/
 ├── src/
 │   ├── pages/            # Astro のルーティング・静的ページ生成
-│   ├── views/            # トップページや自己紹介などの React 画面
+│   ├── views/            # トップページ（自己紹介）と404ページの React 画面
 │   ├── components/       # 共有 UI コンポーネント
-│   ├── layouts/          # ページレイアウト・共通ヘッダー/フッター
+│   ├── layouts/          # HTML の head（メタデータ・言語判定・計測タグ）を出力する共通レイアウト
+│   ├── lib/              # 多言語の文言・URL処理、メタデータ、アイコン画像の生成、計測
 │   └── data/             # スキル一覧や作品リンクなどのプロフィールデータ
+├── e2e/                  # Playwright のブラウザテスト
 └── static/               # ファビコンなどの静的アセット
 ```
