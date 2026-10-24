@@ -8,7 +8,7 @@ Astro と React で作る日本語・英語の自己紹介・ポートフォリ�
 - GitHub Pages のサブパス配信を維持する。`astro.config.mjs` の `base` と `trailingSlash` を前提に、アセットを `/...` の絶対パスで参照しない。
 - main への push はサイト公開につながる。公開条件は `.github/workflows/gh-pages.yml`、PR のテストは `.github/workflows/test.yml` を確認する。
 - リリースのタグ（`v<版番号>`）は、`package.json` の `version` を同じ版番号に上げる PR をマージしてから付ける。
-- 基盤・依存の変更時は `yarn typecheck`・`yarn audit:dependencies` も実行する。ページや配信の変更時は本番ビルド後に `yarn test:e2e` を実行し、必要に応じて移行前と PC/スマホの表示を比較する。
+- 基盤・依存の変更時は `yarn typecheck`・`yarn audit:dependencies` も実行する。ページや配信の変更時は `GOOGLE_ANALYTICS_MEASUREMENT_ID=G-TEST yarn build` の後に `yarn test:e2e` を実行し、必要に応じて変更前と PC/スマホの表示を比較する。
 - 整形は変更したファイルに絞る。`yarn format` は広い範囲を書き換えるため、無関係な差分を含めない。`.env.development` の内容をコミット・ログ・文書に転記しない。
 - 継続する改善候補は [docs/improvement-backlog.md](docs/improvement-backlog.md)を使う。
 
