@@ -10,7 +10,7 @@ import ProjectCard from '@/components/ProjectCard';
 import SkillSection from '@/components/SkillSection';
 import FixedNavigation from '@/components/FixedNavigation';
 
-const aboutPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
+const aboutPage: React.FC<PageProps> = ({ location, locale }) => {
   const text = messages[locale];
   const [activeSection, setActiveSection] = React.useState('sns');
   const [isNavFixed, setIsNavFixed] = React.useState(false);

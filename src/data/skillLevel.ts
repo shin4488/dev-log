@@ -5,7 +5,7 @@ interface SkillLevel {
   skills: string[];
 }
 
-export const skillLevels: SkillLevel[] = [
+const skillLevels: SkillLevel[] = [
   {
     level: 4,
     skills: [

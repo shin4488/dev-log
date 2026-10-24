@@ -4,7 +4,7 @@ import Layout from '@/components/layout';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { isLocale, localeUrl, messages } from '@/lib/i18n';
 
-const NotFoundPage: React.FC<PageProps> = ({ location, locale = 'ja' }) => {
+const NotFoundPage: React.FC<PageProps> = ({ location, locale }) => {
   const [displayLocale, setDisplayLocale] = React.useState(locale);
 
   React.useEffect(() => {

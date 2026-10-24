@@ -78,7 +78,5 @@ const localePrefix = new RegExp(
 
 export function languageUrl(pathname: string, locale: Locale) {
   const path = pathname.slice(basePath.length).replace(localePrefix, '') || '/';
-  // Only the English not-found page is also published as 404.html, the file
-  // GitHub Pages serves for missing URLs. Every language has a /404/ page.
-  return localeUrl(locale, path === '/404.html' ? '/404/' : path);
+  return localeUrl(locale, path);
 }
