@@ -16,13 +16,13 @@
 1. [Astroの対応状況](https://github.com/withastro/roadmap/discussions/1321)を確認し、安定版が移行先を正式にサポートしていることを確認する。関連ツールの更新時にもこの条件を再確認する。
 2. TypeScriptと必要な関連ツールを同じPRで更新する。peer依存の上書きや別コンパイラの追加をせず、`.astro`・`.ts`・`.tsx` の検査範囲を維持する。
 3. 固定Yarnのimmutable install、lint、型検査、単体テスト、依存監査、本番ビルド、本番・開発時のブラウザテストを実行する。
-4. 対応範囲を確認したうえで `.github/dependabot.yml` の TypeScript メジャー更新の除外を見直す。READMEの対応バージョンも更新する。
+4. 対応範囲を確認したうえで `.github/dependabot.yml` の TypeScript メジャー更新の除外を見直す。
 
 ### 依存バージョンの完全固定の検討 — S
 
-dependencies が`^`レンジ指定のため、`yarn install`のタイミングで意図しないバージョンが入り得る(yarn.lock がある限り通常は固定されるが、lockfile 再生成時に一斉に動く)。他リポジトリの「完全固定+更新は Dependabot 経由」ポリシーに合わせるか判断する。
+dependencies の `@popperjs/core` と devDependencies の多くが`^`レンジ指定のため、yarn.lock を再生成するとまとめてバージョンが変わり得る。他リポジトリの「完全固定+更新は Dependabot 経由」ポリシーに合わせるか判断する。
 
-1. 方針を決める(Dependabot 導入とセットで固定運用にするのが整合的)
+1. 方針を決める(Dependabot は導入済み)
 2. 固定する場合: package.json の`^`を外して現在の lockfile のバージョンに揃える
 
 ## CI・品質

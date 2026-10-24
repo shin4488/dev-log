@@ -4,7 +4,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "rootDir": ".",
-    "paths": { "~/*": ["./*"], "@/*": ["./src/*"] },
+    "paths": { "@/*": ["./src/*"] },
     "esModuleInterop": true,
     "skipLibCheck": true
   },

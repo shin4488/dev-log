@@ -21,6 +21,8 @@ export default defineConfig({
       // The integration skips only the root 404 page by default.
       filter: (page) => !page.endsWith('/404/'),
     }),
+    // Also publish the English not-found page at /404/, the URL that language links use.
+    // Astro writes the root 404 page only as 404.html.
     {
       name: 'legacy-404-url',
       hooks: {
@@ -49,6 +51,7 @@ export default defineConfig({
           ],
         },
       },
+      // The prerender and ssr environments below both resolve the ESM builds of the listed UI packages through Vite instead of loading them with Node.
       prerender: {
         resolve: {
           conditions: ['module', 'development|production'],

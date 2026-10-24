@@ -46,7 +46,6 @@ describe('ProjectCard', () => {
     const links = screen.getAllByRole('link');
     expect(links).toHaveLength(2);
 
-    // 両方のリンクが正しいhrefとtargetを持つことを確認
     links.forEach((link) => {
       expect(link).toHaveAttribute('href', 'https://example.com');
       expect(link).toHaveAttribute('target', '_blank');

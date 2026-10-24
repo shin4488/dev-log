@@ -52,8 +52,6 @@ typings/
 .env*
 
 # build files
-.cache/
-public
 dist/
 .astro/
 

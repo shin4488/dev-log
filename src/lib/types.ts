@@ -1,7 +1,6 @@
 import type { Locale } from './i18n';
 
-export interface PageProps<T = unknown> {
+export interface PageProps {
   location: { pathname: string };
-  data: T;
-  locale?: Locale;
+  locale: Locale;
 }

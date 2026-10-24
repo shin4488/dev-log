@@ -29,8 +29,7 @@ updates:
         dependency-type: development
         update-types: ['minor', 'patch']
     ignore:
-      # Review major upgrades with Astro type-checking support.
-      # Revisit using the migration criteria in docs/improvement-backlog.md.
+      # Upgrade the major version only after Astro's type checker supports it.
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major']
       # Upgrade Node.js and its major type version together (package.json engines).

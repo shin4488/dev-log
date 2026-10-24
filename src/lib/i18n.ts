@@ -78,5 +78,5 @@ const localePrefix = new RegExp(
 
 export function languageUrl(pathname: string, locale: Locale) {
   const path = pathname.slice(basePath.length).replace(localePrefix, '') || '/';
-  return localeUrl(locale, path === '/404.html' ? '/404/' : path);
+  return localeUrl(locale, path);
 }

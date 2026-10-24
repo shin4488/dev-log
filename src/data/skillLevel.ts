@@ -5,7 +5,7 @@ interface SkillLevel {
   skills: string[];
 }
 
-export const skillLevels: SkillLevel[] = [
+const skillLevels: SkillLevel[] = [
   {
     level: 4,
     skills: [
@@ -73,7 +73,7 @@ export function getSalesforceNotes(locale: Locale) {
   return salesforceNotes.map((note) => note[locale]);
 }
 
-// 開発経験の更新日
+// `YYYY/MM/DD` 形式で書く。日本語版はこの文字列をそのまま表示し、英語版は年・月・日に分けて英語の日付表記にする。
 export const experienceUpdatedDate = '2025/09/21';
 
 export { type SkillLevel };

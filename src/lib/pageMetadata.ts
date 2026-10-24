@@ -10,7 +10,6 @@ import { site } from './site';
 interface PageMetadataOptions {
   title: string;
   locale: Locale;
-  description?: string;
   pagePath?: string;
 }
 
@@ -18,9 +17,9 @@ interface PageMetadataOptions {
 export function createPageMetadata({
   title,
   locale,
-  description = messages[locale].description,
   pagePath = '/',
 }: PageMetadataOptions) {
+  const description = messages[locale].description;
   const canonicalUrl = new URL(localeUrl(locale, pagePath), site.url).href;
   return {
     lang: locale,
