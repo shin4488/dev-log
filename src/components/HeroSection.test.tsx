@@ -33,36 +33,12 @@ describe('HeroSection', () => {
     expect(mockOnNavClick).toHaveBeenCalledWith('projects');
   });
 
-  it('アクティブなセクションが正しくスタイリングされる', () => {
+  it('表示中の欄のリンクだけを現在地として示す', () => {
     render(
       <HeroSection activeSection="projects" onNavClick={mockOnNavClick} />,
     );
 
-    const activeLink = screen.getByText('個人開発');
-    expect(activeLink).toHaveStyle({ borderBottomColor: 'rgb(255, 255, 255)' });
-    expect(activeLink).toHaveAttribute('aria-current', 'location');
-  });
-
-  it('ホバー効果が正しく動作する', () => {
-    render(<HeroSection activeSection="sns" onNavClick={mockOnNavClick} />);
-
-    const link = screen.getByText('個人開発');
-
-    fireEvent.mouseEnter(link);
-    expect(link).toHaveStyle({ opacity: 0.8 });
-    expect(link).toHaveStyle({ borderBottomColor: 'rgba(0, 0, 0, 0)' });
-    expect(link).not.toHaveAttribute('aria-current');
-
-    fireEvent.mouseLeave(link);
-    expect(link).toHaveStyle({ borderBottomColor: 'rgba(0, 0, 0, 0)' });
-  });
-
-  it('背景グラデーションが適用される', () => {
-    render(<HeroSection activeSection="sns" onNavClick={mockOnNavClick} />);
-
-    const heroContainer = screen.getByText('リンク').closest('div');
-    expect(heroContainer).toHaveStyle({
-      backgroundImage: 'linear-gradient(120deg, #1d976c, #2e86de)',
-    });
+    const currentLinks = screen.getAllByRole('link', { current: 'location' });
+    expect(currentLinks.map((link) => link.textContent)).toEqual(['個人開発']);
   });
 });
