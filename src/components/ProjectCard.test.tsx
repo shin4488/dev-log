@@ -59,11 +59,4 @@ describe('ProjectCard', () => {
     expect(screen.getByText('概要')).toBeInTheDocument();
     expect(screen.getByText('技術アピール')).toBeInTheDocument();
   });
-
-  it('カードにBootstrapクラスが適用される', () => {
-    const { container } = render(<ProjectCard item={mockProjectItem} />);
-
-    const card = container.querySelector('.card');
-    expect(card).toHaveClass('h-100', 'shadow-sm', 'border');
-  });
 });

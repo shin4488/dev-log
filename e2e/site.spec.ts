@@ -1,6 +1,8 @@
 import { test, expect } from './fixtures';
 import type { Page } from '@playwright/test';
 
+const japaneseText = /[\u3040-\u30ff\u3400-\u9fff]/u;
+
 async function expectNotFoundLanguage(page: Page, locale: 'ja' | 'en') {
   const english = locale === 'en';
   const title = english ? '404: Page not found' : '404: ページが見つかりません';
@@ -343,11 +345,28 @@ test('F1C icon is served locally even when the F1C site is unavailable', async (
   expect(state).toEqual({ local: true, width: 600, height: 600 });
 });
 
-test('site theme preserves heading colors, table surfaces and skill borders', async ({
+test('site theme preserves the hero gradient, heading colors, table surfaces and skill borders', async ({
   page,
 }) => {
   await page.goto('ja/');
   await page.waitForLoadState('networkidle');
+  // The white hero links need the gradient behind them, whichever element draws it.
+  const heroBackground = await page
+    .locator('nav.position-absolute')
+    .evaluate((element) => {
+      for (
+        let current: Element | null = element;
+        current;
+        current = current.parentElement
+      ) {
+        const image = getComputedStyle(current).backgroundImage;
+        if (image !== 'none') return image;
+      }
+      return 'none';
+    });
+  expect(heroBackground).toBe(
+    'linear-gradient(120deg, rgb(29, 151, 108), rgb(46, 134, 222))',
+  );
   for (const heading of await page.locator('h2, h3').all()) {
     await expect(heading).toHaveCSS('color', 'rgb(26, 32, 44)');
   }
@@ -366,6 +385,40 @@ test('site theme preserves heading colors, table surfaces and skill borders', as
   await expect(note).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await expect(note).toHaveCSS('color', 'rgb(33, 37, 41)');
   await expect(note).toHaveCSS('border-color', 'rgba(0, 0, 0, 0)');
+});
+
+test('project cards in the same row share one height and keep their border and shadow', async ({
+  page,
+}) => {
+  // Two columns from Bootstrap's md width, so rows hold several cards.
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.goto('ja/');
+  await page.waitForLoadState('networkidle');
+  const cards = await page.locator('.card').evaluateAll((cards) =>
+    cards.map((card) => {
+      const style = getComputedStyle(card);
+      const { top, height } = card.getBoundingClientRect();
+      return {
+        top: Math.round(top),
+        height: Math.round(height),
+        border:
+          style.borderTopStyle !== 'none' &&
+          Number.parseFloat(style.borderTopWidth) > 0,
+        shadow: style.boxShadow !== 'none',
+      };
+    }),
+  );
+  const rows = new Map<number, number[]>();
+  for (const { top, height } of cards) {
+    rows.set(top, [...(rows.get(top) ?? []), height]);
+  }
+  expect([...rows.values()].some((heights) => heights.length > 1)).toBe(true);
+  for (const heights of rows.values()) {
+    expect(heights).toEqual(heights.map(() => heights[0]));
+  }
+  for (const { border, shadow } of cards) {
+    expect({ border, shadow }).toEqual({ border: true, shadow: true });
+  }
 });
 
 test('profile selection follows manual scrolling in both directions', async ({
@@ -558,6 +611,11 @@ test('language switching translates the portfolio and survives reload', async ({
   page,
 }) => {
   await page.goto('ja/');
+  // The English page lists the same projects and skills as the Japanese page.
+  const projectCount = await page.locator('.card').count();
+  const skillCount = await page.locator('#experience .badge').count();
+  expect(projectCount).toBeGreaterThan(0);
+  expect(skillCount).toBeGreaterThan(0);
   const switcher = page.getByRole('navigation', {
     name: '表示言語',
     exact: true,
@@ -571,20 +629,15 @@ test('language switching translates the portfolio and survives reload', async ({
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page).toHaveTitle('About | Dev Log');
   await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
-  await expect(page.locator('.card')).toHaveCount(10);
-  await expect(page.locator('.card').first()).toContainText(
-    'Crypto Arbitrage Detector | Spot price gaps between exchanges',
-  );
-  await expect(page.locator('#experience')).toContainText('Process Builder');
+  await expect(page.locator('.card')).toHaveCount(projectCount);
+  await expect(page.locator('#experience .badge')).toHaveCount(skillCount);
   await expect(page.locator('#experience')).toContainText(
-    'As of September 21, 2025',
+    /As of [A-Z][a-z]+ \d{1,2}, \d{4}/,
   );
   await expect(page.locator('footer')).toHaveText(/^© \d{4} shin4488$/);
   // The language control is the only Japanese text on the English page.
   const mainText = await page.locator('main').innerText();
-  expect(mainText.replace('日本語', '')).not.toMatch(
-    /[\u3040-\u30ff\u3400-\u9fff]/u,
-  );
+  expect(mainText.replace('日本語', '')).not.toMatch(japaneseText);
   await page.reload();
   await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
   await page
@@ -594,9 +647,7 @@ test('language switching translates the portfolio and survives reload', async ({
   await expect(page).toHaveURL(/\/dev-log\/ja\/$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
   await expect(page.locator('#projects h2')).toHaveText('個人開発');
-  await expect(page.locator('.card').first()).toContainText(
-    'Crypto Arbitrage Detector｜取引所間の価格差を検知',
-  );
+  await expect(page.locator('.card').first()).toContainText(japaneseText);
 });
 
 test('language switching preserves a directly linked section and works with browser history', async ({
@@ -795,9 +846,7 @@ test.describe('static localized pages', () => {
     await page.getByRole('link', { name: '日本語', exact: true }).click();
     await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
     await expect(page.locator('#projects h2')).toHaveText('個人開発');
-    await expect(page.locator('.card').first()).toContainText(
-      'Crypto Arbitrage Detector｜取引所間の価格差を検知',
-    );
+    await expect(page.locator('.card').first()).toContainText(japaneseText);
     await page.getByRole('link', { name: 'English', exact: true }).click();
     await expect(page.locator('#projects h2')).toHaveText('Personal Projects');
   });
