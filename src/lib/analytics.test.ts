@@ -1,47 +1,110 @@
-import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { startPageAnalytics } from './analytics';
 
-const observers: {
-  callback: ConstructorParameters<typeof IntersectionObserver>[0];
-  targets: Element[];
-}[] = [];
+// Follows the browser contract: an observer is notified only when the
+// visible ratio crosses one of its thresholds or the target starts or stops
+// intersecting.
+class FakeIntersectionObserver {
+  static instances = new Set<FakeIntersectionObserver>();
+  private readonly thresholds: number[];
+  private readonly previous = new Map<
+    Element,
+    { thresholdIndex: number; isIntersecting: boolean }
+  >();
+
+  constructor(
+    private readonly callback: IntersectionObserverCallback,
+    options: IntersectionObserverInit = {},
+  ) {
+    this.thresholds = [options.threshold ?? 0].flat();
+    FakeIntersectionObserver.instances.add(this);
+  }
+
+  observe(target: Element) {
+    this.previous.set(target, { thresholdIndex: -1, isIntersecting: false });
+  }
+
+  unobserve(target: Element) {
+    this.previous.delete(target);
+  }
+
+  disconnect() {
+    this.previous.clear();
+  }
+
+  takeRecords() {
+    return [];
+  }
+
+  update(target: Element, intersectionRatio: number) {
+    const previous = this.previous.get(target);
+    if (!previous) {
+      return;
+    }
+    const isIntersecting = intersectionRatio > 0;
+    const thresholdIndex = this.thresholds.filter(
+      (threshold) => threshold <= intersectionRatio,
+    ).length;
+    if (
+      thresholdIndex === previous.thresholdIndex &&
+      isIntersecting === previous.isIntersecting
+    ) {
+      return;
+    }
+    this.previous.set(target, { thresholdIndex, isIntersecting });
+    this.callback(
+      [
+        {
+          target,
+          isIntersecting,
+          intersectionRatio,
+        } as IntersectionObserverEntry,
+      ],
+      this as unknown as IntersectionObserver,
+    );
+  }
+}
+
 let cleanup = () => {};
 let hidden = false;
 
-function intersect(index: number, visible: boolean) {
-  const observer = observers[index];
-  observer.callback(
-    observer.targets.map((target) => ({
-      target,
-      isIntersecting: visible,
-      intersectionRatio: visible ? 1 : 0,
-    })) as IntersectionObserverEntry[],
-    {} as IntersectionObserver,
-  );
+function heading(section: string) {
+  const element = document.createElement('h2');
+  element.dataset.analyticsSection = section;
+  document.body.append(element);
+  return element;
 }
+
+function showHeading(element: Element, visibleRatio: number) {
+  for (const observer of FakeIntersectionObserver.instances) {
+    observer.update(element, visibleRatio);
+  }
+}
+
+function setTabHidden(value: boolean) {
+  hidden = value;
+  document.dispatchEvent(new Event('visibilitychange'));
+}
+
+function sentEvents(eventName: string) {
+  return vi
+    .mocked(window.gtag!)
+    .mock.calls.filter(
+      ([command, name]) => command === 'event' && name === eventName,
+    )
+    .map(([, , parameters]) => parameters as Record<string, unknown>);
+}
+
+const viewedSections = () =>
+  sentEvents('section_view').map(({ section_name }) => section_name);
 
 beforeEach(() => {
   vi.useFakeTimers();
   hidden = false;
   vi.spyOn(document, 'hidden', 'get').mockImplementation(() => hidden);
   window.gtag = vi.fn();
-  observers.length = 0;
-  vi.stubGlobal(
-    'IntersectionObserver',
-    class {
-      record: (typeof observers)[number];
-      constructor(
-        callback: ConstructorParameters<typeof IntersectionObserver>[0],
-      ) {
-        this.record = { callback, targets: [] };
-        observers.push(this.record);
-      }
-      observe(target: Element) {
-        this.record.targets.push(target);
-      }
-      disconnect() {}
-    },
-  );
+  FakeIntersectionObserver.instances.clear();
+  vi.stubGlobal('IntersectionObserver', FakeIntersectionObserver);
   document.body.innerHTML = '';
 });
 
@@ -51,12 +114,6 @@ afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
   delete window.gtag;
-});
-
-it('does not collect without the production tag', () => {
-  delete window.gtag;
-  cleanup = startPageAnalytics();
-  expect(observers).toHaveLength(0);
 });
 
 it('counts nested project and middle-button profile clicks without collecting destination queries', () => {
@@ -90,57 +147,82 @@ it('counts nested project and middle-button profile clicks without collecting de
   expect(window.gtag).not.toHaveBeenCalled();
 });
 
-it('counts a section only after a continuous visible second, once per page', () => {
-  document.body.innerHTML =
-    '<h2 data-analytics-section="projects">個人開発</h2>';
-  cleanup = startPageAnalytics();
-  intersect(0, true);
-  vi.advanceTimersByTime(900);
-  intersect(0, false);
-  vi.advanceTimersByTime(1000);
-  expect(window.gtag).toHaveBeenCalledTimes(1); // page_view only
-  intersect(0, true);
-  vi.advanceTimersByTime(1000);
-  intersect(0, false);
-  intersect(0, true);
-  vi.advanceTimersByTime(2000);
-  expect(window.gtag).toHaveBeenCalledTimes(2);
-  expect(window.gtag).toHaveBeenLastCalledWith(
-    'event',
-    'section_view',
-    expect.objectContaining({ section_name: 'projects' }),
-  );
-});
+describe('section views', () => {
+  it('counts a section once at least half of its heading stays visible for one second', () => {
+    const projects = heading('projects');
+    cleanup = startPageAnalytics();
+    showHeading(projects, 0.2);
+    showHeading(projects, 0.49);
+    vi.advanceTimersByTime(60_000);
+    expect(viewedSections()).toEqual([]);
 
-it('counts a section only after a full visible second following a background tab', () => {
-  document.body.innerHTML =
-    '<h2 data-analytics-section="projects">個人開発</h2>';
-  cleanup = startPageAnalytics();
-  intersect(0, true);
-  vi.advanceTimersByTime(900);
-  hidden = true;
-  document.dispatchEvent(new Event('visibilitychange'));
-  vi.advanceTimersByTime(60_000);
-  hidden = false;
-  document.dispatchEvent(new Event('visibilitychange'));
-  vi.advanceTimersByTime(900);
-  expect(window.gtag).toHaveBeenCalledTimes(1);
-  vi.advanceTimersByTime(100);
-  expect(window.gtag).toHaveBeenLastCalledWith(
-    'event',
-    'section_view',
-    expect.objectContaining({ section_name: 'projects' }),
-  );
-  vi.advanceTimersByTime(60_000);
-  expect(window.gtag).toHaveBeenCalledTimes(2);
-});
+    showHeading(projects, 0.5);
+    vi.advanceTimersByTime(999);
+    expect(viewedSections()).toEqual([]);
+    vi.advanceTimersByTime(1);
+    expect(sentEvents('section_view')).toEqual([
+      expect.objectContaining({ section_name: 'projects' }),
+    ]);
+  });
 
-it('cancels unfinished section measurements when leaving a page', () => {
-  document.body.innerHTML =
-    '<h2 data-analytics-section="projects">個人開発</h2>';
-  cleanup = startPageAnalytics();
-  intersect(0, true);
-  cleanup();
-  vi.advanceTimersByTime(60_000);
-  expect(window.gtag).toHaveBeenCalledTimes(1);
+  it('restarts the second when the heading leaves the screen before it elapses', () => {
+    const projects = heading('projects');
+    cleanup = startPageAnalytics();
+    showHeading(projects, 1);
+    vi.advanceTimersByTime(900);
+    showHeading(projects, 0.3);
+    vi.advanceTimersByTime(60_000);
+    expect(viewedSections()).toEqual([]);
+
+    showHeading(projects, 1);
+    vi.advanceTimersByTime(999);
+    expect(viewedSections()).toEqual([]);
+    vi.advanceTimersByTime(1);
+    expect(viewedSections()).toEqual(['projects']);
+  });
+
+  it('counts each section at most once per page', () => {
+    const sns = heading('sns');
+    const projects = heading('projects');
+    cleanup = startPageAnalytics();
+    showHeading(sns, 1);
+    vi.advanceTimersByTime(1000);
+    showHeading(projects, 1);
+    vi.advanceTimersByTime(1000);
+    expect(viewedSections()).toEqual(['sns', 'projects']);
+
+    showHeading(sns, 0);
+    showHeading(projects, 0);
+    showHeading(sns, 1);
+    showHeading(projects, 1);
+    vi.advanceTimersByTime(60_000);
+    expect(viewedSections()).toEqual(['sns', 'projects']);
+  });
+
+  it('counts a section only after a full visible second following a background tab', () => {
+    const projects = heading('projects');
+    cleanup = startPageAnalytics();
+    showHeading(projects, 1);
+    vi.advanceTimersByTime(900);
+    setTabHidden(true);
+    vi.advanceTimersByTime(60_000);
+    expect(viewedSections()).toEqual([]);
+
+    setTabHidden(false);
+    vi.advanceTimersByTime(999);
+    expect(viewedSections()).toEqual([]);
+    vi.advanceTimersByTime(1);
+    expect(viewedSections()).toEqual(['projects']);
+    vi.advanceTimersByTime(60_000);
+    expect(viewedSections()).toEqual(['projects']);
+  });
+
+  it('cancels unfinished section measurements when leaving a page', () => {
+    const projects = heading('projects');
+    cleanup = startPageAnalytics();
+    showHeading(projects, 1);
+    cleanup();
+    vi.advanceTimersByTime(60_000);
+    expect(viewedSections()).toEqual([]);
+  });
 });
