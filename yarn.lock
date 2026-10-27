@@ -37,19 +37,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/check@npm:0.9.10":
-  version: 0.9.10
-  resolution: "@astrojs/check@npm:0.9.10"
+"@astrojs/astro2tsx@npm:^0.1.2":
+  version: 0.1.3
+  resolution: "@astrojs/astro2tsx@npm:0.1.3"
   dependencies:
-    "@astrojs/language-server": "npm:^2.16.7"
-    chokidar: "npm:^4.0.3"
+    "@emnapi/core": "npm:1.11.3"
+    "@napi-rs/wasm-runtime": "npm:1.2.4"
+  checksum: 10c0/55a260fbc97d72b51070bd71de34dcb710fbd5a6b2d97e6f32dcf679516461aba2690c1d48e2a271140a99a36f4596bc14aae53c544362de8bafd74ede8f019a
+  languageName: node
+  linkType: hard
+
+"@astrojs/check@npm:0.9.11":
+  version: 0.9.11
+  resolution: "@astrojs/check@npm:0.9.11"
+  dependencies:
+    "@astrojs/language-server": "npm:^2.17.2"
+    chokidar: "npm:^5.0.0"
     kleur: "npm:^4.1.5"
-    yargs: "npm:^18.0.0"
+    yargs: "npm:^18.2.0"
   peerDependencies:
     typescript: ^5.0.0 || ^6.0.0
   bin:
     astro-check: ./bin/astro-check.js
-  checksum: 10c0/a5de46d71e2c295bbee3c575af73b015e070c2a418f1bc1196b115fddacf60681b5313d9f6ea0427cec5f138bdf6d3c894d8e1938fd54025624b7bab2f52e7eb
+  checksum: 10c0/dd95021b7a15ee59055f7b5d994b300e6995f604472abf050eb370c0265a359bbed50cb2ccc6b676fa102be03da3388d8252f2ab4d960b34ab3ce81df17293f5
   languageName: node
   linkType: hard
 
@@ -175,13 +185,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/compiler@npm:^2.13.1":
-  version: 2.13.1
-  resolution: "@astrojs/compiler@npm:2.13.1"
-  checksum: 10c0/83d85c30c8b1bd6d2382f1bc3d99126732838dc747e3a9defa55f726ccc2276c710e6af81bfb68d8fb17fde452c69cf0187cb1d2f8eb022764f1ccc4cf3a3db1
-  languageName: node
-  linkType: hard
-
 "@astrojs/internal-helpers@npm:0.13.0":
   version: 0.13.0
   resolution: "@astrojs/internal-helpers@npm:0.13.0"
@@ -198,19 +201,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/language-server@npm:^2.16.7":
-  version: 2.16.16
-  resolution: "@astrojs/language-server@npm:2.16.16"
+"@astrojs/language-server@npm:^2.17.2":
+  version: 2.17.2
+  resolution: "@astrojs/language-server@npm:2.17.2"
   dependencies:
-    "@astrojs/compiler": "npm:^2.13.1"
+    "@astrojs/astro2tsx": "npm:^0.1.2"
     "@astrojs/yaml2ts": "npm:^0.2.4"
-    "@jridgewell/sourcemap-codec": "npm:^1.5.5"
     "@volar/kit": "npm:~2.4.28"
     "@volar/language-core": "npm:~2.4.28"
     "@volar/language-server": "npm:~2.4.28"
     "@volar/language-service": "npm:~2.4.28"
     muggle-string: "npm:^0.4.1"
-    tinyglobby: "npm:^0.2.16"
+    tinyglobby: "npm:^0.2.17"
     volar-service-css: "npm:0.0.71"
     volar-service-emmet: "npm:0.0.71"
     volar-service-html: "npm:0.0.71"
@@ -219,7 +221,7 @@ __metadata:
     volar-service-typescript-twoslash-queries: "npm:0.0.71"
     volar-service-yaml: "npm:0.0.71"
     vscode-html-languageservice: "npm:^5.6.2"
-    vscode-uri: "npm:^3.1.0"
+    vscode-uri: "npm:^3.2.0"
   peerDependencies:
     prettier: ^3.0.0
     prettier-plugin-astro: ">=0.11.0"
@@ -230,7 +232,7 @@ __metadata:
       optional: true
   bin:
     astro-ls: ./bin/nodeServer.js
-  checksum: 10c0/585b049f284da44c33b2477282aa3cada721fe086f3d1a24f3c8cc0e50a34236d1b5c755af05c7e2348edcd7f1c969e0d5f39a075049388b4580172c0be552c7
+  checksum: 10c0/9e5f014b9d8abc316beccc4843eb15007d259805337fdbe2e437db72e2e26e7422aba450263bb92bd5101d3b4f54234b4529b3e340527e97fc5355527757f6e4
   languageName: node
   linkType: hard
 
@@ -1045,7 +1047,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.5.5, @jridgewell/sourcemap-codec@npm:^1.6.0":
+"@jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.6.0":
   version: 1.6.0
   resolution: "@jridgewell/sourcemap-codec@npm:1.6.0"
   checksum: 10c0/b5be700e45a775f218589c3466c4ffea630582b4988657652da464e5ab8a7d18bf928ee4fd2363fb346ede4bea9c6ff0bae05a538358c4565ece6199531b5f72
@@ -1062,6 +1064,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@napi-rs/wasm-runtime@npm:1.2.4, @napi-rs/wasm-runtime@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "@napi-rs/wasm-runtime@npm:1.2.4"
+  dependencies:
+    "@tybys/wasm-util": "npm:^0.10.3"
+  peerDependencies:
+    "@emnapi/core": ^1.7.1 || ^2.0.0-alpha.4
+    "@emnapi/runtime": ^1.7.1 || ^2.0.0-alpha.4
+  checksum: 10c0/4bd7be975f7c806bf7c33255b53257cdcd603c573e453b2f6878550bcfd59722d0d34c97627ee6a0353d91274b738d29b32ba1f0fe552a5fca1c2da80aa17bdc
+  languageName: node
+  linkType: hard
+
 "@napi-rs/wasm-runtime@npm:^1.2.3":
   version: 1.2.3
   resolution: "@napi-rs/wasm-runtime@npm:1.2.3"
@@ -1071,18 +1085,6 @@ __metadata:
     "@emnapi/core": ^1.7.1 || ^2.0.0-alpha.4
     "@emnapi/runtime": ^1.7.1 || ^2.0.0-alpha.4
   checksum: 10c0/6da0a4bf9df79e9abfb3e3d462f6a5d42889be39426040038c9dd5925865585d7dbd06dd439c2ffc20f49ef2751412da5bd748cfb3c5b049142d72c0550f6f79
-  languageName: node
-  linkType: hard
-
-"@napi-rs/wasm-runtime@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "@napi-rs/wasm-runtime@npm:1.2.4"
-  dependencies:
-    "@tybys/wasm-util": "npm:^0.10.3"
-  peerDependencies:
-    "@emnapi/core": ^1.7.1 || ^2.0.0-alpha.4
-    "@emnapi/runtime": ^1.7.1 || ^2.0.0-alpha.4
-  checksum: 10c0/4bd7be975f7c806bf7c33255b53257cdcd603c573e453b2f6878550bcfd59722d0d34c97627ee6a0353d91274b738d29b32ba1f0fe552a5fca1c2da80aa17bdc
   languageName: node
   linkType: hard
 
@@ -2123,15 +2125,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "chokidar@npm:4.0.3"
-  dependencies:
-    readdirp: "npm:^4.0.1"
-  checksum: 10c0/a58b9df05bb452f7d105d9e7229ac82fa873741c0c40ddcc7bb82f8a909fbe3f7814c9ebe9bc9a2bef9b737c0ec6e2d699d179048ef06ad3ec46315df0ebe6ad
-  languageName: node
-  linkType: hard
-
 "chokidar@npm:^5.0.0":
   version: 5.0.0
   resolution: "chokidar@npm:5.0.0"
@@ -2336,7 +2329,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dev-log@workspace:."
   dependencies:
-    "@astrojs/check": "npm:0.9.10"
+    "@astrojs/check": "npm:0.9.11"
     "@astrojs/react": "npm:7.1.0"
     "@astrojs/sitemap": "npm:3.7.4"
     "@biomejs/biome": "npm:2.5.15"
@@ -3619,13 +3612,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readdirp@npm:^4.0.1":
-  version: 4.1.2
-  resolution: "readdirp@npm:4.1.2"
-  checksum: 10c0/60a14f7619dec48c9c850255cd523e2717001b0e179dc7037cfa0895da7b9e9ab07532d324bfb118d73a710887d1e35f79c495fa91582784493e085d18c72c62
-  languageName: node
-  linkType: hard
-
 "readdirp@npm:^5.0.0":
   version: 5.1.1
   resolution: "readdirp@npm:5.1.1"
@@ -4157,7 +4143,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.12, tinyglobby@npm:^0.2.16, tinyglobby@npm:^0.2.17":
+"tinyglobby@npm:^0.2.12, tinyglobby@npm:^0.2.17":
   version: 0.2.17
   resolution: "tinyglobby@npm:0.2.17"
   dependencies:
@@ -4879,7 +4865,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vscode-uri@npm:^3.0.2, vscode-uri@npm:^3.0.8, vscode-uri@npm:^3.1.0":
+"vscode-uri@npm:^3.0.2, vscode-uri@npm:^3.0.8, vscode-uri@npm:^3.1.0, vscode-uri@npm:^3.2.0":
   version: 3.2.0
   resolution: "vscode-uri@npm:3.2.0"
   checksum: 10c0/65b4d78f2d014ee359ba36a81605bbd8a420d4c13d3fdba61b44b301ea416bf4b12637253ee72c0f30c1cd774c3649d667674c2fbf00c931667b869158f8519f
@@ -5051,9 +5037,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^18.0.0":
-  version: 18.1.0
-  resolution: "yargs@npm:18.1.0"
+"yargs@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "yargs@npm:18.2.0"
   dependencies:
     cliui: "npm:^9.0.1"
     escalade: "npm:^3.1.1"
@@ -5061,7 +5047,7 @@ __metadata:
     string-width: "npm:^8.2.1"
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^22.0.0"
-  checksum: 10c0/86052bbed90a9aaaaf1eabe004f47c7420e1b7f8d314170cfb0ad4721f518ec2fb7ba5a6daa20708b1595aba257f1554b2d5b3f5606356f86aa9dae18de0bec5
+  checksum: 10c0/7419338c3c00f9143ec6b6ab168335061c6f5342d161642aec23ff119e28cac1c417e0eca1d7dc82fd084f07207cc5d34c7d8315f605c0e3dbf12c350e405f3f
   languageName: node
   linkType: hard
 
