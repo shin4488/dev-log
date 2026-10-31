@@ -15,6 +15,7 @@ describe('FixedNavigation', () => {
         isFixed={false}
         activeSection="sns"
         onNavClick={mockOnNavClick}
+        locale="ja"
       />,
     );
 
@@ -27,6 +28,7 @@ describe('FixedNavigation', () => {
         isFixed={true}
         activeSection="sns"
         onNavClick={mockOnNavClick}
+        locale="ja"
       />,
     );
 
@@ -41,6 +43,7 @@ describe('FixedNavigation', () => {
         isFixed={true}
         activeSection="sns"
         onNavClick={mockOnNavClick}
+        locale="ja"
       />,
     );
 
@@ -55,6 +58,7 @@ describe('FixedNavigation', () => {
         isFixed={true}
         activeSection="projects"
         onNavClick={mockOnNavClick}
+        locale="ja"
       />,
     );
 

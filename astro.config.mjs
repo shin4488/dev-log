@@ -5,6 +5,20 @@ import { mkdir, copyFile } from 'node:fs/promises';
 
 const base = '/dev-log';
 
+// The prerender and ssr environments both resolve the ESM builds of these UI packages through Vite instead of loading them with Node.
+const uiPackageResolve = () => ({
+  conditions: ['module', 'development|production'],
+  noExternal: [
+    'react-icons',
+    'react-bootstrap',
+    'dom-helpers',
+    '@restart/ui',
+    '@restart/hooks',
+    'react-transition-group',
+    'uncontrollable',
+  ],
+});
+
 export default defineConfig({
   site: 'https://shin4488.github.io',
   base,
@@ -51,35 +65,8 @@ export default defineConfig({
           ],
         },
       },
-      // The prerender and ssr environments below both resolve the ESM builds of the listed UI packages through Vite instead of loading them with Node.
-      prerender: {
-        resolve: {
-          conditions: ['module', 'development|production'],
-          noExternal: [
-            'react-icons',
-            'react-bootstrap',
-            'dom-helpers',
-            '@restart/ui',
-            '@restart/hooks',
-            'react-transition-group',
-            'uncontrollable',
-          ],
-        },
-      },
-      ssr: {
-        resolve: {
-          conditions: ['module', 'development|production'],
-          noExternal: [
-            'react-icons',
-            'react-bootstrap',
-            'dom-helpers',
-            '@restart/ui',
-            '@restart/hooks',
-            'react-transition-group',
-            'uncontrollable',
-          ],
-        },
-      },
+      prerender: { resolve: uiPackageResolve() },
+      ssr: { resolve: uiPackageResolve() },
     },
   },
 });

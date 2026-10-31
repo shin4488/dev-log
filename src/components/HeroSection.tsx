@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { Container } from 'react-bootstrap';
 import AboutImage from '@/images/my-profile-image.png?url';
-import { localeUrl, messages, navigationItems, type Locale } from '@/lib/i18n';
+import { messages, navigationItems, type Locale } from '@/lib/i18n';
 import LanguageSwitcher from './LanguageSwitcher';
 
 interface HeroSectionProps {
   activeSection: string;
   onNavClick: (_sectionId: string) => void;
-  locale?: Locale;
-  pathname?: string;
+  locale: Locale;
+  pathname: string;
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({
   activeSection,
   onNavClick,
-  locale = 'ja',
-  pathname = localeUrl(locale),
+  locale,
+  pathname,
 }) => {
   const [hoveredItem, setHoveredItem] = React.useState<string | null>(null);
   const navItems = navigationItems(locale);

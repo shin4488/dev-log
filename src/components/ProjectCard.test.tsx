@@ -13,7 +13,7 @@ const mockProjectItem = {
 
 describe('ProjectCard', () => {
   it('プロジェクトの基本情報が表示される', () => {
-    render(<ProjectCard item={mockProjectItem} />);
+    render(<ProjectCard item={mockProjectItem} locale="ja" />);
 
     expect(screen.getByText('テストプロジェクト')).toBeInTheDocument();
     expect(
@@ -25,7 +25,7 @@ describe('ProjectCard', () => {
   });
 
   it('プロジェクト画像が表示される', () => {
-    render(<ProjectCard item={mockProjectItem} />);
+    render(<ProjectCard item={mockProjectItem} locale="ja" />);
 
     const image = screen.getByAltText('テストプロジェクト');
     expect(image).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe('ProjectCard', () => {
   });
 
   it('使用技術のバッジが表示される', () => {
-    render(<ProjectCard item={mockProjectItem} />);
+    render(<ProjectCard item={mockProjectItem} locale="ja" />);
 
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('TypeScript')).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe('ProjectCard', () => {
   });
 
   it('プロジェクトタイトルとイメージがリンクになっている', () => {
-    render(<ProjectCard item={mockProjectItem} />);
+    render(<ProjectCard item={mockProjectItem} locale="ja" />);
 
     const links = screen.getAllByRole('link');
     expect(links).toHaveLength(2);
@@ -53,7 +53,7 @@ describe('ProjectCard', () => {
   });
 
   it('テーブルの行ラベルが正しく表示される', () => {
-    render(<ProjectCard item={mockProjectItem} />);
+    render(<ProjectCard item={mockProjectItem} locale="ja" />);
 
     expect(screen.getByText('使用技術')).toBeInTheDocument();
     expect(screen.getByText('概要')).toBeInTheDocument();
