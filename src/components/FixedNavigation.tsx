@@ -6,14 +6,14 @@ interface FixedNavigationProps {
   isFixed: boolean;
   activeSection: string;
   onNavClick: (_sectionId: string) => void;
-  locale?: Locale;
+  locale: Locale;
 }
 
 const FixedNavigation: React.FC<FixedNavigationProps> = ({
   isFixed,
   activeSection,
   onNavClick,
-  locale = 'ja',
+  locale,
 }) => {
   const [hoveredItem, setHoveredItem] = React.useState<string | null>(null);
   const navItems = navigationItems(locale);

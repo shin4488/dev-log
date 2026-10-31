@@ -5,12 +5,22 @@ import HeroSection from './HeroSection';
 describe('HeroSection', () => {
   const mockOnNavClick = vi.fn();
 
+  const renderHeroSection = (activeSection: string) =>
+    render(
+      <HeroSection
+        activeSection={activeSection}
+        onNavClick={mockOnNavClick}
+        locale="ja"
+        pathname="/dev-log/ja/"
+      />,
+    );
+
   beforeEach(() => {
     mockOnNavClick.mockClear();
   });
 
   it('プロフィール画像が表示される', () => {
-    render(<HeroSection activeSection="sns" onNavClick={mockOnNavClick} />);
+    renderHeroSection('sns');
 
     const profileImage = screen.getByAltText('shin4488のプロフィール画像');
     expect(profileImage).toBeInTheDocument();
@@ -18,7 +28,7 @@ describe('HeroSection', () => {
   });
 
   it('ナビゲーションアイテムが表示される', () => {
-    render(<HeroSection activeSection="sns" onNavClick={mockOnNavClick} />);
+    renderHeroSection('sns');
 
     expect(screen.getByText('リンク')).toBeInTheDocument();
     expect(screen.getByText('個人開発')).toBeInTheDocument();
@@ -26,7 +36,7 @@ describe('HeroSection', () => {
   });
 
   it('ナビゲーションアイテムをクリックすると、onNavClickが呼ばれる', () => {
-    render(<HeroSection activeSection="sns" onNavClick={mockOnNavClick} />);
+    renderHeroSection('sns');
 
     fireEvent.click(screen.getByText('個人開発'));
 
@@ -34,9 +44,7 @@ describe('HeroSection', () => {
   });
 
   it('表示中の欄のリンクだけを現在地として示す', () => {
-    render(
-      <HeroSection activeSection="projects" onNavClick={mockOnNavClick} />,
-    );
+    renderHeroSection('projects');
 
     const currentLinks = screen.getAllByRole('link', { current: 'location' });
     expect(currentLinks.map((link) => link.textContent)).toEqual(['個人開発']);

@@ -13,10 +13,10 @@ interface ProjectItem {
 
 interface ProjectCardProps {
   item: ProjectItem;
-  locale?: Locale;
+  locale: Locale;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ item, locale = 'ja' }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ item, locale }) => {
   const text = messages[locale];
   return (
     <Card className="h-100 shadow-sm border">

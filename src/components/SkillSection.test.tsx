@@ -10,7 +10,7 @@ vi.mock('@/data/skillLevel', async (importOriginal) => ({
 
 describe('SkillSection', () => {
   it('日本語では更新日を「YYYY/MM/DD 現在」と表示する', () => {
-    render(<SkillSection />);
+    render(<SkillSection locale="ja" />);
 
     expect(screen.getByText('2024/01/05 現在')).toBeInTheDocument();
   });
@@ -22,7 +22,7 @@ describe('SkillSection', () => {
   });
 
   it('セクションタイトルが表示される', () => {
-    render(<SkillSection />);
+    render(<SkillSection locale="ja" />);
 
     expect(
       screen.getByText('業務で扱ってきた主な技術スタック'),
@@ -30,7 +30,7 @@ describe('SkillSection', () => {
   });
 
   it('すべての技術を表示する', () => {
-    render(<SkillSection />);
+    render(<SkillSection locale="ja" />);
 
     for (const { skills } of getSkillLevels('ja')) {
       for (const skill of skills) {
@@ -40,7 +40,7 @@ describe('SkillSection', () => {
   });
 
   it('レベルごとに5個の星を並べ、レベルの数だけ黄色、残りを灰色にする', () => {
-    render(<SkillSection />);
+    render(<SkillSection locale="ja" />);
 
     // 黄色の星を★、灰色の星を☆に置き換え、表示順に5個ずつ区切る。
     const stars = screen
@@ -61,7 +61,7 @@ describe('SkillSection', () => {
   });
 
   it('Salesforceの注釈をすべて順に表示する', () => {
-    render(<SkillSection />);
+    render(<SkillSection locale="ja" />);
 
     expect(screen.getByRole('alert').textContent).toBe(
       getSalesforceNotes('ja').join(''),

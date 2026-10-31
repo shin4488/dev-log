@@ -8,7 +8,7 @@ import {
 } from '@/data/skillLevel';
 import { messages, type Locale } from '@/lib/i18n';
 
-const SkillSection: React.FC<{ locale?: Locale }> = ({ locale = 'ja' }) => {
+const SkillSection: React.FC<{ locale: Locale }> = ({ locale }) => {
   const text = messages[locale];
   const renderStars = (level: number) => {
     return Array.from({ length: 5 }, (_, i) => (
