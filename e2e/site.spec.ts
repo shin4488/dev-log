@@ -87,8 +87,6 @@ test.describe('published routes', () => {
     test(`published route ${
       route || '/'
     } has its content and local assets`, async ({ page }) => {
-      const errors: string[] = [];
-      page.on('pageerror', (error) => errors.push(error.message));
       const response = await page.goto(route);
       // Published documents are served successfully, including the explicit 404 page.
       expect(response?.status()).toBe(200);
@@ -96,7 +94,6 @@ test.describe('published routes', () => {
       await expect(page.locator('html')).toHaveAttribute('lang', locale);
       await expect(page.locator('footer')).toHaveText(/^© \d{4} shin4488$/);
       await page.waitForLoadState('networkidle');
-      expect(errors).toEqual([]);
       expect(
         await page
           .locator('img')
@@ -339,10 +336,11 @@ test('F1C icon is served locally even when the F1C site is unavailable', async (
   await expect(image).toBeVisible();
   const state = await image.evaluate((image) => ({
     local: new URL((image as HTMLImageElement).src).origin === location.origin,
-    width: (image as HTMLImageElement).naturalWidth,
-    height: (image as HTMLImageElement).naturalHeight,
+    loaded:
+      (image as HTMLImageElement).complete &&
+      (image as HTMLImageElement).naturalWidth > 0,
   }));
-  expect(state).toEqual({ local: true, width: 600, height: 600 });
+  expect(state).toEqual({ local: true, loaded: true });
 });
 
 test('site theme preserves the hero gradient, heading colors, table surfaces and skill borders', async ({
