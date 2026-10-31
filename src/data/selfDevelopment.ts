@@ -66,7 +66,7 @@ const selfDevelopmentItems: SelfDevelopmentItem[] = [
     },
     technicalAppeal: {
       ja: '確率計算と画面の処理を分離し、計算結果を自動テストで検証。大きな数でも計算が破綻しにくいよう工夫し、分布の設定や表示順をURLに保存しています。',
-      en: 'Separates probability calculations from the UI and verifies results with automated tests. Handles large numbers more reliably and saves distribution settings and display order in the URL.',
+      en: 'Separates probability calculations from the UI and verifies the results with automated tests. Keeps calculations stable with large numbers and saves distribution settings and display order in the URL.',
     },
   },
   {
@@ -92,8 +92,8 @@ const selfDevelopmentItems: SelfDevelopmentItem[] = [
       en: 'Learn sorting algorithms through animation. Compare how they process the same data to understand differences in their steps and workload. Adjust the speed or pause to examine each step.',
     },
     technicalAppeal: {
-      ja: '画面とアルゴリズムの処理を分け、機能を追加しやすい構成に。ブラウザの言語に合わせた表示切り替えと、Dockerによる開発環境の統一にも対応しています。',
-      en: 'Separates algorithms from the UI to make new features easier to add. Supports browser-language detection and a consistent development environment with Docker.',
+      ja: '画面とアルゴリズムの処理を分け、機能を追加しやすい構成に。ブラウザの言語に合わせて表示言語を切り替え、Dockerで開発環境をそろえています。',
+      en: 'Separates algorithms from the UI to make new features easier to add. Matches the display language to the browser and uses Docker for a consistent development environment.',
     },
   },
   {
@@ -235,7 +235,7 @@ const selfDevelopmentItems: SelfDevelopmentItem[] = [
       en: 'Keep up with MLB standings in your usual timeline. Follow the bot to receive standings updates without opening a separate site or searching for results.',
     },
     technicalAppeal: {
-      ja: 'EventBridgeとLambdaで定期実行し、TerraformでAWSの構成を管理。GitHub Actionsでテストとデプロイを自動化し、投稿前に、Xへ送る文章を手元のPCで確認できるようにしています。',
+      ja: 'EventBridgeとLambdaで定期実行し、TerraformでAWSの構成を管理。GitHub Actionsでテストとデプロイを自動化し、Xへ投稿する文章を事前に手元のPCで確認できるようにしています。',
       en: 'Runs on a schedule with EventBridge and Lambda, with AWS infrastructure managed through Terraform. GitHub Actions automates testing and deployment, and posts can be previewed locally before being sent to X.',
     },
   },

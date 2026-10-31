@@ -45,11 +45,11 @@ const skillLevels: SkillLevel[] = [
 const salesforceNotes: LocalizedText[] = [
   { ja: '※Salesforceに関して', en: 'About Salesforce' },
   {
-    ja: 'Apex...JavaライクなSalesforce独自のプログラミング言語',
+    ja: 'Apex：Javaに似たSalesforce独自のプログラミング言語',
     en: 'Apex: Salesforce’s Java-like programming language.',
   },
   {
-    ja: 'Lightning Web Component...Vue.jsライクなSalesforce独自のUIフレームワーク',
+    ja: 'Lightning Web Component：Vue.jsに似たSalesforce独自のUIフレームワーク',
     en: 'Lightning Web Component: Salesforce’s UI framework, similar to Vue.js.',
   },
 ];
