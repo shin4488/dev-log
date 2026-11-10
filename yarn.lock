@@ -257,9 +257,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/react@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@astrojs/react@npm:7.1.1"
+"@astrojs/react@npm:7.1.2":
+  version: 7.1.2
+  resolution: "@astrojs/react@npm:7.1.2"
   dependencies:
     "@astrojs/internal-helpers": "npm:0.13.0"
     "@vitejs/plugin-react": "npm:^6.1.2"
@@ -275,7 +275,7 @@ __metadata:
   peerDependenciesMeta:
     oxc-transform-react:
       optional: true
-  checksum: 10c0/423638c67be4fe6a6242134bc703a6bf7c86481e6d7e54a18a1e5bd8cc0d8eb287fa7d2dea1e4ef6327e36bfe42211c0cacb4d257cb79821a75fae0100a64a43
+  checksum: 10c0/754946e6d64239fc905f71d3636c8dee392468f40d2b4cc5d6b56079aec77cbed71189805e4d12386301dedfc41f2679309009ac3e9be64942050c9cb2bd3814
   languageName: node
   linkType: hard
 
@@ -2317,7 +2317,7 @@ __metadata:
   resolution: "dev-log@workspace:."
   dependencies:
     "@astrojs/check": "npm:0.9.12"
-    "@astrojs/react": "npm:7.1.1"
+    "@astrojs/react": "npm:7.1.2"
     "@astrojs/sitemap": "npm:3.7.4"
     "@biomejs/biome": "npm:2.6.3"
     "@playwright/test": "npm:1.64.1"
