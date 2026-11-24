@@ -383,20 +383,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/biome@npm:2.6.6"
+"@biomejs/biome@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/biome@npm:2.6.8"
   dependencies:
-    "@biomejs/cli-android-arm64": "npm:2.6.6"
-    "@biomejs/cli-android-x64": "npm:2.6.6"
-    "@biomejs/cli-darwin-arm64": "npm:2.6.6"
-    "@biomejs/cli-darwin-x64": "npm:2.6.6"
-    "@biomejs/cli-linux-arm64": "npm:2.6.6"
-    "@biomejs/cli-linux-arm64-musl": "npm:2.6.6"
-    "@biomejs/cli-linux-x64": "npm:2.6.6"
-    "@biomejs/cli-linux-x64-musl": "npm:2.6.6"
-    "@biomejs/cli-win32-arm64": "npm:2.6.6"
-    "@biomejs/cli-win32-x64": "npm:2.6.6"
+    "@biomejs/cli-android-arm64": "npm:2.6.8"
+    "@biomejs/cli-android-x64": "npm:2.6.8"
+    "@biomejs/cli-darwin-arm64": "npm:2.6.8"
+    "@biomejs/cli-darwin-x64": "npm:2.6.8"
+    "@biomejs/cli-linux-arm64": "npm:2.6.8"
+    "@biomejs/cli-linux-arm64-musl": "npm:2.6.8"
+    "@biomejs/cli-linux-x64": "npm:2.6.8"
+    "@biomejs/cli-linux-x64-musl": "npm:2.6.8"
+    "@biomejs/cli-win32-arm64": "npm:2.6.8"
+    "@biomejs/cli-win32-x64": "npm:2.6.8"
   dependenciesMeta:
     "@biomejs/cli-android-arm64":
       optional: true
@@ -420,76 +420,76 @@ __metadata:
       optional: true
   bin:
     biome: bin/biome
-  checksum: 10c0/1040bceed5464784420157781daabb3408017b5ced3acd7cbe86934b9e8ef41638b6544fde21a64b7353afaa4d6be390938fb40d5c17f698df1e349b2b0b70ea
+  checksum: 10c0/0a8e2a3ec88ca75221aaeef2bd0bd9ab5e50b405e1365c41078e52af6f97f17f57934998c3cc87d3212726155c3766b10eb65c992c539a465fce6efda2fc06d0
   languageName: node
   linkType: hard
 
-"@biomejs/cli-android-arm64@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-android-arm64@npm:2.6.6"
+"@biomejs/cli-android-arm64@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-android-arm64@npm:2.6.8"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-android-x64@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-android-x64@npm:2.6.6"
+"@biomejs/cli-android-x64@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-android-x64@npm:2.6.8"
   conditions: os=android & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-arm64@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-darwin-arm64@npm:2.6.6"
+"@biomejs/cli-darwin-arm64@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-darwin-arm64@npm:2.6.8"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-x64@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-darwin-x64@npm:2.6.6"
+"@biomejs/cli-darwin-x64@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-darwin-x64@npm:2.6.8"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64-musl@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.6.6"
+"@biomejs/cli-linux-arm64-musl@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.6.8"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-linux-arm64@npm:2.6.6"
+"@biomejs/cli-linux-arm64@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-linux-arm64@npm:2.6.8"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64-musl@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-linux-x64-musl@npm:2.6.6"
+"@biomejs/cli-linux-x64-musl@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-linux-x64-musl@npm:2.6.8"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-linux-x64@npm:2.6.6"
+"@biomejs/cli-linux-x64@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-linux-x64@npm:2.6.8"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-arm64@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-win32-arm64@npm:2.6.6"
+"@biomejs/cli-win32-arm64@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-win32-arm64@npm:2.6.8"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-x64@npm:2.6.6":
-  version: 2.6.6
-  resolution: "@biomejs/cli-win32-x64@npm:2.6.6"
+"@biomejs/cli-win32-x64@npm:2.6.8":
+  version: 2.6.8
+  resolution: "@biomejs/cli-win32-x64@npm:2.6.8"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -1075,14 +1075,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.65.0":
-  version: 1.65.0
-  resolution: "@playwright/test@npm:1.65.0"
+"@playwright/test@npm:1.65.1":
+  version: 1.65.1
+  resolution: "@playwright/test@npm:1.65.1"
   dependencies:
-    playwright: "npm:1.65.0"
+    playwright: "npm:1.65.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/137a641e1be8035686a165e69d86d242ee7ed5cbe71e5230f9195cb6e65be37a66ba697f16919b508d04c4d682fd4e167d1a755b64ceb545afac780de72b594b
+  checksum: 10c0/f3c0c6ce1d426c84c2ee370e7b7a81fcd4a7a8eaa9d51a880ec853e98ce437482772a09c58c7fbb4444002b127068f076458bec99cecca60c3b51e9ba93e2cc6
   languageName: node
   linkType: hard
 
@@ -2273,8 +2273,8 @@ __metadata:
     "@astrojs/check": "npm:0.9.12"
     "@astrojs/react": "npm:7.1.5"
     "@astrojs/sitemap": "npm:3.7.4"
-    "@biomejs/biome": "npm:2.6.6"
-    "@playwright/test": "npm:1.65.0"
+    "@biomejs/biome": "npm:2.6.8"
+    "@playwright/test": "npm:1.65.1"
     "@popperjs/core": "npm:^2.11.8"
     "@testing-library/dom": "npm:^10.4.2"
     "@testing-library/jest-dom": "npm:^7.0.1"
@@ -2284,7 +2284,7 @@ __metadata:
     "@types/react-dom": "npm:^19.3.0"
     astro: "npm:7.4.12"
     bootstrap: "npm:5.3.8"
-    jsdom: "npm:^31.0.0"
+    jsdom: "npm:^31.0.1"
     react: "npm:19.3.1"
     react-bootstrap: "npm:2.10.10"
     react-dom: "npm:19.3.1"
@@ -2795,9 +2795,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^31.0.0":
-  version: 31.0.0
-  resolution: "jsdom@npm:31.0.0"
+"jsdom@npm:^31.0.1":
+  version: 31.0.1
+  resolution: "jsdom@npm:31.0.1"
   dependencies:
     "@exodus/bytes": "npm:^1.16.0"
     bcp-47: "npm:^2.1.2"
@@ -2822,7 +2822,7 @@ __metadata:
   peerDependenciesMeta:
     "@napi-rs/canvas":
       optional: true
-  checksum: 10c0/e7240d72bfd6aab3e06ef2bcbd9656e39011707958d57b30c25caf840503a433ba56ba384f43e07938125f49e835f679856db58a9f762496a1811ec6ab580740
+  checksum: 10c0/e0f5567543401f2897984682a4139e42b8190fe8ed3f5d53f7e391333cb98b553870018685dbea5eb98549649ac8d5980800a774729a19aabca6fa0fd2b5f83d
   languageName: node
   linkType: hard
 
@@ -3352,23 +3352,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.65.0":
-  version: 1.65.0
-  resolution: "playwright-core@npm:1.65.0"
+"playwright-core@npm:1.65.1":
+  version: 1.65.1
+  resolution: "playwright-core@npm:1.65.1"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/ed905c6fc2457a725c3fdb3ad4500f43c7a1bb2c6e4e8c708e1e314930c7dce446a5756ad073425bf3c6e3ca975e5a35fb0221118e2d51ef7b4b6c6d13d0644c
+  checksum: 10c0/4406d4f8eff668a93aaada8382d25fcce8da5f679e9f31311888178d631ed0270eb40c0288129e41e15709c957a31932cac9753fdb332547a19bc3541d317e44
   languageName: node
   linkType: hard
 
-"playwright@npm:1.65.0":
-  version: 1.65.0
-  resolution: "playwright@npm:1.65.0"
+"playwright@npm:1.65.1":
+  version: 1.65.1
+  resolution: "playwright@npm:1.65.1"
   dependencies:
-    playwright-core: "npm:1.65.0"
+    playwright-core: "npm:1.65.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/a7d71f3ca5bcad0531b5f3c39ae1a9be0da8e74be6fee8510d99b9f5fc07fd5b3d889aa4ca487c70ca29aba8625f74e3c2c7473b4c8a784dc14fefff80474ac3
+  checksum: 10c0/30ce029c9fb2a6e88cf81b150b978fd60edb59b8af5a6460f5576f0fe6e2bb739454109f0ce4904eac63cb2cf10390518d7d71d335fd695b5897734a5af7250d
   languageName: node
   linkType: hard
 
